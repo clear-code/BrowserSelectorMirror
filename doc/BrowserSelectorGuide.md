@@ -2,9 +2,9 @@
 CJKmainfont: Noto Sans CJK JP
 CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
-title: "BrowserSelector利用ガイド"
+title: "BrowserSelector利用ガイド v2.1.0"
 author: "株式会社クリアコード"
-date: "2020-12-01"
+date: "2021-01-18"
 titlepage: true
 logo: logo.png
 logo-width: 250
