@@ -106,7 +106,7 @@ INIファイルに設定できる項目の詳細は「設定項目の一覧」�
 ## Edgeにアドオンをインストールする
 
 BrowserSelectorはEdge/Chrome/Firefox向けに「IEView WE」という連携アドオンを提供しています。
-このアドオンは次の手順でインストールできます。
+このアドオンは次の手順でインストールします。
 
  1. 次の内容を「edge.reg」という名前で保存します。
 
@@ -136,7 +136,7 @@ BrowserSelectorはEdge/Chrome/Firefox向けに「IEView WE」という連携ア�
 
     - Edgeが立ち上がることを確認します。
 
- 2. Edgeを操作して www.clear-code.com 以外のサイトにアクセスします。
+ 2. Edgeを操作して https://www.clear-code.com 以外のサイトにアクセスします。
 
     - IEが立ち上がることを確認します。
 
