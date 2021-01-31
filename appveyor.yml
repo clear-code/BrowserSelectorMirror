@@ -1,0 +1,31 @@
+version: v1-winbuild-{build}
+
+image: Visual Studio 2019
+
+platform:
+  - Win32
+
+environment:
+  vspath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community'
+  msiext: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/0.9.9/vspackage
+  PATH: '%PATH%;C:\WinFlexBison'
+  VSAPPIDDIR: ''
+  VSAPPIDNAME: 'devenv.exe'
+
+configuration:
+  - Release
+
+install:
+  - ps: Invoke-WebRequest -O InstallerProjects.vsix $env:msiext
+  - call "%vspatH%\VC\Auxiliary\Build\vcvars32.bat"
+  - InstallerProjects.vsix /quiet InstallerProjects.vsix
+
+build_script:
+  - msbuild BrowserSelector.sln /m /p:Configuration=Release /p:Platform=Win32
+  - devenv.exe BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
+
+artifacts:
+  - path: BrowserSelectorSetup\Release\*.msi
+    name: browserselector-msi
+  - path: BrowserSelectorSetup\Release\*.zip
+    name: browserselector-debug-symbols
