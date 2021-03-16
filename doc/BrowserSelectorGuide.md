@@ -254,6 +254,8 @@ EnableIncludeCache=1
 0002=internet|firefox
 ```
 
+この機能はIE/Firefoxのみサポートしています。Chrome/Edgeの連携アドオンは、ゾーン判定に対応していません。
+
 # その他のセットアップ
 
 ## BrowserSelectorを既定のブラウザとして登録する
