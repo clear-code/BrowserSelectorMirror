@@ -767,8 +767,12 @@ static void LoadAppPath(std::wstring &wpath, LPCTSTR exeName)
 	regKeyName += exeName;
 
 	LONG result = reg.Open(HKEY_LOCAL_MACHINE, regKeyName, KEY_READ);
-	if (result != ERROR_SUCCESS)
-		return;
+	if (result != ERROR_SUCCESS) {
+		result = reg.Open(HKEY_CURRENT_USER, regKeyName, KEY_READ);
+		if (result != ERROR_SUCCESS) {
+			return;
+		}
+}
 
 	TCHAR path[MAX_PATH];
 	ULONG pathSize = MAX_PATH;
