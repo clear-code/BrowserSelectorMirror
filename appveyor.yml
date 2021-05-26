@@ -7,7 +7,7 @@ platform:
 
 environment:
   vspath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community'
-  msiext: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/0.9.9/vspackage
+  msiext: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
   PATH: '%PATH%;C:\WinFlexBison'
   VSAPPIDDIR: ''
   VSAPPIDNAME: 'devenv.exe'
