@@ -7,8 +7,8 @@ platform:
 
 environment:
   vspath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community'
-  msiext: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
-  PATH: '%PATH%;C:\WinFlexBison'
+  exturl: https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2015InstallerProjects
+  extpath: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
   VSAPPIDDIR: ''
   VSAPPIDNAME: 'devenv.exe'
 
@@ -16,7 +16,9 @@ configuration:
   - Release
 
 install:
-  - ps: Invoke-WebRequest -O InstallerProjects.vsix $env:msiext
+  - ps: |
+      Invoke-WebRequest -O Installer.html -UseBasicParsing -SessionVariable session $env:exturl
+      Invoke-WebRequest -O InstallerProjects.vsix -WebSession $session $env:extpath
   - call "%vspatH%\VC\Auxiliary\Build\vcvars32.bat"
   - InstallerProjects.vsix /quiet InstallerProjects.vsix
 
