@@ -68,6 +68,7 @@ private:
 	HRESULT ConnectDocumentEvents(void);
 	HRESULT DisconnectDocumentEvents(void);
 	bool IsTopLevelFrame(IDispatch* pDisp);
+	bool IsEdgeIE(void);
 	std::wstring GetBrowserNameToOpenURL(const std::wstring &url);
 	void DoNavigate(BSTR url, VARIANT_BOOL *cancel);
 

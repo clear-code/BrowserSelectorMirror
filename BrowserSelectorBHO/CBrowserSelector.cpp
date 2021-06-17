@@ -114,6 +114,11 @@ bool CBrowserSelector::IsTopLevelFrame(IDispatch* pDisp)
 	return (pDisp == spDispatch);
 }
 
+bool CBrowserSelector::IsEdgeIE(void)
+{
+	return getenv("EDGE_BROWSER_PID") != NULL;
+}
+
 void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 {
 	wstring URL(url);
@@ -132,6 +137,8 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 
 	wstring browserName = GetBrowserNameToOpenURL(URL);
 	if (browserName == L"ie")
+		return;
+	if (browserName == L"edge" && IsEdgeIE())
 		return;
 
 	const bool bypassElevationDialog = true;
