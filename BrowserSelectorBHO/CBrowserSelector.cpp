@@ -114,6 +114,11 @@ bool CBrowserSelector::IsTopLevelFrame(IDispatch* pDisp)
 	return (pDisp == spDispatch);
 }
 
+/*
+ * Return true if the BHO is running under Edge's IE mode.
+ *
+ * Confirmed to work on Microsoft Edge 92.0.902.78.
+ */
 bool CBrowserSelector::IsEdgeIE(void)
 {
 	return getenv("EDGE_BROWSER_PID") != NULL;
