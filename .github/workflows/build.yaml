@@ -1,0 +1,29 @@
+on: [push]
+name: Build ThinBridge
+jobs:
+  build:
+    runs-on: [ windows-2019 ]
+    env:
+      VSPATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise'
+      EXTSITE: https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2015InstallerProjects
+      EXTURL: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
+      VSAPPIDDIR: ''
+      VSAPPIDNAME: 'devenv.exe'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Fetch Visual Studio addons
+        run: |
+          Invoke-WebRequest -O Installer.html -UseBasicParsing -SessionVariable session $env:EXTSITE
+          Invoke-WebRequest -O InstallerProjects.vsix -WebSession $session $env:EXTURL
+      - name: Build binaries
+        shell: cmd
+        run: |
+          call "%vspatH%\VC\Auxiliary\Build\vcvars32.bat"
+          InstallerProjects.vsix /quiet InstallerProjects.vsix
+          msbuild BrowserSelector.sln /m /p:Configuration=Release /p:Platform=Win32
+          devenv BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
+      - name: Upload Installer
+        uses: actions/upload-artifact@v2
+        with:
+          name: browserselector-msi
+          path: BrowserSelectorSetup\Release\*.msi
