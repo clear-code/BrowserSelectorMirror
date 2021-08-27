@@ -143,8 +143,10 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 	wstring browserName = GetBrowserNameToOpenURL(URL);
 	if (browserName == L"ie")
 		return;
-	if (browserName == L"edge" && IsEdgeIE())
+	if (browserName == L"edge" && IsEdgeIE()) {
+		DebugLog(L"Already opened in Edge (IE mode).");
 		return;
+	}
 
 	const bool bypassElevationDialog = true;
 	bool succeeded = m_app.OpenByModernBrowser(browserName, URL, bypassElevationDialog);
