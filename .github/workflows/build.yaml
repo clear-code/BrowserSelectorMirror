@@ -1,5 +1,5 @@
 on: [push]
-name: Build ThinBridge
+name: Build
 jobs:
   build:
     runs-on: [ windows-2019 ]
@@ -7,6 +7,8 @@ jobs:
       VSPATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise'
       EXTSITE: https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2015InstallerProjects
       EXTURL: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
+      # The following envs are used in BrowserSelectorBHO.vcxproj
+      # to build a 64-bit DLL in PostBuildEvent.
       VSAPPIDDIR: ''
       VSAPPIDNAME: 'devenv.exe'
     steps:
@@ -18,7 +20,7 @@ jobs:
       - name: Build binaries
         shell: cmd
         run: |
-          call "%vspatH%\VC\Auxiliary\Build\vcvars32.bat"
+          call "%VSPATH%\VC\Auxiliary\Build\vcvars32.bat"
           InstallerProjects.vsix /quiet InstallerProjects.vsix
           msbuild BrowserSelector.sln /m /p:Configuration=Release /p:Platform=Win32
           devenv BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
