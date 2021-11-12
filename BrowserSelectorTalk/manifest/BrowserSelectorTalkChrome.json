@@ -4,6 +4,7 @@
   "path": "BrowserSelectorTalk.exe",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://nifnmbbelnhfhgeiampkfghakhmgggcf/"
+    "chrome-extension://nifnmbbelnhfhgeiampkfghakhmgggcf/",
+    "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/"
   ]
 }
