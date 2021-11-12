@@ -27,5 +27,21 @@ jobs:
       - name: Upload Installer
         uses: actions/upload-artifact@v2
         with:
-          name: browserselector-msi
+          name: Installer
           path: BrowserSelectorSetup\Release\*.msi
+  assets:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Testing Extensions
+        run: |
+          cp webextension/edge/manifest.json.dev webextension/edge/manifest.json
+          make -C webextension/edge
+          #cp webextension/chrome/manifest.json.dev webextension/chrome/manifest.json
+          #make -C webextension/chrome
+          #make -C webextension/firefox
+      - name: Upload Extensions
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebExtensionTest
+          path: webextension/*/*.zip
