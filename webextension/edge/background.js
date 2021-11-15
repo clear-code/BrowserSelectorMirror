@@ -55,6 +55,8 @@ function domatch(text, pat, i, j) {
 }
 
 function wildmat(text, pat) {
+	text = text.toLowerCase();
+	pat = pat.toLowerCase();
 	return domatch(text, pat, 0, 0);
 }
 
@@ -183,23 +185,20 @@ var Redirector = {
 		for (i = 0; i < URLPatterns.length; i++) {
 			if (wildmat(url, URLPatterns[i][0])) {
 				console.log(`* Match with '${URLPatterns[i][0]}' (browser=${URLPatterns[i][1]})`);
-				return URLPatterns[i][1];
+				return URLPatterns[i][1].toLowerCase();
 			}
 		}
 
 		for (i = 0; i < HostPatterns.length; i++) {
 			if (wildmat(host, HostPatterns[i][0])) {
 				console.log(`* Match with '${HostPatterns[i][0]}' (browser=${HostPatterns[i][1]})`);
-				return HostPatterns[i][1];
+				return HostPatterns[i][1].toLowerCase();
 			}
 		}
 		return null;
 	},
 
 	isRedirectURL: function(config, url) {
-		var section;
-		var matches = [];
-
 		if (!url) {
 			console.log(`* Empty URL found`);
 			return false;
@@ -241,7 +240,7 @@ var Redirector = {
 	handleStartup: function(config) {
 		chrome.tabs.query({}, (tabs) => {
 			tabs.forEach((tab) => {
-				var url = tab.url || tab.pendingUrl;
+				var url = tab.pendingUrl || tab.url;
 				console.log(`handleStartup ${url} (tab=${tab.id})`);
 				if (Redirector.isRedirectURL(config, url)) {
 					console.log(`* Redirect to another browser`);
@@ -296,12 +295,12 @@ var Redirector = {
 			return;
 		}
 
-		if (config.OnlyMainFrame && !isMainFrame) {
+		if (!isMainFrame) {
 			console.log(`* Ignore subframe request`);
 			return;
 		}
 
-		if (config.CloseEmptyTab && isMainFrame && Redirector.isNewTab[details.tabId]) {
+		if (config.CloseEmptyTab && Redirector.isNewTab[details.tabId]) {
 			closeTab = true;
 		}
 
