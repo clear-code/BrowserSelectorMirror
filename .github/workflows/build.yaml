@@ -37,8 +37,8 @@ jobs:
         run: |
           cp webextension/edge/manifest.json.dev webextension/edge/manifest.json
           make -C webextension/edge
-          #cp webextension/chrome/manifest.json.dev webextension/chrome/manifest.json
-          #make -C webextension/chrome
+          cp webextension/chrome/manifest.json.dev webextension/chrome/manifest.json
+          make -C webextension/chrome
           #make -C webextension/firefox
       - name: Upload Extensions
         uses: actions/upload-artifact@v2

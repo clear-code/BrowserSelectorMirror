@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+	"name": "__MSG_extName__",
+	"version": "1.0.0",
+	"description": "__MSG_extDescription__",
+	"permissions": [
+		"nativeMessaging",
+		"alarms",
+		"tabs",
+		"webRequest",
+		"webRequestBlocking",
+		"<all_urls>"
+	],
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	},
+	"icons": {
+		"128": "misc/128x128.png"
+	},
+	"default_locale": "ja"
+}
