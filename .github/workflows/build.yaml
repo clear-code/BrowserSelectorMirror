@@ -29,7 +29,7 @@ jobs:
         with:
           name: Installer
           path: BrowserSelectorSetup\Release\*.msi
-  assets:
+  webextdev:
     runs-on: [ ubuntu-latest ]
     steps:
       - uses: actions/checkout@v2
@@ -43,5 +43,19 @@ jobs:
       - name: Upload Extensions
         uses: actions/upload-artifact@v2
         with:
-          name: WebExtensionTest
+          name: WebExtensionDev
+          path: webextension/*/*.zip
+  webext:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Web Extensions
+        run: |
+          make -C webextension/edge
+          make -C webextension/chrome
+          #make -C webextension/firefox
+      - name: Upload Extensions
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebExtension
           path: webextension/*/*.zip
