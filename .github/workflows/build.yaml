@@ -39,7 +39,7 @@ jobs:
           make -C webextension/edge
           cp webextension/chrome/manifest.json.dev webextension/chrome/manifest.json
           make -C webextension/chrome
-          #make -C webextension/firefox
+          make -C webextension/firefox
       - name: Upload Extensions
         uses: actions/upload-artifact@v2
         with:
@@ -53,7 +53,7 @@ jobs:
         run: |
           make -C webextension/edge
           make -C webextension/chrome
-          #make -C webextension/firefox
+          make -C webextension/firefox
       - name: Upload Extensions
         uses: actions/upload-artifact@v2
         with:
