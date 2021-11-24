@@ -2,12 +2,13 @@
 CJKmainfont: Noto Sans CJK JP
 CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
-title: "BrowserSelector利用ガイド v2.1.0"
+title: "BrowserSelector利用ガイド v2.2.0"
 author: "株式会社クリアコード"
-date: "2021-01-18"
+date: "2021-11-24"
 titlepage: true
 logo: logo.png
 logo-width: 250
+colorlinks: true
 toc-title: "目次"
 toc-own-page: true
 listings-disable-line-numbers: true
@@ -69,7 +70,7 @@ BrowserSelectorEdge.json    Edge向け定義ファイル
 
 ##  BrowseSelectorをインストールする
 
-BrowseSelectorについてはMSI形式のインストーラが配布されています。
+BrowseSelectorについてはMSI形式のインストーラを配布しています。
 
  1. 次のページから最新版のインストーラをダウンロードします。
 
@@ -105,28 +106,17 @@ INIファイルに設定できる項目の詳細は「設定項目の一覧」�
 
 ## Edgeにアドオンをインストールする
 
-BrowserSelectorはEdge/Chrome/Firefox向けに「IEView WE」という連携アドオンを提供しています。
-このアドオンは次の手順でインストールします。
+BrowserSelectorはEdge・Chrome・Firefox向けに専用のアドオンを提供しています。
+このアドオンは次の手順でインストールできます。
 
- 1. 次の内容を「edge.reg」という名前で保存します。
+ 1. Edgeを起動し、EdgeアドオンストアのBrowserSelectorのページにアクセスします。
 
-    ```ini
-    Windows Registry Editor Version 5.00
+    https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge]
-    "ExtensionSettings"="{\"ifacgepgdnnddnckleiinelkadppopgh\":{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"force_installed\"}}"
+ 2. 画面右の「インストール」ボタンをクリックします。
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge\3rdparty\extensions\ifacgepgdnnddnckleiinelkadppopgh\policy]
-    "talkEnabled"=dword:00000001
-    "talkServerName"="com.clear_code.browserselector_talk"
-    "talkBrowserName"="edge"
-    ```
-
- 2. 管理者権限でレジストリ設定を読み込みます。
-
-    ```powershell
-    % REG IMPORT edge.reg
-    ```
+なお、BrowserSelectorを組織導入する場合は、グループポリシーでアドオンを一括インストールできます。
+詳細な手順は、本マニュアルの「その他のセットアップ」の章を参照ください。
 
 ## ブラウザの動作を確認する
 
@@ -146,13 +136,7 @@ BrowserSelectorはEdge/Chrome/Firefox向けに「IEView WE」という連携ア�
 
  2. BrowserSelectorを選択し、アンインストールを実行します。
 
- 3. レジストリに登録した設定を削除します。
-
-    ```powershell
-    % REG DELETE HKLM\Software\Policies\Microsoft\Edge /v ExtensionSettings
-    % REG DELETE HKLM\Software\Policies\Microsoft\Edge\3rdparty\extensions\n
-      ifnmbbelnhfhgeiampkfghakhmgggcf\policy
-    ```
+ 3. Edgeを起動し、アドオンの管理画面からBrowserSelectorのアドオンを削除します。
 
 # 設定項目の一覧
 
@@ -184,10 +168,8 @@ CloseEmptyTab=1
 | ------------------------ |  ------------------------------------------------------ | ---- |
 | DefaultBrowser           | Webページを開くデフォルトのブラウザ (ie/edge/chrome/firefox) | ie   |
 | SecondBrowser            | ブラウザの指定を省略した時に利用するブラウザ (ie/edge/chrome/firefox) | |
-| FirefoxCommand           | 起動するFirefoxを指定する (Firefoxを複数インストールしている環境のみ設定が必要) | |
+| FirefoxCommand           | 起動するFirefoxを指定する (Firefoxを複数インストールしている環境用) | |
 | CloseEmptyTab            | 他のブラウザでページを開いたときに元のタブを閉じる | 1 |
-| OnlyOnAnchorClick        | リンククリック時のみリダイレクト判定を行う | 0 |
-| UseRegex                 | ルールの記述に正規表現を利用する (0の場合は簡易パターンマッチが利用される) | 0 |
 | Include                  | 追加で読み込む外部設定ファイルのパス | |
 | EnableIncludeCache       | 外部の設定ファイルのキャッシュを生成する | 0 |
 
@@ -308,7 +290,7 @@ Windowsのグループポリシーで設定を集中管理することができ�
 
     - 管理用テンプレート > Clear Code > BrowserSelector を確認ください。
 
-## Firefoxに連携アドオンを導入する
+## Firefoxアドオンを管理者インストールする
 
 Firefox向けの連携アドオンを導入する場合は、次の手順でインストールします。
 
@@ -339,53 +321,55 @@ Firefox向けの連携アドオンを導入する場合は、次の手順でイ�
 
  3. Firefoxを再起動し、IEView WEが導入されていることを確認します。
 
-## Chromeに連携アドオンを導入する
+## Chromeアドオンを管理者インストールする
 
-Chrome向けの連携アドオンを導入する場合は、次の手順でインストールします。
+グループポリシーを利用することで、Chromeアドオンを組織の端末に一括導入できます。
 
- 1. 次の内容を「chrome.reg」というファイル名で保存します。
+ 1. Google公式サイトからChromeの管理者テンプレートを入手します。
 
-    ```ini
-    Windows Registry Editor Version 5.00
+    https://chromeenterprise.google/browser/download/
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Google\Chrome]
-    "ExtensionSettings"="{\"nifnmbbelnhfhgeiampkfghakhmgggcf\":{\"update_url\":\"https://clients2.google.com/service/update2/crx\",\"installation_mode\":\"force_installed\"}}"
+ 2. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Google\Chrome\3rdparty\extensions\nifnmbbelnhfhgeiampkfghakhmgggcf\policy]
-    "talkEnabled"=dword:00000001
-    "talkServerName"="com.clear_code.browserselector_talk"
-    "talkBrowserName"="chrome"
-    ```
+    * 管理用テンプレート > Google > Google Chrome > 拡張機能 > 自動インストールするアプリと拡張機能のリストの設定
 
- 2. 管理者権限で「`REG IMPORT chrome.reg`」を実行します。
+ 3. 設定を有効化した上で、オプション欄の「表示」ボタンをクリックします。
 
- 3. Chromeを起動し、IEView WEが導入されていることを確認します。
+ 4. 入力ダイアログに以下の設定値（BrowserSelectorのアドオンID）を記入して確定します。
 
-## Edgeに連携アドオンを導入する
+    `nhcenbjbddlhdkdpfkbilmjpbkiigick`
 
-Edge向けの連携アドオンを導入する場合は、次の手順でインストールします。
+ 5. Chromeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
 
- 1. 次の内容を「edge.reg」という名前で保存します。
+なお、検証などの目的でグループポリシーを利用せずにアドオンを導入する場合は、
+次のChromeウェブストアのページからインストールいただけます。
 
-    ```ini
-    Windows Registry Editor Version 5.00
+https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge]
-    "ExtensionSettings"="{\"ifacgepgdnnddnckleiinelkadppopgh\":{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"force_installed\"}}"
+## Edgeアドオンを管理者インストールする
 
-    [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge\3rdparty\extensions\ifacgepgdnnddnckleiinelkadppopgh\policy]
-    "talkEnabled"=dword:00000001
-    "talkServerName"="com.clear_code.browserselector_talk"
-    "talkBrowserName"="edge"
-    ```
+グループポリシーを利用することで、Edgeアドオンを組織の端末に一括導入できます。
 
- 2. 管理者権限でレジストリ設定を読み込みます。
+ 1. Microsoft公式サイトからEdgeの管理者テンプレートを入手します。
 
-    ```powershell
-    % REG IMPORT edge.reg
-    ```
+    https://www.microsoft.com/en-us/edge/business/download
 
- 3. Edgeを起動し、IEView WEが導入されていることを確認します。
+ 2. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
+
+    * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
+
+ 3. 設定を有効化した上で、オプション欄の「表示」ボタンをクリックします。
+
+ 4. 入力ダイアログに以下の設定値（BrowserSelectorのアドオンID）を記入して確定します。
+
+    `ifghihgjehplhamcpkmgcfjehjhkijgp`
+
+ 5. Edgeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
+
+なお、検証などの目的でグループポリシーを利用せずにアドオンを導入する場合は、
+次のEdgeアドオンストアのページからインストールいただけます。
+
+https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp
 
 ## BrowserSelectorをアンインストールする
 
@@ -395,24 +379,27 @@ BrowserSelectorをシステムから削除したい場合は次の手順に従�
 
  2. BrowserSelectorを選択し、アンインストールを実行します。
 
- 3. 連携アドオン「IEView WE」を導入した場合は、次の手順で削除します。
-
+ 3. ブラウザにアドオンを導入した場合は、次の手順で削除します。
 
 Chromeのアドオンを削除する
 
-```powershell
-% REG DELETE HKLM\Software\Policies\Google\Chrome /v ExtensionSettings
-% REG DELETE HKLM\Software\Policies\Google\Chrome\3rdparty\extensions\n
-  ifnmbbelnhfhgeiampkfghakhmgggcf\policy
-```
+ 1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
+
+    * 管理用テンプレート > Google > Google Chrome > 拡張機能 >  自動インストールするアプリと拡張機能のリストの設定
+
+ 2. オプション欄の「表示」ボタンをクリックします。
+
+ 3. BrowserSelectorのアドオンIDを一覧から削除します。
 
 Edgeのアドオンを削除する
 
-```powershell
-% REG DELETE HKLM\Software\Policies\Microsoft\Edge /v ExtensionSettings
-% REG DELETE HKLM\Software\Policies\Microsoft\Edge\3rdparty\extensions\n
-  ifnmbbelnhfhgeiampkfghakhmgggcf\policy
-```
+ 1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
+
+    * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
+
+ 2. オプション欄の「表示」ボタンをクリックします。
+
+ 3. BrowserSelectorのアドオンIDを一覧から削除します。
 
 Firefoxのアドオンを削除する
 
