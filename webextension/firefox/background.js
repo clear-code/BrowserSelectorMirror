@@ -62,14 +62,14 @@ var Redirector = {
 	 * Since onBeforeRequest() cannot handle Firefox's startup tabs,
 	 * process those tabs manually on startup.
 	 */
-	handleStartup: async function(config) {
+	handleStartup: async function() {
 		var tabs = await browser.tabs.query({});
 		for (var i = 0; i < tabs.length; i++) {
 			var tab = tabs[i];
 			var url = tab.pendingUrl || tab.url;
 			console.log(`handleStartup ${url} (tab=${tab.id})`);
 
-			if (!/https?:/.test(url)){
+			if (!/https?:/.test(url)) {
 				console.log("* Ignore non-HTTP/HTTPS URL");
 				continue;
 			}
@@ -100,7 +100,7 @@ var Redirector = {
 			if (resp.close_tab && Redirector.isNewTab[details.tabId]) {
 				console.log(`* Close tab#${details.tabId}`);
 				delete Redirector.isNewTab[details.tabId];
-				await browser.tabs.remove(details.tabId).catch(() => null);
+				browser.tabs.remove(details.tabId);
 			}
 			return {cancel: true};
 		}
