@@ -1,15 +1,8 @@
 {
   "policies": {
     "Extensions": {
-      "Install": ["https://addons.mozilla.org/firefox/downloads/file/3500393/ie_view_we.xpi"]
-    },
-    "3rdparty": {
-      "Extensions": {
-        "ieview-we@clear-code.com": {
-          "talkEnabled": true,
-          "talkServerName": "com.clear_code.browserselector_talk"
-        }
-      }
+      "Install": ["https://addons.mozilla.org/firefox/downloads/latest/browserselector/latest.xpi"],
+      "Locked": ["browserselector@clear-code.com"]
     }
   }
 }

@@ -2,9 +2,9 @@
 CJKmainfont: Noto Sans CJK JP
 CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
-title: "BrowserSelector利用ガイド v2.2.0"
+title: "BrowserSelector利用ガイド v2.2.1"
 author: "株式会社クリアコード"
-date: "2021-11-24"
+date: "2021-11-26"
 titlepage: true
 logo: logo.png
 logo-width: 250
@@ -34,7 +34,7 @@ BrowserSelectorはWindows上で動作するアプリケーションです（動�
 
 ------------------ -------------------
 Internet Explorer  バージョン 9 以降
-Mozilla Firefox    バージョン 60 以降
+Mozilla Firefox    バージョン 78 以降
 Google Chrome      バージョン 79 以降
 Microsoft Edge     バージョン 79 以降
 ------------------ -------------------
@@ -304,22 +304,14 @@ Firefox向けの連携アドオンを導入する場合は、次の手順でイ�
     {
       "policies": {
         "Extensions": {
-          "Install": ["https://addons.mozilla.org/firefox/downloads/latest/ie-view-we/latest.xpi"],
-          "Locked": ["ieview-we@clear-code.com"]
-        },
-        "3rdparty": {
-          "Extensions": {
-            "ieview-we@clear-code.com": {
-              "talkEnabled": true,
-              "talkServerName": "com.clear_code.browserselector_talk"
-            }
-          }
+          "Install": ["https://addons.mozilla.org/firefox/downloads/latest/browserselector/latest.xpi"],
+          "Locked": ["browserselector@clear-code.com"]
         }
       }
     }
     ```
 
- 3. Firefoxを再起動し、IEView WEが導入されていることを確認します。
+ 3. Firefoxを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
 
 ## Chromeアドオンを管理者インストールする
 
@@ -403,9 +395,9 @@ Edgeのアドオンを削除する
 
 Firefoxのアドオンを削除する
 
-```powershell
-% DEL C:\path\to\distribution\policies.json
-```
+ 1. Firefoxのインストールパス配下の「distribution」フォルダに移動します。
+
+ 2. policies.jsonからExtensions設定を削除します（またはpolicies.jsonを削除します）
 
 # よくある質問
 
