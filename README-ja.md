@@ -19,9 +19,11 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
     IE用のBHO（ブラウザーヘルパーオブジェクト）です。
     URLを開く際に、自動的にMozilla FirefoxやGoogle Chromeに切り替えます。
 
-BrowserSelectorは、FirefoxおよびChrome用ブラウザエクステンションの
-[IEView WE](https://github.com/clear-code/ieview-we)と統合されています。
-アドオンと併用することで、IEとChrome/Firefoxを相互に行き来できます。
+モダンブラウザ向けの連携アドオンも提供しています：
+
+ * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp)
+ * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick)
+ * [Mozilla Firefox](https://addons.mozilla.org/ja/firefox/addon/browserselector/)
 
 ## ビルド方法
 

@@ -19,9 +19,11 @@ This software consists of two modules:
     A BHO (Browser Helper Object) for IE. It will launch Mozilla Firefox
     or Google Chrome to open internet sites.
 
-BrowserSelector is fully integrated with the Firefox/Chrome extension
-[IEView WE](https://github.com/clear-code/ieview-we). With this addon
-combined, you can smoothly switch between IE and Chrome/Firefox.
+We provide integration addons for modern browsers:
+
+ * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp)
+ * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick)
+ * [Mozilla Firefox](https://addons.mozilla.org/ja/firefox/addon/browserselector/)
 
 ## How to Build
 
