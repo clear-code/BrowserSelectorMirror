@@ -129,6 +129,10 @@ var Redirector = {
 			Redirector.newTabIds.add(tab.id);
 		});
 
+		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+			Redirector.newTabIds.delete(tabId);
+		});
+
 		chrome.tabs.onUpdated.addListener((id, info, tab) => {
 			if (info.status === 'complete') {
 				Redirector.newTabIds.delete(tab.id);

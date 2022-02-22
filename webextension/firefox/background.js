@@ -30,6 +30,10 @@ var Redirector = {
 			Redirector.newTabIds.add(tab.id);
 		});
 
+		browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
+			Redirector.newTabIds.delete(tabId);
+		});
+
 		browser.tabs.onUpdated.addListener((id, info, tab) => {
 			if (info.status === 'complete') {
 				if (info.url && !/^(about:(blank|newtab|home))$/.test(info.url)) {
@@ -99,7 +103,6 @@ var Redirector = {
 		if (resp.open) {
 			if (resp.close_tab && Redirector.newTabIds.has(details.tabId)) {
 				console.log(`* Close tab#${details.tabId}`);
-				Redirector.newTabIds.delete(details.tabId);
 				browser.tabs.remove(details.tabId);
 			}
 			return {cancel: true};
