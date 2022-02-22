@@ -62,7 +62,7 @@ function wildmat(text, pat) {
 
 var RecentlyRedirectedUrls = {
 	entriesByTabId: new Map(),
-	timeoutMsec: 100,
+	timeoutMsec: 1000,
 
 	init() {
 		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {

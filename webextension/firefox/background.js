@@ -8,7 +8,7 @@ var SERVER_NAME = 'com.clear_code.browserselector_talk';
 
 var RecentlyRedirectedUrls = {
 	entriesByTabId: new Map(),
-	timeoutMsec: 100,
+	timeoutMsec: 1000,
 
 	init() {
 		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
