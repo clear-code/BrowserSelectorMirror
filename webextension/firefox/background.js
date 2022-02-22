@@ -23,7 +23,7 @@ var RecentlyRedirectedUrls = {
 		urlEntries.set(url, now);
 		this.entriesByTabId.set(tabId, urlEntries);
 
-		this.setTimeout(() => {
+		setTimeout(() => {
 			if (urlEntries.get(url) != now)
 				return;
 			this.delete(url, tabId);
