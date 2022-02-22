@@ -6,10 +6,64 @@
 var BROWSER = 'firefox';
 var SERVER_NAME = 'com.clear_code.browserselector_talk';
 
+var RecentlyRedirectedUrls = {
+	entriesByTabId: new Map(),
+	timeoutMsec: 100,
+
+	init() {
+		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+			this.entriesByTabId.delete(tabId);
+		});
+	},
+
+	add(url, tabId) {
+		const now = Date.now();
+
+		const urlEntries = this.entriesByTabId.get(tabId) || new Map();
+		urlEntries.set(url, now);
+		this.entriesByTabId.set(tabId, urlEntries);
+
+		this.setTimeout(() => {
+			if (urlEntries.get(url) != now)
+				return;
+			this.delete(url, tabId);
+		}, this.timeoutMsec);
+	},
+
+	delete(url, tabId) {
+		const urlEntries = this.entriesByTabId.get(tabId);
+		if (!urlEntries)
+			return;
+
+		urlEntries.delete(url);
+		if (urlEntries.size == 0) {
+			this.entriesByTabId.delete(tabId);
+		}
+	}
+
+	canRedirect(url, tabId) {
+		const urlEntries = this.entriesByTabId.get(tabId);
+		if (!urlEntries)
+			return true;
+
+		const now = Date.now();
+		const lastAdded = urlEntries.get(url);
+		if (lastAdded && now - lastAdded < this.timeoutMsec) {
+			urlEntries.set(url, now);
+			console.log('Recently redirected: ', url, tabId);
+			return false;
+		}
+
+		this.delete(url, tabId);
+		return true;
+	},
+};
+
 var Redirector = {
 
 	init: async function() {
 		Redirector.newTabIds = new Set();
+		RecentlyRedirectedUrls.init();
 		await Redirector.handleStartup();
 		Redirector.listen();
 		console.log('Running as BrowserSelector Talk client');
@@ -49,7 +103,7 @@ var Redirector = {
 	 * >>> "Q firefox https://google.com"
 	 * {"status":"OK", "open":1, "close_tab":1}
 	 */
-	check: async function(url) {
+	check: async function(url, tabId) {
 		var resp;
 		var query = new String('Q ' + BROWSER + ' ' + url);
 		try {
@@ -59,6 +113,9 @@ var Redirector = {
 			return {};
 		}
 		console.log(`* Response was ${JSON.stringify(resp)}`);
+		if (resp.open) {
+			RecentlyRedirectedUrls.add(url, tabId);
+		}
 		return resp;
 	},
 
@@ -78,7 +135,7 @@ var Redirector = {
 				continue;
 			}
 
-			var resp = await Redirector.check(url);
+			var resp = await Redirector.check(url, tab.id);
 			if (resp.open && resp.close_tab) {
 				console.log(`* Close tab#${tab.id}`);
 				browser.tabs.remove(tab.id);
@@ -99,7 +156,13 @@ var Redirector = {
 			return;
 		}
 
-		var resp = await Redirector.check(details.url);
+		if (!RecentlyRedirectedUrls.canRedirect(details.url, details.tabId)) {
+			console.log('Recently redirected: ', url, tabId);
+			RecentlyRedirectedUrls.add(details.url, details.tabId);
+			return {cancel: true};
+		}
+
+		var resp = await Redirector.check(details.url, details.tabId);
 		if (resp.open) {
 			if (resp.close_tab && Redirector.newTabIds.has(details.tabId)) {
 				console.log(`* Close tab#${details.tabId}`);

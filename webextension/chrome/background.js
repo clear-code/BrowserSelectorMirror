@@ -60,6 +60,59 @@ function wildmat(text, pat) {
 	return domatch(text, pat, 0, 0);
 }
 
+var RecentlyRedirectedUrls = {
+	entriesByTabId: new Map(),
+	timeoutMsec: 100,
+
+	init() {
+		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+			this.entriesByTabId.delete(tabId);
+		});
+	},
+
+	add(url, tabId) {
+		const now = Date.now();
+
+		const urlEntries = this.entriesByTabId.get(tabId) || new Map();
+		urlEntries.set(url, now);
+		this.entriesByTabId.set(tabId, urlEntries);
+
+		this.setTimeout(() => {
+			if (urlEntries.get(url) != now)
+				return;
+			this.delete(url, tabId);
+		}, this.timeoutMsec);
+	},
+
+	delete(url, tabId) {
+		const urlEntries = this.entriesByTabId.get(tabId);
+		if (!urlEntries)
+			return;
+
+		urlEntries.delete(url);
+		if (urlEntries.size == 0) {
+			this.entriesByTabId.delete(tabId);
+		}
+	}
+
+	canRedirect(url, tabId) {
+		const urlEntries = this.entriesByTabId.get(tabId);
+		if (!urlEntries)
+			return true;
+
+		const now = Date.now();
+		const lastAdded = urlEntries.get(url);
+		if (lastAdded && now - lastAdded < this.timeoutMsec) {
+			urlEntries.set(url, now);
+			console.log('Recently redirected: ', url, tabId);
+			return false;
+		}
+
+		this.delete(url, tabId);
+		return true;
+	},
+};
+
 /*
  * Observe WebRequests with config fetched from BrowserSelector.
  *
@@ -81,6 +134,7 @@ var Redirector = {
 	init: function() {
 		Redirector.cached = null;
 		Redirector.newTabIds = new Set();
+		RecentlyRedirectedUrls.init();
 		Redirector.configure();
 		Redirector.listen();
 		console.log('Running as BrowserSelector Talk client');
@@ -167,8 +221,18 @@ var Redirector = {
 				return;
 			}
 
+			if (!RecentlyRedirectedUrls.canRedirect(url, tabId)) {
+				console.log('Recently redirected: ', url, tabId);
+				RecentlyRedirectedUrls.add(url, tabId);
+				if (closeTab) {
+					chrome.tabs.remove(tabId);
+				}
+				return;
+			}
+
 			var query = new String('Q ' + BROWSER + ' ' + url);
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
+				RecentlyRedirectedUrls.add(url, tabId);
 				if (closeTab) {
 					chrome.tabs.remove(tabId);
 				}
