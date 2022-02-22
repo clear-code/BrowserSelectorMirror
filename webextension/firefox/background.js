@@ -39,7 +39,7 @@ var RecentlyRedirectedUrls = {
 		if (urlEntries.size == 0) {
 			this.entriesByTabId.delete(tabId);
 		}
-	}
+	},
 
 	canRedirect(url, tabId) {
 		const urlEntries = this.entriesByTabId.get(tabId);
