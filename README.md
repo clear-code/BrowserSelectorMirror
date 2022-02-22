@@ -27,14 +27,16 @@ We provide integration addons for modern browsers:
 
 ## How to Build
 
-### Prerequisites
+### BrowserSelector.exe and BrowserSelectorBHO.dll
+
+#### Prerequisites
 
   * Microsoft Visual Studio 2019
     * C++ MFC for v142 build tools (x86 & x64)
   * Visual Studio extension "Microsoft Visual Studio Installer Projects"
     * https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects
 
-### Build Steps
+#### Build Steps
 
   * Open BrowserSelector.sln by Microsoft Visual Studio 2019
   * Select "Release" (or "Debug") from the toolbar
@@ -45,6 +47,26 @@ or you can do it in command line:
   * Open "Developer Command Prompt for VS 2019" from the start menu
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
+
+### Addons for browsers
+
+Do `make` at directories for each browser under the `webextensions`, then you'll get built packages.
+For example:
+
+```console
+$ cd webextensions/edge
+$ make
+```
+
+For Chrome and Edge, you need to run `make dev` to create development builds with special IDs for the Native Messaging Host.
+For example:
+
+```console
+$ cd webextensions/edge
+$ make dev
+```
+
+Then you'll get development build under the `dev/` directory, so load it as an unpacked extension.
 
 ## How to Install
 

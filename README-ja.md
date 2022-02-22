@@ -27,14 +27,16 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
 
 ## ビルド方法
 
-### 必要なもの
+### BrowserSelector.exe および BrowserSelectorBHO.dll
+
+#### 必要なもの
 
   * Microsoft Visual Studio 2019
     * v142ビルドツール用C++ MFC (x86およびx64)
   * Visual Studio拡張機能「Microsoft Visual Studio Installer Projects」
     * https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects
 
-### ビルド手順
+#### ビルド手順
 
   * Microsoft Visual Studio 2010でBrowserSelector.slnを開きます
   * ツールバーの「ソリューション構成」で「リリース」を選択します
@@ -45,6 +47,25 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
   * スタートメニューから「Developer Command Prompt for VS 2019」を開く
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
+
+### ブラウザー用アドオン
+
+`webextensions` 配下の各ディレクトリーで `make` を実行すると、パッケージが作成されます。
+
+```console
+$ cd webextensions/edge
+$ make
+```
+
+ChromeおよびEdgeにおいては、Native Messaging Hostとの通信の都合上、開発段階においては `make dev` で開発用のIDを伴ったビルドを作成する必要があります。
+
+```console
+$ cd webextensions/edge
+$ make dev
+```
+
+このようにして `dev/` 配下に生成されたデバッグビルドを、パッケージ化されていない拡張機能として読み込んでください。
+
 
 ## インストール方法
 
