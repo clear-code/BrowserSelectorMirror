@@ -80,7 +80,7 @@ var Redirector = {
 
 	init: function() {
 		Redirector.cached = null;
-		Redirector.isNewTab = {};
+		Redirector.newTabIds = new Set();
 		Redirector.configure();
 		Redirector.listen();
 		console.log('Running as BrowserSelector Talk client');
@@ -126,12 +126,12 @@ var Redirector = {
 
 		/* Tab book-keeping for intelligent tab handlings */
 		chrome.tabs.onCreated.addListener(tab => {
-			Redirector.isNewTab[tab.id] = 1;
+			Redirector.newTabIds.add(tab.id);
 		});
 
 		chrome.tabs.onUpdated.addListener((id, info, tab) => {
 			if (info.status === 'complete') {
-				delete Redirector.isNewTab[tab.id];
+				Redirector.newTabIds.delete(tab.id);
 			}
 		});
 
@@ -300,7 +300,7 @@ var Redirector = {
 			return;
 		}
 
-		if (config.CloseEmptyTab && Redirector.isNewTab[details.tabId]) {
+		if (config.CloseEmptyTab && Redirector.newTabIds.has(details.tabId)) {
 			closeTab = true;
 		}
 

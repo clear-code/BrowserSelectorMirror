@@ -9,7 +9,7 @@ var SERVER_NAME = 'com.clear_code.browserselector_talk';
 var Redirector = {
 
 	init: async function() {
-		Redirector.isNewTab = {};
+		Redirector.newTabIds = new Set();
 		await Redirector.handleStartup();
 		Redirector.listen();
 		console.log('Running as BrowserSelector Talk client');
@@ -27,13 +27,13 @@ var Redirector = {
 
 		/* Tab book-keeping for intelligent tab handlings */
 		browser.tabs.onCreated.addListener(tab => {
-			Redirector.isNewTab[tab.id] = 1;
+			Redirector.newTabIds.add(tab.id);
 		});
 
 		browser.tabs.onUpdated.addListener((id, info, tab) => {
 			if (info.status === 'complete') {
 				if (info.url && !/^(about:(blank|newtab|home))$/.test(info.url)) {
-					delete Redirector.isNewTab[tab.id];
+					Redirector.newTabIds.delete(tab.id);
 				}
 			}
 		});
@@ -97,9 +97,9 @@ var Redirector = {
 
 		var resp = await Redirector.check(details.url);
 		if (resp.open) {
-			if (resp.close_tab && Redirector.isNewTab[details.tabId]) {
+			if (resp.close_tab && Redirector.newTabIds.has(details.tabId)) {
 				console.log(`* Close tab#${details.tabId}`);
-				delete Redirector.isNewTab[details.tabId];
+				Redirector.newTabIds.delete(details.tabId);
 				browser.tabs.remove(details.tabId);
 			}
 			return {cancel: true};
