@@ -73,6 +73,8 @@ var RecentlyRedirectedUrls = {
 	add(url, tabId) {
 		const now = Date.now();
 
+		// This nested history is designed for better performance to delete
+		// obsolete entries when tabs are closed.
 		const urlEntries = this.entriesByTabId.get(tabId) || new Map();
 		urlEntries.set(url, now);
 		this.entriesByTabId.set(tabId, urlEntries);

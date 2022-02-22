@@ -19,6 +19,8 @@ var RecentlyRedirectedUrls = {
 	add(url, tabId) {
 		const now = Date.now();
 
+		// This nested history is designed for better performance to delete
+		// obsolete entries when tabs are closed.
 		const urlEntries = this.entriesByTabId.get(tabId) || new Map();
 		urlEntries.set(url, now);
 		this.entriesByTabId.set(tabId, urlEntries);
@@ -156,6 +158,14 @@ var Redirector = {
 			return;
 		}
 
+		// Currently the BrowserSelector Native Messaging Host only supports single
+		// request to do two things "browser detection" and "browser kicking" together,
+		// thus it is impossible that detect browser by the NMH, check it is recently
+		// redirected or not, and don't kick the browser.
+		// However, just checking the combination URL and tabId is recently redirected
+		// looks safe here. We worry about wrong blocking, but this detection never fail
+		// because RecentlyRedirectedUrls.canRedirect() returns false only when the URL
+		// is already redirected recently.
 		if (!RecentlyRedirectedUrls.canRedirect(details.url, details.tabId)) {
 			console.log('Recently redirected: ', url, tabId);
 			RecentlyRedirectedUrls.add(details.url, details.tabId);
