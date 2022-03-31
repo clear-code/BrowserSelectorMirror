@@ -17,6 +17,7 @@ var RecentlyRedirectedUrls = {
 	},
 
 	add(url, tabId) {
+		console.log(`RecentlyRedirectedUrls.add: ${url} (tab=${tabId})`);
 		const now = Date.now();
 
 		// This nested history is designed for better performance to delete
@@ -33,6 +34,7 @@ var RecentlyRedirectedUrls = {
 	},
 
 	delete(url, tabId) {
+		console.log(`RecentlyRedirectedUrls.delete: ${url} (tab=${tabId})`);
 		const urlEntries = this.entriesByTabId.get(tabId);
 		if (!urlEntries)
 			return;
@@ -44,7 +46,7 @@ var RecentlyRedirectedUrls = {
 	},
 
 	canRedirect(url, tabId) {
-		console.log(`canRedirect: ${url} (tab=${tabId})`);
+		console.log(`RecentlyRedirectedUrls.canRedirect: ${url} (tab=${tabId})`);
 		try {
 			const urlEntries = this.entriesByTabId.get(tabId);
 			if (!urlEntries) {
