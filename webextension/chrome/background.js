@@ -98,19 +98,30 @@ var RecentlyRedirectedUrls = {
 	},
 
 	canRedirect(url, tabId) {
-		const urlEntries = this.entriesByTabId.get(tabId);
-		if (!urlEntries)
-			return true;
+		console.log(`canRedirect: ${url} (tab=${tabId})`);
+		try {
+			const urlEntries = this.entriesByTabId.get(tabId);
+			if (!urlEntries) {
+				console.log(' => no URL entry, can redirect');
+				return true;
+			}
 
-		const now = Date.now();
-		const lastAdded = urlEntries.get(url);
-		if (lastAdded && now - lastAdded < this.timeoutMsec) {
-			urlEntries.set(url, now);
-			console.log('Recently redirected: ', url, tabId);
-			return false;
+			const now = Date.now();
+			const lastAdded = urlEntries.get(url);
+			console.log(` => lastAdded = ${lastAdded}`);
+			if (lastAdded)
+				console.log(` => ${now - lastAdded}msec from lastAdded`);
+			if (lastAdded && now - lastAdded < this.timeoutMsec) {
+				console.log(` => smaller than ${this.timeoutMsec}, cannot redirect`);
+				return false;
+			}
+
+			this.delete(url, tabId);
+			console.log(' => deleted URL entry, can redirect');
 		}
-
-		this.delete(url, tabId);
+		catch(error) {
+			console.log(` => error: ${error}, can redirect`);
+		}
 		return true;
 	},
 };
