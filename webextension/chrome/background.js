@@ -145,6 +145,8 @@ var RecentlyRedirectedUrls = {
  * }
  */
 var Redirector = {
+	newWindows: new Map(),
+	clearNewWindowStateTimeout: 1000,
 
 	init: function() {
 		Redirector.cached = null;
@@ -214,6 +216,7 @@ var Redirector = {
 		 */
 		if (BROWSER === "edge") {
 			chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated);
+			chrome.windows.onCreated.addListener(Redirector.onWindowCreated);
 		}
 	},
 
@@ -346,6 +349,13 @@ var Redirector = {
 
 		console.log(`onTabUpdated ${url} (tab=${tabId})`);
 
+		var newWindowInitialTabIds = Redirector.newWindows.get(tab.windowId);
+		if (newWindowInitialTabIds &&
+			newWindowInitialTabIds.has(tabId)) {
+			console.log(` => initial tab of new window: skip redirection`);
+			return;
+		}
+
 		if (Redirector.isRedirectURL(config, url)) {
 			console.log(`* Redirect to another browser`);
 			Redirector.redirect(url, tabId, false);
@@ -357,6 +367,13 @@ var Redirector = {
 				chrome.tabs.goBack(tabId);
 			});
 		}
+	},
+
+	onWindowCreated: function(win) {
+		Redirector.newWindows.set(win.id, new Set(win.tabs.map(tab => tab.id)));
+		setTimeout(() => {
+			Redirector.newWindows.delete(win.id);
+		}, Redirector.clearNewWindowStateTimeout);
 	},
 
 	/* Callback for webRequest.onBeforeRequest */
