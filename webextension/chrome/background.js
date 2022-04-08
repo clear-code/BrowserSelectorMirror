@@ -145,7 +145,7 @@ var RecentlyRedirectedUrls = {
  * }
  */
 var Redirector = {
-	newWindows: new Map(),
+	newWindows: new Set(),
 	clearNewWindowStateTimeout: 1000,
 
 	init: function() {
@@ -349,9 +349,7 @@ var Redirector = {
 
 		console.log(`onTabUpdated ${url} (tab=${tabId})`);
 
-		var newWindowInitialTabIds = Redirector.newWindows.get(tab.windowId);
-		if (newWindowInitialTabIds &&
-			newWindowInitialTabIds.has(tabId)) {
+		if (Redirector.newWindows.has(tab.windowId)) {
 			console.log(` => initial tab of new window: skip redirection`);
 			return;
 		}
@@ -370,7 +368,7 @@ var Redirector = {
 	},
 
 	onWindowCreated: function(win) {
-		Redirector.newWindows.set(win.id, new Set(win.tabs.map(tab => tab.id)));
+		Redirector.newWindows.add(win.id);
 		setTimeout(() => {
 			Redirector.newWindows.delete(win.id);
 		}, Redirector.clearNewWindowStateTimeout);
