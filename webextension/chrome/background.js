@@ -145,7 +145,8 @@ var RecentlyRedirectedUrls = {
  * }
  */
 var Redirector = {
-	newWindows: new Set(),
+	newWindows: new Map(),
+	newWindowTabs: new Map();
 	clearNewWindowStateTimeout: 1000,
 
 	init: function() {
@@ -228,8 +229,8 @@ var Redirector = {
 	 *
 	 * * Request Example: "Q edge https://example.com/".
 	 */
-	redirect: function(url, tabId, closeTab) {
-		chrome.tabs.get(tabId, (tab) => {
+	redirect: function(url, tabId, closeTab, isNewWindow) {
+		chrome.tabs.get(tabId, tab => {
 			if (chrome.runtime.lastError) {
 				console.log(`* Ignore prefetch request`);
 				return;
@@ -243,7 +244,7 @@ var Redirector = {
 				console.log('Recently redirected: ', url, tabId);
 				RecentlyRedirectedUrls.add(url, tabId);
 				if (closeTab) {
-					chrome.tabs.remove(tabId);
+					Redirector.closeTab(tab, isNewWindow);
 				}
 				return;
 			}
@@ -252,9 +253,19 @@ var Redirector = {
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 				RecentlyRedirectedUrls.add(url, tabId);
 				if (closeTab) {
-					chrome.tabs.remove(tabId);
+					Redirector.closeTab(tab, isNewWindow);
 				}
 			});
+		});
+	},
+	closeTab: function(tab, isNewWindow) {
+		console.log(`Close tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow})`);
+		chrome.tabs.query({ windowId: tab.windowId }, tabs => {
+			if (isNewWindow && tabs.length == 1 && tabs[0].id == tab.id) {
+				console.log(`Close window ${tab.windowId} due to the redirected last tab`);
+				chrome.windows.remove(tab.windowId);
+			}
+			chrome.tabs.remove(tab.id);
 		});
 	},
 
@@ -347,10 +358,14 @@ var Redirector = {
 			return;
 		}
 
-		console.log(`onTabUpdated ${url} (tab=${tabId})`);
+		console.log(`onTabUpdated ${url} (tab=${tabId}, windowId=${tab.windowId})`);
 
 		if (Redirector.newWindows.has(tab.windowId)) {
-			console.log(` => initial tab of new window: skip redirection`);
+			Redirector.newWindowTabs.set(tab.id, tab.windowId);
+			var tabIds = Redirector.newWindows.get(tab.windowId);
+			tabIds.add(tab.id);
+			Redirector.newWindows.set(tab.windowId, tabIds);
+			console.log(` => initial tab of a new window: skip redirection`);
 			return;
 		}
 
@@ -368,8 +383,14 @@ var Redirector = {
 	},
 
 	onWindowCreated: function(win) {
-		Redirector.newWindows.add(win.id);
+		console.log(`Detected new browser window ${win.id}`);
+		Redirector.newWindows.set(win.id, new Set());
 		setTimeout(() => {
+			console.log(`Forgetting new browser window ${win.id}`);
+			var tabIds = Redirector.newWindows.get(win.id)
+			for (const tabId of tabIds) {
+				Redirector.newWindowTabs.delete(tabId);
+			}
 			Redirector.newWindows.delete(win.id);
 		}, Redirector.clearNewWindowStateTimeout);
 	},
@@ -379,8 +400,10 @@ var Redirector = {
 		var config = Redirector.cached;
 		var closeTab = false;
 		var isMainFrame = (details.type == 'main_frame');
+		var isNewTab = Redirector.newTabIds.has(details.tabId);
+		var isNewWindow = Redirector.newWindowTabs.has(details.tabId);
 
-		console.log(`onBeforeRequest ${details.url} (tab=${details.tabId})`);
+		console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, ,isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
 
 		if (!config) {
 			console.log('* Config cache is empty. Fetching...');
@@ -398,16 +421,17 @@ var Redirector = {
 			return;
 		}
 
-		if (config.CloseEmptyTab && Redirector.newTabIds.has(details.tabId)) {
+		if (config.CloseEmptyTab && (isNewTab || isNewWindow)) {
 			closeTab = true;
 		}
 
 		if (Redirector.isRedirectURL(config, details.url)) {
 			console.log(`* Redirect to another browser`);
-			Redirector.redirect(details.url, details.tabId, closeTab);
+			Redirector.redirect(details.url, details.tabId, closeTab, isNewWindow);
 			return CANCEL_REQUEST;
 		}
 	}
 };
 
 Redirector.init();
+
