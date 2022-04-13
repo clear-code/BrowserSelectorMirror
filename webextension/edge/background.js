@@ -217,8 +217,9 @@ var Redirector = {
 		 */
 		if (BROWSER === "edge") {
 			chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated);
-			chrome.windows.onCreated.addListener(Redirector.onWindowCreated);
 		}
+
+		chrome.windows.onCreated.addListener(Redirector.onWindowCreated);
 	},
 
 	/*
