@@ -146,7 +146,7 @@ var RecentlyRedirectedUrls = {
  */
 var Redirector = {
 	newWindows: new Map(),
-	newWindowTabs: new Map();
+	newWindowTabs: new Map(),
 	clearNewWindowStateTimeout: 1000,
 
 	init: function() {
