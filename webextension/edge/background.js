@@ -230,7 +230,7 @@ var Redirector = {
 	 *
 	 * * Request Example: "Q edge https://example.com/".
 	 */
-	redirect: function(url, tabId, closeTab, isNewWindow) {
+	redirect: function({ url, tabId, isNewTab, closeEmptyTab }) {
 		chrome.tabs.get(tabId, tab => {
 			if (chrome.runtime.lastError) {
 				console.log(`* Ignore prefetch request`);
@@ -244,8 +244,8 @@ var Redirector = {
 			if (!RecentlyRedirectedUrls.canRedirect(url, tabId)) {
 				console.log('Recently redirected: ', url, tabId);
 				RecentlyRedirectedUrls.add(url, tabId);
-				if (closeTab) {
-					Redirector.closeTab(tab, isNewWindow);
+				if (closeEmptyTab) {
+					Redirector.tryCloseEmptyTab({ tab, isNewTab });
 				}
 				return;
 			}
@@ -253,15 +253,27 @@ var Redirector = {
 			var query = new String('Q ' + BROWSER + ' ' + url);
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 				RecentlyRedirectedUrls.add(url, tabId);
-				if (closeTab) {
-					Redirector.closeTab(tab, isNewWindow);
+				if (closeEmptyTab) {
+					Redirector.tryCloseEmptyTab({ tab, isNewTab });
 				}
 			});
 		});
 	},
-	closeTab: function(tab, isNewWindow) {
-		console.log(`Close tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow})`);
+	tryCloseEmptyTab: function({ tab, isNewTab, closeEmptyTab }) {
+		if (Redirector.newWindows.has(tab.windowId)) {
+			const tabIds = Redirector.newWindows.get(tab.windowId);
+			Redirector.newWindowTabs.set(tab.id, tab.windowId);
+			tabIds.add(tab.id);
+			Redirector.newWindows.set(tab.windowId, tabIds);
+		}
 		chrome.tabs.query({ windowId: tab.windowId }, tabs => {
+			const isNewWindow = Redirector.newWindows.has(tab.windowId);
+			const closeTab = isNewTab !== false || isNewWindow;
+			console.log(`Trying to close empty tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow}, closeTab=${closeTab})`);
+			if (!close) {
+				console.log(` => no close tab`);
+				return;
+			}
 			if (isNewWindow && tabs.length == 1 && tabs[0].id == tab.id) {
 				console.log(`Close window ${tab.windowId} due to the redirected last tab`);
 				chrome.windows.remove(tab.windowId);
@@ -342,7 +354,11 @@ var Redirector = {
 				console.log(`handleStartup ${url} (tab=${tab.id})`);
 				if (Redirector.isRedirectURL(config, url)) {
 					console.log(`* Redirect to another browser`);
-					Redirector.redirect(url, tab.id, config.CloseEmptyTab);
+					Redirector.redirect({
+						url,
+						tabId: tab.id,
+						closeEmptyTab: config.CloseEmptyTab,
+					});
 				}
 			});
 		});
@@ -372,7 +388,11 @@ var Redirector = {
 
 		if (Redirector.isRedirectURL(config, url)) {
 			console.log(`* Redirect to another browser`);
-			Redirector.redirect(url, tabId, false);
+			Redirector.redirect({
+				url,
+				tabId,
+				closeEmptyTab: false,
+			});
 
 			/* Call executeScript() to stop the page loading immediately.
 			 * Then let the tab go back to the previous page.
@@ -422,13 +442,14 @@ var Redirector = {
 			return;
 		}
 
-		if (config.CloseEmptyTab && (isNewTab || isNewWindow)) {
-			closeTab = true;
-		}
-
 		if (Redirector.isRedirectURL(config, details.url)) {
 			console.log(`* Redirect to another browser`);
-			Redirector.redirect(details.url, details.tabId, closeTab, isNewWindow);
+			Redirector.redirect({
+				url: details.url,
+				tabId: details.tabId,
+				isNewTab,
+				closeEmptyTab: config.CloseEmptyTab,
+			});
 			return CANCEL_REQUEST;
 		}
 	}
