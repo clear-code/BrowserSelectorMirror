@@ -201,6 +201,9 @@ var Redirector = {
 			Redirector.newTabIds.add(tab.id);
 
 			const tabIds = Redirector.newWindows.get(tab.windowId);
+			if (!tabIds)
+				return;
+
 			tabIds.add(tab.id);
 			Redirector.newWindows.set(tab.windowId, tabIds);
 			if (tabIds.size > 1)
