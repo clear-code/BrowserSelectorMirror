@@ -147,7 +147,7 @@ var RecentlyRedirectedUrls = {
 var Redirector = {
 	newWindows: new Map(),
 	newWindowTabs: new Map(),
-	clearNewWindowStateTimeout: 1000,
+	clearNewWindowStateTimeout: 10000,
 
 	init: function() {
 		Redirector.cached = null;
@@ -199,25 +199,21 @@ var Redirector = {
 		/* Tab book-keeping for intelligent tab handlings */
 		chrome.tabs.onCreated.addListener(tab => {
 			Redirector.newTabIds.add(tab.id);
+
+			const tabIds = Redirector.newWindows.get(tab.windowId);
+			tabIds.add(tab.id);
+			Redirector.newWindows.set(tab.windowId, tabIds);
+			if (tabIds.size > 1)
+				Redirector.forgetNewWindow(tab.windowId, 'tabs.onCreated');
 		});
 
 		chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
 			Redirector.newTabIds.delete(tabId);
+			Redirector.forgetNewWindow(removeInfo.windowId, 'tabs.onRemoved');
 		});
 
-		chrome.tabs.onUpdated.addListener((id, info, tab) => {
-			if (info.status === 'complete') {
-				Redirector.newTabIds.delete(tab.id);
-			}
-		});
+		chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated);
 
-		/*
-		 * Edge won't call webRequest.onBeforeRequest() when navigating
-		 * from Edge-IE to Edge. Add a workaround via tabs.onUpdated.
-		 */
-		if (BROWSER === "edge") {
-			chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated);
-		}
 
 		chrome.windows.onCreated.addListener(Redirector.onWindowCreated);
 	},
@@ -365,6 +361,18 @@ var Redirector = {
 	},
 
 	onTabUpdated: function(tabId, info, tab) {
+		if (info.status === 'complete') {
+			Redirector.newTabIds.delete(tab.id);
+		}
+
+		if (BROWSER !== "edge") {
+			return;
+		}
+		/*
+		 * Edge won't call webRequest.onBeforeRequest() when navigating
+		 * from Edge-IE to Edge, so we need to handle requests on this timing.
+		 */
+
 		var config = Redirector.cached;
 		var url = tab.pendingUrl || tab.url;
 
@@ -379,7 +387,7 @@ var Redirector = {
 
 		if (Redirector.newWindows.has(tab.windowId)) {
 			Redirector.newWindowTabs.set(tab.id, tab.windowId);
-			var tabIds = Redirector.newWindows.get(tab.windowId);
+			const tabIds = Redirector.newWindows.get(tab.windowId);
 			tabIds.add(tab.id);
 			Redirector.newWindows.set(tab.windowId, tabIds);
 			console.log(` => initial tab of a new window: skip redirection`);
@@ -407,13 +415,19 @@ var Redirector = {
 		console.log(`Detected new browser window ${win.id}`);
 		Redirector.newWindows.set(win.id, new Set());
 		setTimeout(() => {
-			console.log(`Forgetting new browser window ${win.id}`);
-			var tabIds = Redirector.newWindows.get(win.id)
+			Redirector.forgetNewWindow(win.id, 'timeout');
+		}, Redirector.clearNewWindowStateTimeout);
+	},
+
+	forgetNewWindow: function(windowId, trigger) {
+		console.log(`Forgetting new browser window ${windowId} (trigger=${trigger})`);
+		const tabIds = Redirector.newWindows.get(windowId);
+		if (tabIds) {
 			for (const tabId of tabIds) {
 				Redirector.newWindowTabs.delete(tabId);
 			}
-			Redirector.newWindows.delete(win.id);
-		}, Redirector.clearNewWindowStateTimeout);
+		}
+		Redirector.newWindows.delete(windowId);
 	},
 
 	/* Callback for webRequest.onBeforeRequest */
