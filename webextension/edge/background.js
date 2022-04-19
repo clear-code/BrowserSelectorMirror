@@ -402,7 +402,7 @@ var Redirector = {
 			Redirector.redirect({
 				url,
 				tabId,
-				closeEmptyTab: false,
+				closeEmptyTab: Redirector.newWindows.has(tab.windowId),
 			});
 
 			/* Call executeScript() to stop the page loading immediately.
