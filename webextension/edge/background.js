@@ -147,7 +147,6 @@ var RecentlyRedirectedUrls = {
 var Redirector = {
 	newWindows: new Map(),
 	newWindowTabs: new Map(),
-	clearNewWindowStateTimeout: 10000,
 
 	init: function() {
 		Redirector.cached = null;
@@ -417,9 +416,6 @@ var Redirector = {
 	onWindowCreated: function(win) {
 		console.log(`Detected new browser window ${win.id}`);
 		Redirector.newWindows.set(win.id, new Set());
-		setTimeout(() => {
-			Redirector.forgetNewWindow(win.id, 'timeout');
-		}, Redirector.clearNewWindowStateTimeout);
 	},
 
 	forgetNewWindow: function(windowId, trigger) {
@@ -440,6 +436,7 @@ var Redirector = {
 		var isMainFrame = (details.type == 'main_frame');
 		var isNewTab = Redirector.newTabIds.has(details.tabId);
 		var isNewWindow = Redirector.newWindowTabs.has(details.tabId);
+		var windowId = Redirector.newWindowTabs.get(details.tabId);
 
 		console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, ,isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
 
@@ -469,6 +466,8 @@ var Redirector = {
 			});
 			return CANCEL_REQUEST;
 		}
+
+		Redirector.forgetNewWindow(windowId, 'onBeforeRequest (not redirected)');
 	}
 };
 
