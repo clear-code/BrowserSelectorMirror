@@ -250,8 +250,8 @@ var Redirector = {
 			}
 
 			var query = new String('Q ' + BROWSER + ' ' + url);
+			RecentlyRedirectedUrls.add(url, tabId);
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
-				RecentlyRedirectedUrls.add(url, tabId);
 				if (closeEmptyTab) {
 					Redirector.tryCloseEmptyTab({ tab, isNewTab });
 				}
