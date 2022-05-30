@@ -945,6 +945,13 @@ public:
 			return matchSimpleWildCard(url, pattern);
 	}
 
+	// Non-HTTP URLs won't be notified on some browsers including Chrome.
+	// For consistent behavior we should check that the requested URL is http or https.
+	bool IsAcceptableURL(const std::wstring &url) const
+	{
+		return matchRegex(url, L"^https?");
+	}
+
 	std::wstring GetBrowserNameToOpenURL(const std::wstring &url) const
 	{
 		if (url.empty())

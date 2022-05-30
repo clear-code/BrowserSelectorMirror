@@ -140,6 +140,9 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 			return;
 	}
 
+	if (!m_app.IsAcceptableURL(url))
+		return;
+
 	wstring browserName = GetBrowserNameToOpenURL(URL);
 	if (browserName == L"ie")
 		return;
