@@ -140,6 +140,9 @@ URLs:
   * `*`: matches any string
   * `?`: matches any single character
 
+Only URLs starting with `http:` or `https:` are supported. URLs with any other
+scheme will be processed by the current browser.
+
 For browser names, following values are supported:
 
   * `ie`
