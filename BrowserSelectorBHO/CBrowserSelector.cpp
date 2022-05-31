@@ -140,8 +140,10 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 			return;
 	}
 
-	if (!m_app.IsAcceptableURL(url))
+	if (!m_app.IsAcceptableURL(url)) {
+		DebugLog(L"Ignore inacceptable URL: %ls", url);
 		return;
+	}
 
 	wstring browserName = GetBrowserNameToOpenURL(URL);
 	if (browserName == L"ie")
