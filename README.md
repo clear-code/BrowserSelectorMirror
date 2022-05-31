@@ -154,10 +154,17 @@ be used as described later.
 
 #### Regular Expression
 
-You can use also regular expression for hostname or URL patterns when you set
+You can use regular expression forURL patterns instead of wildcards, when you set
 the following registry value under the top of `BrowserSelector` key:
 
   * `"UseRegex"` = `dword:00000001`
+
+On this case all patterns must be valid regular expressions, so you cannot mix
+regular expression patterns and wildcard patterns.
+
+Regular expression patterns must match to the whole URL, not partially. Prealse
+remind that you must put `.*` at the end of the pattern if the pattern needs to
+be matched to arbitrary paths under a specific host.
 
 Please see the following page for the grammar of the regular expression:
 
