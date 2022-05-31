@@ -949,7 +949,7 @@ public:
 	// For consistent behavior we should check that the requested URL is http or https.
 	bool IsAcceptableURL(const std::wstring &url) const
 	{
-		return matchRegex(url, L"^https?");
+		return matchSimpleWildCard(url, L"http://*") || matchSimpleWildCard(url, L"https://*");
 	}
 
 	std::wstring GetBrowserNameToOpenURL(const std::wstring &url) const
