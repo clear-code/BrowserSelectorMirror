@@ -461,3 +461,11 @@ BrowserSelectorがどのFirefoxを起動するかが問題となります。
 FirefoxCommand=%ProgramFiles%\Mozilla Firefox\firefox.exe
 ...
 ```
+
+## `mailto:`や`microsoft-edge:`などで始まるURLについて判別が機能しない
+
+BrowserSelectorは、ブラウザー上で読み込まれたURLのうち、`http:`または`https:`で始まる物のみを処理対象とします。
+それ以外のスキーマのURLについては、パターンを定義したとしても、判別は行われません。
+こちらは、ブラウザーの仕様による制限事項となります。
+
+
