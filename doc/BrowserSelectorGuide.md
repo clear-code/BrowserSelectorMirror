@@ -59,8 +59,8 @@ BrowserSelectorEdge.json    Edge向け定義ファイル
 この章では、BrowserSelectorをインストールして、ブラウザの切り替えをセットアップする手順を説明します。
 この手順は、大きく4つのステップに分かれます。
 
- 1. BrowseSelectorをインストールする。
- 2. BrowseSelectorの設定ファイルを配置する。
+ 1. BrowserSelectorをインストールする。
+ 2. BrowserSelectorの設定ファイルを配置する。
  3. Edge/Chrome/Firefoxにアドオンをインストールする。
  4. ブラウザを起動し、動作を確認する。
 
@@ -68,9 +68,9 @@ BrowserSelectorEdge.json    Edge向け定義ファイル
 導入の流れはFirefoxやChromeを利用する場合でも同じです
 （具体的な手順は「その他のセットアップ」の章を参照ください）。
 
-##  BrowseSelectorをインストールする
+##  BrowserSelectorをインストールする
 
-BrowseSelectorについてはMSI形式のインストーラを配布しています。
+BrowserSelectorについてはMSI形式のインストーラを配布しています。
 
  1. 次のページから最新版のインストーラをダウンロードします。
 
@@ -81,11 +81,11 @@ BrowseSelectorについてはMSI形式のインストーラを配布していま
  3. 「BrowserSelectorは正常にインストールされました」というメッセージが表示されたら、
     「閉じる」をクリックして終了します。
 
-## BrowseSelectorの設定ファイルを配置する
+## BrowserSelectorの設定ファイルを配置する
 
-BrowseSelectorはINI形式の設定ファイルによって管理することができます。
+BrowserSelectorはINI形式の設定ファイルによって管理することができます。
 
- 1. 次の内容を「BrowseSelector.ini」という名前で保存します。
+ 1. 次の内容を「BrowserSelector.ini」という名前で保存します。
 
     ```ini
     [Common]
@@ -96,7 +96,7 @@ BrowseSelectorはINI形式の設定ファイルによって管理することが
     0001=http*://www.clear-code.com/*|edge
     ```
 
- 2. 保存したファイルを、BrowseSelectorのインストールパスに配置します。
+ 2. 保存したファイルを、BrowserSelectorのインストールパスに配置します。
 
     ```powershell
     % move BrowserSelector.ini C:\Program Files (x86)\ClearCode\BrowserSelector
