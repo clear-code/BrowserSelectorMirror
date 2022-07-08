@@ -141,7 +141,9 @@ URLs:
   * `?`: matches any single character
 
 Only URLs starting with `http:` or `https:` are supported. URLs with any other
-scheme will be processed by the current browser.
+scheme will be processed by the current browser[^only-http-and-https].
+
+[^only-http-and-https]: This is because [there is an limitation that an explicit operation by the user is always required to allow accessing to file URLs on Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=173640#c68).
 
 For browser names, following values are supported:
 

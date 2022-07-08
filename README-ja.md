@@ -145,7 +145,9 @@ BHOのみを使用してBrowserSelector.exeが必要無い場合、この手順�
   * `?`: 任意の一文字にマッチします
 
 URLは`http:`または`https:`で始まる物のみ対応しています。それ以外のスキーマのURLは、
-常に現在のブラウザで処理されます。
+常に現在のブラウザで処理されます[^only-http-and-https]。
+
+[^only-http-and-https]: これは、[Chromeにおいてfile: URLへのアクセスにはユーザーの明示的な許可が常に必要である](https://bugs.chromium.org/p/chromium/issues/detail?id=173640#c68)という制限事項があるためです。
 
 ブラウザ名としては、以下の値がサポートされています:
 
