@@ -160,7 +160,7 @@ const Redirector = {
 	},
 
 	configure: function() {
-		const query = new String('C ' + BROWSER);
+		const query = `C ${BROWSER}`;
 
 		chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 			if (chrome.runtime.lastError) {
@@ -250,7 +250,7 @@ const Redirector = {
 				return;
 			}
 
-			const query = new String('Q ' + BROWSER + ' ' + url);
+			const query = `Q ${BROWSER} ${url}`;
 			RecentlyRedirectedUrls.add(url, tabId);
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 				if (closeEmptyTab) {
