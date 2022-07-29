@@ -82,11 +82,13 @@ const RecentlyRedirectedUrls = {
 		urlEntries.set(url, now);
 		this.entriesByTabId.set(tabId, urlEntries);
 
-		setTimeout(() => {
-			if (urlEntries.get(url) != now)
+		chrome.alarms.create('clear-url-entry', { delayInMinutes: this.timeoutMsec / 1000 / 60 });
+		chrome.alarms.onAlarm.addListener((alarm) => {
+			if (alarm.name != 'clear-url-entry' ||
+			    urlEntries.get(url) != now)
 				return;
 			this.delete(url, tabId);
-		}, this.timeoutMsec);
+		});
 	},
 
 	delete(url, tabId) {
