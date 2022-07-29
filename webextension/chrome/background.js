@@ -189,12 +189,11 @@ const Redirector = {
 
 		/* Refresh config for every N minute */
 		console.log('Poll config for every', ALARM_MINUTES , 'minutes');
-		chrome.alarms.create("poll-config", {'periodInMinutes': ALARM_MINUTES});
-
+		chrome.alarms.create('poll-config', { periodInMinutes: ALARM_MINUTES });
 		chrome.alarms.onAlarm.addListener((alarm) => {
-			if (alarm.name === "poll-config") {
-				Redirector.configure();
-			}
+			if (alarm.name !== 'poll-config')
+				return;
+			Redirector.configure();
 		});
 
 		/* Tab book-keeping for intelligent tab handlings */
