@@ -3,10 +3,12 @@
 /*
  * CONSTANT
  */
-var BROWSER = 'edge';
-var SERVER_NAME = 'com.clear_code.browserselector_talk';
-var ALARM_MINUTES = 1;
-var CANCEL_REQUEST = {redirectUrl:`data:text/html,${escape('<script type="application/javascript">history.back()</script>')}`};
+const BROWSER = 'edge';
+const SERVER_NAME = 'com.clear_code.browserselector_talk';
+const ALARM_MINUTES = 1;
+const CANCEL_REQUEST = {
+  redirectUrl: `data:text/html,${escape('<script type="application/javascript">history.back()</script>')}`,
+};
 
 /*
  * A JavaScript port of "wildmat()" by Rich Salz (https://github.com/richsalz/wildmat)
@@ -60,7 +62,7 @@ function wildmat(text, pat) {
 	return domatch(text, pat, 0, 0);
 }
 
-var RecentlyRedirectedUrls = {
+const RecentlyRedirectedUrls = {
 	entriesByTabId: new Map(),
 	timeoutMsec: 10000,
 
@@ -80,11 +82,13 @@ var RecentlyRedirectedUrls = {
 		urlEntries.set(url, now);
 		this.entriesByTabId.set(tabId, urlEntries);
 
-		setTimeout(() => {
-			if (urlEntries.get(url) != now)
+		chrome.alarms.create('clear-url-entry', { delayInMinutes: this.timeoutMsec / 1000 / 60 });
+		chrome.alarms.onAlarm.addListener((alarm) => {
+			if (alarm.name != 'clear-url-entry' ||
+			    urlEntries.get(url) != now)
 				return;
 			this.delete(url, tabId);
-		}, this.timeoutMsec);
+		});
 	},
 
 	delete(url, tabId) {
@@ -144,7 +148,7 @@ var RecentlyRedirectedUrls = {
  *	 ]
  * }
  */
-var Redirector = {
+const Redirector = {
 	newWindows: new Map(),
 	newWindowTabs: new Map(),
 
@@ -158,14 +162,14 @@ var Redirector = {
 	},
 
 	configure: function() {
-		var query = new String('C ' + BROWSER);
+		const query = `C ${BROWSER}`;
 
 		chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 			if (chrome.runtime.lastError) {
 				console.log('Cannot fetch config', JSON.stringify(chrome.runtime.lastError));
 				return;
 			}
-			var isStartup = (Redirector.cached == null);
+			const isStartup = (Redirector.cached == null);
 			Redirector.cached = resp.config;
 			console.log('Fetch config', JSON.stringify(Redirector.cached));
 
@@ -187,12 +191,11 @@ var Redirector = {
 
 		/* Refresh config for every N minute */
 		console.log('Poll config for every', ALARM_MINUTES , 'minutes');
-		chrome.alarms.create("poll-config", {'periodInMinutes': ALARM_MINUTES});
-
+		chrome.alarms.create('poll-config', { periodInMinutes: ALARM_MINUTES });
 		chrome.alarms.onAlarm.addListener((alarm) => {
-			if (alarm.name === "poll-config") {
-				Redirector.configure();
-			}
+			if (alarm.name !== 'poll-config')
+				return;
+			Redirector.configure();
 		});
 
 		/* Tab book-keeping for intelligent tab handlings */
@@ -248,7 +251,7 @@ var Redirector = {
 				return;
 			}
 
-			var query = new String('Q ' + BROWSER + ' ' + url);
+			const query = `Q ${BROWSER} ${url}`;
 			RecentlyRedirectedUrls.add(url, tabId);
 			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
 				if (closeEmptyTab) {
@@ -285,19 +288,18 @@ var Redirector = {
 	 * browser name, or null if no pattern matched.
 	 */
 	match: function(config, url) {
-		var i;
-		var host = url.split('/')[2];
-		var URLPatterns = config.URLPatterns
-		var HostPatterns = config.HostNamePatterns;
+		const host = url.split('/')[2];
+		const URLPatterns = config.URLPatterns
+		const HostPatterns = config.HostNamePatterns;
 
-		for (i = 0; i < URLPatterns.length; i++) {
+		for (let i = 0; i < URLPatterns.length; i++) {
 			if (wildmat(url, URLPatterns[i][0])) {
 				console.log(`* Match with '${URLPatterns[i][0]}' (browser=${URLPatterns[i][1]})`);
 				return URLPatterns[i][1].toLowerCase();
 			}
 		}
 
-		for (i = 0; i < HostPatterns.length; i++) {
+		for (let i = 0; i < HostPatterns.length; i++) {
 			if (wildmat(host, HostPatterns[i][0])) {
 				console.log(`* Match with '${HostPatterns[i][0]}' (browser=${HostPatterns[i][1]})`);
 				return HostPatterns[i][1].toLowerCase();
@@ -323,7 +325,7 @@ var Redirector = {
 
 		console.log(`* Check ${url} for redirect patterns`);
 
-		var matched = Redirector.match(config, url);
+		const matched = Redirector.match(config, url);
 		console.log(`* Result: ${matched}`);
 
 		if (matched !== null) {
@@ -348,7 +350,7 @@ var Redirector = {
 	handleStartup: function(config) {
 		chrome.tabs.query({}, (tabs) => {
 			tabs.forEach((tab) => {
-				var url = tab.pendingUrl || tab.url;
+				const url = tab.pendingUrl || tab.url;
 				console.log(`handleStartup ${url} (tab=${tab.id})`);
 				if (Redirector.isRedirectURL(config, url)) {
 					console.log(`* Redirect to another browser`);
@@ -375,8 +377,8 @@ var Redirector = {
 		 * from Edge-IE to Edge, so we need to handle requests on this timing.
 		 */
 
-		var config = Redirector.cached;
-		var url = tab.pendingUrl || tab.url;
+		const config = Redirector.cached;
+		const url = tab.pendingUrl || tab.url;
 
 		if (info.status !== "loading") {
 			return;
@@ -431,12 +433,11 @@ var Redirector = {
 
 	/* Callback for webRequest.onBeforeRequest */
 	onBeforeRequest: function(details) {
-		var config = Redirector.cached;
-		var closeTab = false;
-		var isMainFrame = (details.type == 'main_frame');
-		var isNewTab = Redirector.newTabIds.has(details.tabId);
-		var isNewWindow = Redirector.newWindowTabs.has(details.tabId);
-		var windowId = Redirector.newWindowTabs.get(details.tabId);
+		const config = Redirector.cached;
+		const isMainFrame = (details.type == 'main_frame');
+		const isNewTab = Redirector.newTabIds.has(details.tabId);
+		const isNewWindow = Redirector.newWindowTabs.has(details.tabId);
+		const windowId = Redirector.newWindowTabs.get(details.tabId);
 
 		console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, ,isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
 
