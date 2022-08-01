@@ -164,7 +164,7 @@ const Redirector = {
 	configure: function() {
 		const query = `C ${BROWSER}`;
 
-		chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
+		chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), (resp) => {
 			if (chrome.runtime.lastError) {
 				console.log('Cannot fetch config', JSON.stringify(chrome.runtime.lastError));
 				return;
@@ -253,7 +253,7 @@ const Redirector = {
 
 			const query = `Q ${BROWSER} ${url}`;
 			RecentlyRedirectedUrls.add(url, tabId);
-			chrome.runtime.sendNativeMessage(SERVER_NAME, query, (resp) => {
+			chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), (resp) => {
 				if (closeEmptyTab) {
 					Redirector.tryCloseEmptyTab({ tab, isNewTab });
 				}
