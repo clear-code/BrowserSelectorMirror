@@ -66,6 +66,105 @@ $ make dev
 
 このようにして `dev/` 配下に生成されたデバッグビルドを、パッケージ化されていない拡張機能として読み込んでください。
 
+#### Manifest V3での注意点
+
+ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリシー経由で強制インストールされた場合のみ期待通りに機能します。
+（一般公開のアドオンでは`webRequestBlocking`の権限が無効化されるため、リクエストを他のブラウザーにリダイレクトすることができません。）
+開発段階での動作テストには、以下の手順を経る必要があります。
+
+
+1. このリポジトリーの `webextensions` フォルダーを、端末上の任意の場所にコピーする。
+   ここでは `C:\Users\Public\webextensions` の位置に置いたと仮定する。
+2. Chrome用アドオンの開発版パッケージを用意する。
+   1. Chromeを起動する。
+   2. アドオンの管理画面（chrome:extensions）を開く。
+   3. 「デベロッパーモード」を有効化する。
+   4. 「拡張機能をパッケージ化」で `webextensions¥chrome` をパックする。（1つ上のディレクトリーに `chrome.crx` と `chrome.pem` が作られる）
+   5. `chrome.crx` をChromeのアドオン管理画面にドラッグ＆ドロップし、インストールして、IDを控える。例：`egoppdngdcoikeknmbgiakconmchahhf`
+   6. アドオンを一旦アンインストールする。
+3. Edgeアドオンの開発版パッケージを用意する。
+   1. Edgeを起動する。
+   2. アドオンの管理画面（edge:extensions）を開く。
+   3. 「開発者モード」を有効化する。
+   4. 「拡張機能のパック」で `webextensions¥edge` をパックする。（1つ上のディレクトリーに `edge.crx` と `edge.pem` が作られる）
+   5. `edgecrx` をEdgeのアドオン管理画面にドラッグ＆ドロップし、インストールして、IDを控える。例：`oapdkmbdgdcjpacbjpcdfhncifimimcj`
+   6. アドオンを一旦アンインストールする。
+4. インストール用マニフェストファイルを作成する。
+   先ほど控えたChromeアドオンとEdgeアドオンのIDを含める形で、以下のような内容のXMLファイルを作成し、`chrome.crx` や `edge.crx` と同じ位置に置く。
+   ここでは `C:\Users\Public\webextensions¥manifest.xml` の位置に置いたと仮定する。
+   ```xml
+   <?xml version='1.0' encoding='UTF-8'?>
+   <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
+     <app appid='egoppdngdcoikeknmbgiakconmchahhf'><!-- 先ほど控えたChrome用アドオンのIDを書く -->
+       <updatecheck codebase='file:///C:/Users/Public/webextension/chrome.crx' version='1.0.0' /><!-- `chrome.crx` の実際のFile URLを書く -->
+     </app>
+     <app appid='oapdkmbdgdcjpacbjpcdfhncifimimcj'><!-- 先ほど控えたEdge用アドオンのIDを書く -->
+       <updatecheck codebase='file:///C:/Users/Public/webextension/edge.crx' version='1.0.0' /><!-- `edge.crx` の実際のFile URLを書く -->
+     </app>
+   </gupdate>
+   ```
+   このとき、`version` の値は `manifest.json` 似記述された実際のバージョンに合わせる。
+4. Chromeのグループポリシーテンプレートを導入し、Chromeでアドオンを読み込むための設定を行う。
+   1. https://support.google.com/chrome/a/answer/187202?hl=ja#zippy=%2Cwindows
+      から「Google Chromeバンドル」をダウンロードし、保存されたzipファイルを展開する。
+   2. `Configuration\admx\*.admx` と、`Configuration\admx\en-US` や `Configuration\admx\ja` などを `C:\Windows\PolicyDefinitions` にコピーする。
+   3. `gpedit.msc` を起動し、`Local Computer Policy` → `Computer Configuration` → `Administrative Templates` → `Google` → `Google Chrome` → `Extensions` → `Configure the list of force-installed apps and extensions` （`ローカル コンピューター ポリシー` → `コンピューターの構成` →` 管理用テンプレート` → `Google` → `Google Chrome` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`）を開く。
+   4. 設定値を `Enabled`（有効）に切り替える。
+   5. `Show...` （`表示...`）をクリックする。
+   6. 設定のデータ一覧に `<ChromeアドオンのID>;<マニフェストファイルの位置>` を追加する。
+      ここまでの例に倣った場合、`egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextension/manifest.xml` のようになる。
+5. Edgeのグループポリシーテンプレートを導入し、Chromeでアドオンを読み込むための設定を行う。
+   1. https://www.microsoft.com/ja-jp/edge/business/download
+      の「ポリシー ファイルを取得」からポリシーテンプレートをダウンロードし、保存されたzipファイルを展開する。
+   2. `windows\admx\*.admx` と、`windows\admx\en-US` や `windows\admx\ja` などを `C:\Windows\PolicyDefinitions` にコピーする。
+   3. `gpedit.msc` を起動し、`Local Computer Policy` → `Computer Configuration` → `Administrative Templates` → `Microsoft Edge` → `Extensions` → `Configure the list of force-installed apps and extensions` （`ローカル コンピューター ポリシー` → `コンピューターの構成` →` 管理用テンプレート` → `Microsoft Edge` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`）を開く。
+   5. 設定値を `Enabled`（有効）に切り替える。
+   6. `Show...` （`表示...`）をクリックする。
+   7. 設定のデータ一覧に `<EdgeアドオンのID>;<マニフェストファイルの位置>` を追加する。
+      ここまでの例に倣った場合、`oapdkmbdgdcjpacbjpcdfhncifimimcj;file:///C:/Users/Public/webextension/manifest.xml` のようになる。
+6. 端末がドメイン参加状態でない場合、管理者権限で ` cmd.exe` を開き、以下のコマンド群を実行してドメイン参加状態にする。
+   （参考： https://hitco.at/blog/apply-edge-policies-for-non-domain-joined-devices/ ）
+   ```
+   reg add HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v EnrollmentState /t reg_dword /d 1 /f
+   reg add HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v EnrollmentType /t reg_dword /d 0 /f
+   reg add HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v IsFederated /t reg_dword /d 0 /f
+   reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v Flags /t reg_dword /d 0xd6fb7f /f
+   reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v AcctUId /t reg_sz /d "0x000000000000000000000000000000000000000000000000000000000000000000000000" /f
+   reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v RoamingCount /t reg_dword /d 0 /f
+   reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v SslClientCertReference /t reg_sz /d "MY;User;0000000000000000000000000000000000000000" /f
+   reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v ProtoVer /t reg_sz /d "1.2" /f
+   ```
+7. Chromeを起動し、アドオンが自動的にインストールされることを確認する。
+   （もしインストールされなかった場合、`chrome.exe --enable-logging=1` でChromeを起動し、`%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` に出力されるエラー情報を参照する。）
+8. Edgeを起動し、アドオンが自動的にインストールされることを確認する。
+   （もしインストールされなかった場合、`edge.exe --enable-logging=1` でChromeを起動し、`%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` に出力されるエラー情報を参照する。）
+
+拡張機能のコードを変更した場合、以下の手順でパッケージを更新します。
+
+1. Chrome用アドオンの開発版パッケージを用意する。
+   1. Chromeを起動する。
+   2. アドオンの管理画面（chrome:extensions）を開く。
+   3. 「拡張機能をパッケージ化」で `webextensions¥chrome` をパックする。（証明書ファイルにはⅠつ上のディレクトリーの `chrome.pem` を指定する。）
+2. Edgeアドオンの開発版パッケージを用意する。
+   1. Edgeを起動する。
+   2. アドオンの管理画面（edge:extensions）を開く。
+   3. 「拡張機能のパック」で `webextensions¥edge` をパックする。（証明書ファイルにはⅠつ上のディレクトリーの `edge.pem` を指定する。）
+3. ChromeとEdgeのグループポリシーを編集し、アドオンの強制インストールを無効化する。（`<アドオンのID>;<マニフェストファイルの位置>` を `#<アドオンのID>;<マニフェストファイルの位置>` と書き換えるなど。）
+4. ChromeとEdgeを起動し、アドオンがアンインストールされたことを確認する。
+5. ChromeとEdgeを終了する。
+6. ChromeとEdgeのグループポリシーを編集し、アドオンの強制インストールを再度有効化する。（`#<アドオンのID>;<マニフェストファイルの位置>` を `<アドオンのID>;<マニフェストファイルの位置>` と書き換えるなど。）
+7. ChromeとEdgeを起動し、アドオンがアンインストールされたことを確認する。
+
+ドメイン非参加状態の端末で開発を行っていて、開発作業を終えた場合、以下の手順でドメイン非参加状態に戻します。
+
+1. 管理者権限でコマンドプロンプトを開き、以下のコマンド群を実行する。
+   （参考： https://hitco.at/blog/apply-edge-policies-for-non-domain-joined-devices/ ）
+   ```
+   reg delete HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /f
+   reg delete HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /f
+   ```
+
+
 
 ## インストール方法
 
