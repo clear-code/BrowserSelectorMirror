@@ -68,6 +68,7 @@ $ make dev
 
 Then you'll get development build under the `dev/` directory, so load it as an unpacked extension.
 
+
 ## How to Install
 
 Run built BrowserSelectorSetup\Release\BrowserSelectorSetup.msi.
@@ -282,3 +283,42 @@ available.
 The cache files are stored under a user's LocalAppDataLow folder.
 
   e.g.) C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\BrowserSelectror.ini
+
+
+## How to collect logs
+
+### BHO debug log
+
+1. Set a common option `Debug` to `1`.
+   For example, put `Debug=1` under the `[Common]` section in the file BrowserSelector.ini.
+2. Download the debug log collection tool.
+   https://docs.microsoft.com/en-us/sysinternals/downloads/debugview
+   (Click the "Download DebugView" link.)
+3. Extract files from the downloaded file.
+4. Launch `Dbgview.exe`, an extracted file, with the administrator privilege.
+5. Turn on both checkboxes `Capture Win32` and `Capture Global Win32` under the `Capture` menu.
+6. Reproduce the problem you need to inspect.
+7. Save log file as a file via the `Save As...` command under the `File` menu.
+
+### Chrome debug log
+
+1. Copy a shortcut to Chrome to the desktop (or anywhere).
+2. Right click on the shortcut and choose "Property".
+3. Add a command line option ` --enable-logging=1` at the end of the "link target" field.
+   (Please note that you put a space between the path to the exe file and the added option.)
+4. Launch Chrome with the shortcut.
+5. Reproduce the problem you need to inspect.
+6. Exit Chrome.
+7. Get the log file generated at `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log`.
+
+### Edge debug log
+
+1. Copy a shortcut to Edge to the desktop (or anywhere).
+2. Right click on the shortcut and choose "Property".
+3. Add a command line option ` --enable-logging=1` at the end of the "link target" field.
+   (Please note that you put a space between the path to the exe file and the added option.)
+4. Launch Edge with the shortcut.
+5. Reproduce the problem you need to inspect.
+6. Exit Edge.
+7. Get the log file generated at `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log`.
+
