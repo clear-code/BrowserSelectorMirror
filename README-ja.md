@@ -137,9 +137,9 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
    reg add HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF /v ProtoVer /t reg_sz /d "1.2" /f
    ```
 8. Chromeを起動し、アドオンが自動的にインストールされることを確認する。
-   （もしインストールされなかった場合、`chrome.exe --enable-logging=1` でChromeを起動し、`%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` に出力されるエラー情報を参照する。）
+   （もしインストールされなかった場合、[デバッグログ](#chrome-debug-log)を参照する。）
 9. Edgeを起動し、アドオンが自動的にインストールされることを確認する。
-   （もしインストールされなかった場合、`edge.exe --enable-logging=1` でChromeを起動し、`%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` に出力されるエラー情報を参照する。）
+   （もしインストールされなかった場合、[デバッグログ](#edge-debug-log)を参照する。）
 
 アドオンの実装を変更した場合、以下の手順でパッケージを更新します。
 
@@ -389,3 +389,41 @@ URLのパターンを指定する方法として、単純なワイルドカー�
 キャッシュはユーザーフォルダのLocalAppDataLow以下に保存されます。
 
   例) C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\BrowserSelectror.ini
+
+## ログの採取手順
+
+### BHO debug log
+
+1. 共通オプションの `Debug` を `1` に設定する。
+   例えば、BrowserSelector.ini の `[Common]` セクションに `Debug=1` と追記する。
+2. デバッグ情報収集用ツールをダウンロードする。
+   https://docs.microsoft.com/en-us/sysinternals/downloads/debugview
+   「Download DebugView」のリンク先をファイルとして保存する。
+3. 保存したファイルを展開する。
+4. 展開されたファイルの中の `Dbgview.exe` を管理者権限で実行して、DebugViewを起動する。
+5. DebugViewの `Capture` メニューで `Capture Win32` `Capture Global Win32` の両方にチェックを入れた状態にする。
+6. 調査したい現象を再現させる。
+7. DebugViewの `File` メニューの `Save As...` でログを保存する。
+
+### Chrome debug log
+
+1. Chromeのショートカットをデスクトップ又は任意の場所にコピーする。
+2. ショートカットを右クリックし、メニューから「プロパティ」を選ぶ。
+3. リンクターゲット欄にコマンドライン引数 ` --enable-logging=1` を追加する。
+   （実行ファイルへのパスとコマンドラインオプションの間にスペースを入れることを忘れないこと。）
+4. 編集したショートカットからChromeを起動する。
+5. 調査したい現象を再現させる。
+6. Chromeを終了する。
+7. `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` の位置に出力されたログを採取する。
+
+### Edge debug log
+
+
+1. Edgeのショートカットをデスクトップ又は任意の場所にコピーする。
+2. ショートカットを右クリックし、メニューから「プロパティ」を選ぶ。
+3. リンクターゲット欄にコマンドライン引数 ` --enable-logging=1` を追加する。
+   （実行ファイルへのパスとコマンドラインオプションの間にスペースを入れることを忘れないこと。）
+4. 編集したショートカットからEdgeを起動する。
+5. 調査したい現象を再現させる。
+6. Edgeを終了する。
+7. `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` の位置に出力されたログを採取する。
