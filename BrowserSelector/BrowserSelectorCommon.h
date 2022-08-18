@@ -1048,6 +1048,7 @@ public:
 	 */
 	bool LaunchBrowser(const std::wstring &browser, const std::wstring &url, int flags) const
 	{
+		DebugLog(L"Trying to launch specific browser (%s).", &browser);
 		std::wstring cmd;
 		std::wstring args(L"");
 		wchar_t *buf;
@@ -1067,8 +1068,10 @@ public:
 		args += L"\"";
 
 		buf = CreateStringBufferW(args);
-		if (buf == NULL)
+		if (buf == NULL) {
+			DebugLog(L"Failed to create arguments buffer.");
 			return false;
+		}
 
 		if (!CreateProcess(cmd.c_str(), buf, NULL, NULL, FALSE, flags, NULL, NULL, &si, &pi)) {
 			ErrorLog(L"CreateProcess failed (err=%i, cmd=%ls)", GetLastError(), cmd.c_str());
@@ -1095,6 +1098,7 @@ public:
 		const std::wstring &url,
 		bool bypassElevationDialog = false) const
 	{
+		DebugLog(L"Trying to open modern browser (browserName=%s, bypassElevationDialog=%i).", &browserName, bypassElevationDialog);
 		std::wstring command;
 		std::wstring args(std::wstring(L"\"") + url + std::wstring(L"\""));
 
@@ -1110,6 +1114,7 @@ public:
 				return LaunchBrowser(browserName, url, 0);
 			}
 		}
+		DebugLog(L"command line: ", command.c_str());
 
 		HINSTANCE hInstance = 0;
 		if (!command.empty())
@@ -1122,6 +1127,7 @@ public:
 				SW_SHOW);
 
 		if (reinterpret_cast<uint64_t>(hInstance) > 32) {
+			DebugLog(L"successfully started process (pid=%i)", hInstance);
 			return true;
 		} else {
 			ErrorLog(L"Failed to launch: code=%d, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
