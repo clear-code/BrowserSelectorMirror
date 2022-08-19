@@ -75,21 +75,21 @@ public:
 	virtual std::wstring getProductVersion()
 	{
 		TCHAR filename[MAX_PATH] = {0};
-		if (GetModuleFileName(NULL, filename, MAX_PATH) == 0)
+		if (GetModuleFileNameW(NULL, filename, MAX_PATH) == 0)
 			return L"unknown (failed to get module file name))";
 
 		DWORD dummy;
-		DWORD size = GetFileVersionInfoSize(filename, &dummy);
+		DWORD size = GetFileVersionInfoSizeW(filename, &dummy);
 		if (size == 0)
 			return L"unknown (failed to get the size of the data)";
 
 		std::vector<BYTE> data(size);
-		if (!GetFileVersionInfo(filename, NULL, size, &data[0]))
+		if (!GetFileVersionInfoW(filename, NULL, size, &data[0]))
 			return L"unknown (failed to get version information)";
 
 		LPVOID productVersion = NULL;
 		unsigned int productVersionLength = 0;
-		if (!VerQueryValue(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &productVersion, &productVersionLength))
+		if (!VerQueryValueW(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &productVersion, &productVersionLength))
 			return L"unknown (failed to get product version)";
 
 		std::wstring returnProductVersion = (LPCWSTR)productVersion;
