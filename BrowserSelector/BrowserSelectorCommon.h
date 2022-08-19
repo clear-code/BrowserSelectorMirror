@@ -74,7 +74,7 @@ public:
 
 	virtual std::wstring getProductVersion()
 	{
-		TCHAR filename[MAX_PATH + 1] = {0};
+		TCHAR filename[MAX_PATH] = {0};
 		if (GetModuleFileName(NULL, filename, MAX_PATH) == 0)
 			return L"unknown (failed to get module file name))";
 
