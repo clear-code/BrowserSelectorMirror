@@ -72,10 +72,19 @@ public:
 		return std::wstring();
 	};
 
+private:
+	virtual HINSTANCE getInstanceHandler()
+	{
+		return ATL::_AtlBaseModule.GetModuleInstance();
+	};
+
+public:
 	virtual std::wstring getProductVersion()
 	{
+		HINSTANCE hInstance = getInstanceHandler();
 		TCHAR filename[MAX_PATH] = {0};
-		if (GetModuleFileNameW(NULL, filename, MAX_PATH) == 0)
+		DWORD nWritten = ::GetModuleFileNameW(hInstance, filename, MAX_PATH);
+		if (nWritten == 0)
 			return L"unknown (failed to get module file name))";
 
 		DWORD dummy;
