@@ -72,11 +72,36 @@ public:
 		return std::wstring();
 	};
 
+	virtual std::wstring getProductVersion()
+	{
+		TCHAR szFilename[MAX_PATH + 1] = {0};
+		if (GetModuleFileName(NULL, szFilename, MAX_PATH) == 0)
+			return L"unknown (failed to get module file name))";
+
+		DWORD dummy;
+		DWORD dwSize = GetFileVersionInfoSize(szFilename, &dummy);
+		if (dwSize == 0)
+			return L"unknown (failed to get the size of the data)";
+
+		std::vector<BYTE> data(dwSize);
+		if (!GetFileVersionInfo(szFilename, NULL, dwSize, &data[0]))
+			return L"unknown (failed to get version information)";
+
+		LPVOID pvProductVersion = NULL;
+		unsigned int iProductVersionLen = 0;
+		if (!VerQueryValue(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &pvProductVersion, &iProductVersionLen))
+			return L"unknown (failed to get product version)";
+
+		std::wstring productVersion = (LPCWSTR)pvProductVersion;
+		return productVersion;
+	};
+
 	virtual void dump()
 	{
 		if (m_debug <= 0)
 			return;
 
+		DebugLog(L"BrowserSelector version: %s", getProductVersion().c_str());
 		DebugLog(L"Config: %ls", getName().c_str());
 		DebugLog(L"  DefaultBrowser: %ls", m_defaultBrowser.c_str());
 		DebugLog(L"  SecondBrowser: %ls", m_secondBrowser.c_str());
