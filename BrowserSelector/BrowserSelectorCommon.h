@@ -74,26 +74,26 @@ public:
 
 	virtual std::wstring getProductVersion()
 	{
-		TCHAR szFilename[MAX_PATH + 1] = {0};
-		if (GetModuleFileName(NULL, szFilename, MAX_PATH) == 0)
+		TCHAR filename[MAX_PATH + 1] = {0};
+		if (GetModuleFileName(NULL, filename, MAX_PATH) == 0)
 			return L"unknown (failed to get module file name))";
 
 		DWORD dummy;
-		DWORD dwSize = GetFileVersionInfoSize(szFilename, &dummy);
-		if (dwSize == 0)
+		DWORD size = GetFileVersionInfoSize(filename, &dummy);
+		if (size == 0)
 			return L"unknown (failed to get the size of the data)";
 
-		std::vector<BYTE> data(dwSize);
-		if (!GetFileVersionInfo(szFilename, NULL, dwSize, &data[0]))
+		std::vector<BYTE> data(size);
+		if (!GetFileVersionInfo(filename, NULL, size, &data[0]))
 			return L"unknown (failed to get version information)";
 
-		LPVOID pvProductVersion = NULL;
-		unsigned int iProductVersionLen = 0;
-		if (!VerQueryValue(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &pvProductVersion, &iProductVersionLen))
+		LPVOID productVersion = NULL;
+		unsigned int productVersionLength = 0;
+		if (!VerQueryValue(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &productVersion, &productVersionLength))
 			return L"unknown (failed to get product version)";
 
-		std::wstring productVersion = (LPCWSTR)pvProductVersion;
-		return productVersion;
+		std::wstring returnProductVersion = (LPCWSTR)productVersion;
+		return returnProductVersion;
 	};
 
 	virtual void dump()
