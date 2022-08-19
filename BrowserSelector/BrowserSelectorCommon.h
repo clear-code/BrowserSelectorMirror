@@ -98,7 +98,7 @@ public:
 
 		LPVOID productVersion = NULL;
 		unsigned int productVersionLength = 0;
-		if (!VerQueryValueW(&data[0], _T("\\StringFileInfo\\000004b0\\ProductVersion"), &productVersion, &productVersionLength))
+		if (!::VerQueryValueW(&data[0], L"\\StringFileInfo\\000004b0\\ProductVersion", &productVersion, &productVersionLength))
 			return L"unknown (failed to get product version)";
 
 		std::wstring returnProductVersion = (LPCWSTR)productVersion;
