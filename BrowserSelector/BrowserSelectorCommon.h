@@ -88,12 +88,12 @@ public:
 			return L"unknown (failed to get module file name))";
 
 		DWORD dummy;
-		DWORD size = GetFileVersionInfoSizeW(filename, &dummy);
+		DWORD size = ::GetFileVersionInfoSizeW(filename, &dummy);
 		if (size == 0)
 			return L"unknown (failed to get the size of the data)";
 
 		std::vector<BYTE> data(size);
-		if (!GetFileVersionInfoW(filename, NULL, size, &data[0]))
+		if (!::GetFileVersionInfoW(filename, NULL, size, &data[0]))
 			return L"unknown (failed to get version information)";
 
 		LPVOID productVersion = NULL;
