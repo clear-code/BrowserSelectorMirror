@@ -121,7 +121,8 @@ bool CBrowserSelector::IsTopLevelFrame(IDispatch* pDisp)
  */
 bool CBrowserSelector::IsEdgeIE(void)
 {
-	return getenv("EDGE_BROWSER_PID") != NULL;
+	wstring command = GetCommandLine();
+	return command.find("APPID:MSEdge") != std::wstring::npos;
 }
 
 void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
