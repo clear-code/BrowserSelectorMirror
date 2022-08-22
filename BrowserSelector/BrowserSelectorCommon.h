@@ -93,12 +93,15 @@ public:
 			return L"unknown (failed to get the size of the data)";
 
 		std::vector<BYTE> data(size);
-		if (!::GetFileVersionInfoW(filename, NULL, size, &data[0]))
+		BOOL infoGotten = ::GetFileVersionInfoW(filename, NULL, size, &data[0]);
+		if (!infoGotten)
 			return L"unknown (failed to get version information)";
 
+		LPCTSTR block = L"\\StringFileInfo\\000004b0\\ProductVersion";
 		LPVOID productVersion = NULL;
 		unsigned int productVersionLength = 0;
-		if (!::VerQueryValueW(&data[0], L"\\StringFileInfo\\000004b0\\ProductVersion", &productVersion, &productVersionLength))
+		BOOL valueGotten = ::VerQueryValueW(&data[0], block, &productVersion, &productVersionLength);
+		if (!valueGotten)
 			return L"unknown (failed to get product version)";
 
 		std::wstring returnProductVersion = (LPCWSTR)productVersion;
