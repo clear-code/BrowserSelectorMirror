@@ -82,7 +82,7 @@ public:
 	virtual std::wstring getProductVersion()
 	{
 		HINSTANCE hInstance = getInstanceHandler();
-		TCHAR filename[MAX_PATH] = {0};
+		WCHAR filename[MAX_PATH] = { 0 };
 		DWORD nWritten = ::GetModuleFileNameW(hInstance, filename, MAX_PATH);
 		if (nWritten == 0)
 			return L"unknown (failed to get module file name))";
