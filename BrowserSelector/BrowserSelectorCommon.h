@@ -75,7 +75,7 @@ public:
 private:
 	virtual HINSTANCE getInstanceHandler()
 	{
-		return ATL::_AtlBaseModule.GetModuleInstance();
+		return NULL;
 	};
 
 public:

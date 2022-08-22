@@ -14,7 +14,7 @@ class BHOConfig : public Config {
 private:
 	virtual HINSTANCE getInstanceHandler()
 	{
-		return NULL;
+		return ATL::_AtlBaseModule.GetModuleInstance();
 	};
 };
 
