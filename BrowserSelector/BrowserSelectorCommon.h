@@ -104,7 +104,7 @@ public:
 		if (!valueGotten)
 			return L"unknown (failed to get product version)";
 
-		std::wstring returnProductVersion = (LPCWSTR)productVersion;
+		std::wstring returnProductVersion = static_cast<LPCWSTR>(productVersion);
 		return returnProductVersion;
 	};
 
