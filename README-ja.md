@@ -117,8 +117,8 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
       ここまでの例に倣った場合、`egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextension/manifest.xml` のようになる。
 6. Edgeのグループポリシーテンプレートを導入し、Chromeでアドオンを読み込むための設定を行う。
    1. https://www.microsoft.com/ja-jp/edge/business/download
-   2. `windows\admx\*.admx` と、`windows\admx\en-US` や `windows\admx\ja` などを `C:\Windows\PolicyDefinitions` にコピーする。
       の「ポリシー ファイルを取得」からポリシーテンプレートをダウンロードし、保存されたMicrosoftEdgePolicyTemplates.cabファイル(zipをcabで再圧縮されている)を展開する。
+   2. `windows\admx\*.admx` と、`windows\admx\en-US` や `windows\admx\ja-JP` などを `C:\Windows\PolicyDefinitions` にコピーする。
    3. `gpedit.msc` を起動し、`Local Computer Policy` → `Computer Configuration` → `Administrative Templates` → `Microsoft Edge` → `Extensions` → `Configure the list of force-installed apps and extensions` （`ローカル コンピューター ポリシー` → `コンピューターの構成` →` 管理用テンプレート` → `Microsoft Edge` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`）を開く。
    5. 設定値を `Enabled`（有効）に切り替える。
    6. `Show...` （`表示...`）をクリックする。
