@@ -110,7 +110,7 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
    1. https://support.google.com/chrome/a/answer/187202?hl=ja#zippy=%2Cwindows
       から`Google Chromeバンドル`をダウンロードし、保存されたzipファイルを展開する。
    2. `Configuration\admx\*.admx` と、`Configuration\admx\en-US` や `Configuration\admx\ja` などを `C:\Windows\PolicyDefinitions` にコピーする。
-   3. `gpedit.msc` を起動し、`Local Computer Policy` → `Computer Configuration` → `Administrative Templates` → `Google` → `Google Chrome` → `Extensions` → `Configure the list of force-installed apps and extensions` （`ローカル コンピューター ポリシー` → `コンピューターの構成` →` 管理用テンプレート` → `Google` → `Google Chrome` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`）を開く。
+   3. `gpedit.msc` を起動し、`Local Computer Policy` → `Computer Configuration` → `Administrative Templates` → `Google` → `Google Chrome` → `Extensions` → `Configure the list of force-installed apps and extensions` （`ローカル コンピューター ポリシー` → `コンピューターの構成` →` 管理用テンプレート` → `Google` → `Google Chrome` → `拡張機能` → `自動インストールするアプリと拡張機能のリストの設定`）を開く。
    4. 設定値を `Enabled`（有効）に切り替える。
    5. `Show...` （`表示...`）をクリックする。
    6. 設定のデータ一覧に `<ChromeアドオンのID>;<マニフェストファイルの位置>` を追加する。
