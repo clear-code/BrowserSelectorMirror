@@ -10,8 +10,8 @@ clean:
 	rm -f *.xpi
 
 packages: clean lint
-	cd chrome && make && make dev && mv *.zip ../
-	cd edge && make && make dev && mv *.zip ../
+	cd chrome && make && make dev && make enterprise-dev && mv *.zip ../
+	cd edge && make && make dev && make enterprise-dev && mv *.zip ../
 	cd firefox && make && mv *.xpi ../
 
 install_dependency:
