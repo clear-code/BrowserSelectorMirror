@@ -3,10 +3,13 @@ FILES = manifest.json \
 	misc/128x128.png \
 	background.js
 
-all: BrowserSelectorFirefox.zip
+.PHONY: xpi
+
+all: xpi
 
 clean:
-	rm -f BrowserSelectorFirefox.zip
+	rm -f *.zip
 
-BrowserSelectorFirefox.zip: $(FILES)
-	zip -9 - $(FILES) > $@
+xpi: $(FILES)
+	rm -f *.xpi
+	zip -9 - $(FILES) > BrowserSelectorFirefox.xpi

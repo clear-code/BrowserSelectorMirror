@@ -3,14 +3,12 @@ FILES = manifest.json \
 	misc/128x128.png \
 	background.js
 
-.PHONY: dev enterprise-dev
+.PHONY: zip dev enterprise-dev
 
-all: BrowserSelectorEdge.zip
+all: zip
 
 clean:
-	rm -f BrowserSelectorEdge.zip
-	rm -f BrowserSelectorEdgeDev.zip
-	rm -f BrowserSelectorEdgeEnterpriseDev.zip
+	rm -f *.zip
 	rm -rf dev
 	rm -rf enterprise-dev
 
@@ -19,6 +17,7 @@ dev:
 	mkdir -p dev
 	cp -R _locales misc *.js dev/
 	cp manifest.json.dev dev/manifest.json
+	rm -f BrowserSelectorEdgeDev.zip
 	cd dev && zip -9 - $(FILES) > ../BrowserSelectorEdgeDev.zip
 
 enterprise-dev:
@@ -27,7 +26,9 @@ enterprise-dev:
 	cp -R _locales misc *.js enterprise-dev/
 	sed -i -E -e 's/BrowserSelector/BrowserSelector Enterrpise Developer Edition/g' enterprise-dev/_locales/*/messages.json
 	cp manifest.json enterprise-dev/manifest.json
+	rm -f BrowserSelectorEdgeEnterpriseDev.zip
 	cd enterprise-dev && zip -9 - $(FILES) > ../BrowserSelectorEdgeEnterpriseDev.zip
 
-BrowserSelectorEdge.zip: $(FILES)
-	zip -9 - $(FILES) > $@
+zip: $(FILES)
+	rm -f BrowserSelectorEdge.zip
+	zip -9 - $(FILES) > BrowserSelectorEdge.zip
