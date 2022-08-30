@@ -11,7 +11,7 @@ const RecentlyRedirectedUrls = {
   timeoutMsec: 10000,
 
   init() {
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    chrome.tabs.onRemoved.addListener((tabId, _removeInfo) => {
       this.entriesByTabId.delete(tabId);
     });
   },
@@ -74,7 +74,7 @@ const RecentlyRedirectedUrls = {
   },
 };
 
-var Redirector = {
+const Redirector = {
 
   init: async function() {
     Redirector.newTabIds = new Set();
@@ -99,7 +99,7 @@ var Redirector = {
       Redirector.newTabIds.add(tab.id);
     });
 
-    browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    browser.tabs.onRemoved.addListener((tabId, _removeInfo) => {
       Redirector.newTabIds.delete(tabId);
     });
 
@@ -180,7 +180,7 @@ var Redirector = {
     // because RecentlyRedirectedUrls.canRedirect() returns false only when the URL
     // is already redirected recently.
     if (!RecentlyRedirectedUrls.canRedirect(details.url, details.tabId)) {
-      console.log('Recently redirected: ', url, tabId);
+      console.log('Recently redirected: ', details.url, details.tabId);
       RecentlyRedirectedUrls.add(details.url, details.tabId);
       return {cancel: true};
     }

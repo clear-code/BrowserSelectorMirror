@@ -67,7 +67,7 @@ const RecentlyRedirectedUrls = {
   timeoutMsec: 10000,
 
   init() {
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    chrome.tabs.onRemoved.addListener((tabId, _removeInfo) => {
       this.entriesByTabId.delete(tabId);
     });
   },
@@ -253,14 +253,14 @@ const Redirector = {
 
       const query = `Q ${BROWSER} ${url}`;
       RecentlyRedirectedUrls.add(url, tabId);
-      chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), (resp) => {
+      chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), _resp => {
         if (closeEmptyTab) {
           Redirector.tryCloseEmptyTab({ tab, isNewTab });
         }
       });
     });
   },
-  tryCloseEmptyTab: function({ tab, isNewTab, closeEmptyTab }) {
+  tryCloseEmptyTab: function({ tab, isNewTab }) {
     if (Redirector.newWindows.has(tab.windowId)) {
       const tabIds = Redirector.newWindows.get(tab.windowId);
       Redirector.newWindowTabs.set(tab.id, tab.windowId);
