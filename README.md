@@ -21,8 +21,8 @@ This software consists of two modules:
 
 We provide integration addons for modern browsers:
 
- * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp)
- * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick)
+ * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp) ([Enterprise Developer Edition](https://microsoftedge.microsoft.com/addons/detail/browserselector/hogejpljgljkhmhmbclopmhfhhenepaf))
+ * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick) ([Enterprise Developer Edition](https://chrome.google.com/webstore/detail/browserselector-enterrpis/dhclbobglmheecflidcjeabiingfmcie))
  * [Mozilla Firefox](https://addons.mozilla.org/ja/firefox/addon/browserselector/)
 
 ## How to Build
