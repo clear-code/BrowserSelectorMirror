@@ -21,8 +21,8 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
 
 モダンブラウザ向けの連携アドオンも提供しています：
 
- * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp)
- * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick)
+ * [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp) ([Enterprise Developer Edition](https://microsoftedge.microsoft.com/addons/detail/browserselector-enterrpis/hogejpljgljkhmhmbclopmhfhhenepaf))
+ * [Google Chrome](https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick) ([Enterprise Developer Edition](https://chrome.google.com/webstore/detail/browserselector-enterrpis/dhclbobglmheecflidcjeabiingfmcie))
  * [Mozilla Firefox](https://addons.mozilla.org/ja/firefox/addon/browserselector/)
 
 ## ビルド方法
