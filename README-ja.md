@@ -48,6 +48,37 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
 
+### リリース手順
+
+1. `BrowserSelector.sln` をMicrosoft Visual Studio 2019で開く。
+2. リソースビューで以下の情報を更新する。
+   （または、`BrowserSelector.sln` 自体の以下の情報を更新する。）
+   - `BrowserSelector/BrowserSelector.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+   - `BrowserSelectorBHO/BrowserSelectorBHO.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+   - `BrowserSelectorTalk/BrowserSelectorTalk.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+3. ソリューションエクスプローラで `BrowserSelectorSetup` を選択し、プロパティペインで以下の情報を更新する。
+   （または、`BrowserSelectorSetup/BrowserSelectorSetup.vdproj` の以下の情報を更新する。）
+   - UUIDを更新
+     - `DeployProject.Deployable.Product.PackageCode`
+     - `DeployProject.Deployable.Product.PackageCode`
+   - バージョン番号を更新
+     - `DeployProject.Configurations.Release.OutputFilename`
+     - `DeployProject.Deployable.Product.ProductVersion`
+     - `DeployProject.Deployable.Product.PostBuildEvent`
+4. 変更をコミットする。
+5. （要権限）`git tag -a v*.*.*` の要領でリリースバージョンのタグを作成する。
+6. （要権限）`git push git@github.com:git@github.com:clear-code/BrowserSelectorMirror.git master` の要領でGitHubのミラーに変更をpushする。
+7. （要権限）https://github.com/clear-code/BrowserSelectorMirror/actions の Artifacts から Installer をダウンロードする。
+8. （要権限）前の手順でダウンロードしたインストーラに電子署名を施す。
+9. （要権限）GitLabのUIでリリースを作成し、前の手順でダウンロードしたインストーラをアップロードする。
+
+
 ### ブラウザー用アドオン
 
 `webextensions` 配下の各ディレクトリーで `make` を実行すると、パッケージが作成されます。

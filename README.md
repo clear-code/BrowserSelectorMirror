@@ -48,6 +48,37 @@ or you can do it in command line:
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
 
+### How to release
+
+1. Open `BrowserSelector.sln` with Microsoft Visual Studio 2019.
+2. Upadte version information via the resource view.
+   (Or, edit `BrowserSelector.sln` directly.)
+   - `BrowserSelector/BrowserSelector.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+   - `BrowserSelectorBHO/BrowserSelectorBHO.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+   - `BrowserSelectorTalk/BrowserSelectorTalk.rc/Version/VS_VERSION_INFO`
+     - `FILEVERSION`
+     - `PRODUCTVERSION`
+3. Update following information via the solution explorer's property pane for `BrowserSelectorSetup`.
+   (Or, edit `BrowserSelectorSetup/BrowserSelectorSetup.vdproj` directly.)
+   - Update UUID
+     - `DeployProject.Deployable.Product.PackageCode`
+     - `DeployProject.Deployable.Product.PackageCode`
+   - Update version number
+     - `DeployProject.Configurations.Release.OutputFilename`
+     - `DeployProject.Deployable.Product.ProductVersion`
+     - `DeployProject.Deployable.Product.PostBuildEvent`
+4. Commit changes.
+5. (require permission) Create tag with the release version, like: `git tag -a v*.*.*`
+6. (require permission) Push changes to the mirror on the GitHub, like: `git push git@github.com:git@github.com:clear-code/BrowserSelectorMirror.git master`
+7. (require permission) Download installers from "Artifacts" under https://github.com/clear-code/BrowserSelectorMirror/actions
+8. (require permission) Sign to downloaded installers.
+9. (require permission) Create new release via GitLab's UI, and upload signed installers to the release.
+
+
 ### Addons for browsers
 
 Do `make` at directories for each browser under the `webextensions`, then you'll get built packages.
