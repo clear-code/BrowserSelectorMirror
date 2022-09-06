@@ -48,6 +48,13 @@ or you can do it in command line:
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
 
+### Versioning policy
+
+* The BrowserSelector binary and browser addons have their own versions for each.
+  (No need to synchronize versions between the BrowserSelector binary and browser addons.)
+* Tags should be created only for releases of the BrowserSelector binary.
+  (No need to create tag for releases of browser addons.)
+
 ### How to release
 
 1. Open `BrowserSelector.sln` with Microsoft Visual Studio 2019.

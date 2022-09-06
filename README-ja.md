@@ -48,6 +48,11 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
   * `cd \path\to\BrowserSelector`
   * `devenv.com BrowserSelector.sln /build Release`
 
+### バージョン付けのポリシー
+
+* BrowserSelector本体のバージョンとアドオンのバージョンは同期せず、それぞれ別々に管理する。
+* tagはBrowserSelector本体のバージョンに対してのみ作成する。（アドオンの改修に対してはtagは作成しない）
+
 ### リリース手順
 
 1. `BrowserSelector.sln` をMicrosoft Visual Studio 2019で開く。
