@@ -130,24 +130,33 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 
 	*cancel = VARIANT_FALSE;
 
+	DebugLog(L"DoNavigate for URL: %ls", url);
+
 	if (m_config.m_onlyOnAnchorClick) {
 		std::wstring lastClickedURL = m_lastClickedURL;
 		m_lastClickedURL.clear();
 		int timeDiff = ::GetTickCount() - m_lastClickedTime;
-		if (abs(timeDiff) > 100)
+		if (abs(timeDiff) > 100) {
+			DebugLog(L"Ignore loading with %i delay", timeDiff);
 			return;
-		if (lastClickedURL.empty())
+		}
+		if (lastClickedURL.empty()) {
+			DebugLog(L"Ignore loading with empty last clicked URL");
 			return;
+		}
 	}
 
 	if (!m_app.IsAcceptableURL(url)) {
-		DebugLog(L"Ignore inacceptable URL: %ls", url);
+		DebugLog(L"Ignore inacceptable URL");
 		return;
 	}
 
 	wstring browserName = GetBrowserNameToOpenURL(URL);
-	if (browserName == L"ie")
+	DebugLog(L"Detected target browser: %s", browserName);
+	if (browserName == L"ie") {
+		DebugLog(L"Already opened in IE.");
 		return;
+	}
 	if (browserName == L"edge" && IsEdgeIE()) {
 		DebugLog(L"Already opened in Edge (IE mode).");
 		return;

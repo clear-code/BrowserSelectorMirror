@@ -150,6 +150,9 @@ static int HandleTalkProtocol(const BrowserSelector &app)
 	char *cmd = NULL;
 	wchar_t *wcmd = NULL;
 
+	/* Prevent Windows from corrupting data */
+	setmode(_fileno(stdin), O_BINARY);
+
 	/* Read Native Messaging string */
 	if (fread(&len, sizeof(len), 1, stdin) < 1) {
 		fprintf(stderr, "cannot read %i bytes", sizeof(len));
