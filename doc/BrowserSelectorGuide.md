@@ -39,6 +39,8 @@ Google Chrome      バージョン 88 以降
 Microsoft Edge     バージョン 88 以降
 ------------------ -------------------
 
+また、Google ChromeおよびMicrosoft EdgeでBrowserSelectorを使用する場合には、そのWindows端末がActive Directoryドメインに参加している必要があります。
+
 ## ソフトウェアの構成
 
 BrowserSelectorは次のモジュールから構成されています。
@@ -107,16 +109,24 @@ INIファイルに設定できる項目の詳細は「設定項目の一覧」�
 ## Edgeにアドオンをインストールする
 
 BrowserSelectorはEdge・Chrome・Firefox向けに専用のアドオンを提供しています。
-このアドオンは次の手順でインストールできます。
 
- 1. Edgeを起動し、EdgeアドオンストアのBrowserSelectorのページにアクセスします。
+EdgeでBrowserSelectorアドオンを使用するためには、アドオンをグループポリシーで強制インストールします[^edge-addon-force-install]。
+[Edgeのポリシーテンプレート](https://www.microsoft.com/ja-jp/edge/business/download)を導入した状態で、以下の通り設定します。
 
-    https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp
+[^edge-addon-force-install]: Edgeの仕様のため、ユーザー権限でアドオンをインストールした場合には期待通りに動作しません。必ず、グループポリシーで強制インストールする必要があります。
 
- 2. 画面右の「インストール」ボタンをクリックします。
+ 1. グループポリシーの管理画面を開きます。
 
-なお、BrowserSelectorを組織導入する場合は、グループポリシーでアドオンを一括インストールできます。
-詳細な手順は、本マニュアルの「その他のセットアップ」の章を参照ください。
+ 2. `コンピューターの構成` または `ユーザーの構成` → `管理用テンプレート` → `Microsoft Edge` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`
+    を開きます。
+
+ 3. 設定値が `未定義` または `無効` となっている場合、`有効` に切り替えます。
+
+ 4. `表示...` をクリックします。
+
+ 5. 設定のデータ一覧に `ifghihgjehplhamcpkmgcfjehjhkijgp` を追加します。
+
+他のブラウザーの場合も含めた詳細な手順は、本マニュアルの「その他のセットアップ」の章をご参照ください。
 
 ## ブラウザの動作を確認する
 
@@ -136,7 +146,17 @@ BrowserSelectorはEdge・Chrome・Firefox向けに専用のアドオンを提供
 
  2. BrowserSelectorを選択し、アンインストールを実行します。
 
- 3. Edgeを起動し、アドオンの管理画面からBrowserSelectorのアドオンを削除します。
+ 3. Edge用アドオンを削除します。
+
+    1. グループポリシーの管理画面を開きます。
+
+    2. `コンピューターの構成` または `ユーザーの構成` → `管理用テンプレート` → `Microsoft Edge` → `拡張機能` → `サイレント インストールされる拡張機能を制御する`
+       を開きます。
+
+    3. `表示...` をクリックします。
+
+    4. 設定のデータ一覧に `ifghihgjehplhamcpkmgcfjehjhkijgp` を追加します。
+
 
 # 設定項目の一覧
 
