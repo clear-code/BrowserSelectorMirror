@@ -35,8 +35,8 @@ BrowserSelectorはWindows上で動作するアプリケーションです（動�
 ------------------ -------------------
 Internet Explorer  バージョン 9 以降
 Mozilla Firefox    バージョン 78 以降
-Google Chrome      バージョン 79 以降
-Microsoft Edge     バージョン 79 以降
+Google Chrome      バージョン 88 以降
+Microsoft Edge     バージョン 88 以降
 ------------------ -------------------
 
 ## ソフトウェアの構成
