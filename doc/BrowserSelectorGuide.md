@@ -360,10 +360,8 @@ https://addons.mozilla.org/ja/firefox/addon/browserselector/
 
  5. Chromeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
 
-なお、検証などの目的でグループポリシーを利用せずにアドオンを導入する場合は、
-次のChromeウェブストアのページからインストールいただけます。
-
-https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick
+なお、Chromeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
+Chromeウェブストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
 
 ## Edgeアドオンを管理者インストールする
 
@@ -385,10 +383,8 @@ https://chrome.google.com/webstore/detail/nhcenbjbddlhdkdpfkbilmjpbkiigick
 
  5. Edgeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
 
-なお、検証などの目的でグループポリシーを利用せずにアドオンを導入する場合は、
-次のEdgeアドオンストアのページからインストールいただけます。
-
-https://microsoftedge.microsoft.com/addons/detail/ifghihgjehplhamcpkmgcfjehjhkijgp
+なお、Edgeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
+Edgeアドオンストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
 
 ## BrowserSelectorをアンインストールする
 
