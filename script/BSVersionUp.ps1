@@ -1,69 +1,67 @@
 ﻿# Define Constants
-Set-Variable -name VDPROJPATH -value "../BrowserSelectorSetup/BrowserSelectorSetup.vdproj" -Option Constant
-# Path for Test
-#Set-Variable -name VDPROJPATH -value "../work/BrowserSelectorSetup.vdproj" -Option Constant
-Set-Variable -name VDPROJVERSIONPATTERN -value '\d{1,2}\.\d{1,2}\.\d{1,2}[\""\.]' -Option Constant
-Set-Variable -name VDPROJVERSIONPATTERN_QUOTE -value '\d{1,2}\.\d{1,2}\.\d{1,2}"' -Option Constant
-Set-Variable -name VDPROJVERSIONPATTERN_PERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}\.' -Option Constant
+Set-Variable -name VDPROJ_PATH -value "../BrowserSelectorSetup/BrowserSelectorSetup.vdproj" -Option Constant
+Set-Variable -name VDPROJ_VERSION_PATTERN -value '\d{1,2}\.\d{1,2}\.\d{1,2}[\""\.]' -Option Constant
+Set-Variable -name VDPROJ_VERSION_PATTERN_QUOTE -value '\d{1,2}\.\d{1,2}\.\d{1,2}"' -Option Constant
+Set-Variable -name VDPROJ_VERSION_PATTERN_PERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}\.' -Option Constant
 
-Set-Variable -name GUIDPATTERN_TORENUM -value '("ProductCode"|"PackageCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
-Set-Variable -name GUIDPATTERN_PRODUCT -value '("ProductCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
-Set-Variable -name GUIDPATTERN_PACKAGE -value '("PackageCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
+Set-Variable -name GUID_PATTERN_TO_RENUM -value '("ProductCode"|"PackageCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
+Set-Variable -name GUID_PATTERN_PRODUCT -value '("ProductCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
+Set-Variable -name GUID_PATTERN_PACKAGE -value '("PackageCode")(.+)([0-9A-Z]{8}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{12})(.+)' -Option Constant
 
-$RCPATHARR = "../BrowserSelector/BrowserSelector.rc",
+Set-Variable -name INDEX_FOR_PRODUCTCODE -value 0 -Option Constant
+Set-Variable -name INDEX_FOR_PACKAGECODE -value 1 -Option Constant
+
+$RC_PATH_ARR = "../BrowserSelector/BrowserSelector.rc",
 	"../BrowserSelectorBHO/BrowserSelectorBHO.rc",
 	"../BrowserSelectorTalk/BrowserSelectorTalk.rc"
-# Path for Test
-#$RCPATHARR = "../work/BrowserSelector.rc",
-#	"../work/BrowserSelectorBHO.rc",
-#	"../work/BrowserSelectorTalk.rc"
-Set-Variable -name RCVERSIONPATTERN -value '\d{1,2}[,\.]\d{1,2}[,\.]\d{1,2}' -Option Constant
-Set-Variable -name RCVERSIONPERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}' -Option Constant
-Set-Variable -name RCVERSIONCOMMA -value '\d{1,2},\d{1,2},\d{1,2}' -Option Constant
+
+Set-Variable -name RC_VERSION_PATTERN -value '\d{1,2}[,\.]\d{1,2}[,\.]\d{1,2}' -Option Constant
+Set-Variable -name RC_VERSION_PERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}' -Option Constant
+Set-Variable -name RC_VERSION_COMMA -value '\d{1,2},\d{1,2},\d{1,2}' -Option Constant
 
 # Define Variables
-$newversion = '2.2.4'
-$newversion_comma = $newversion -Replace '\.',','
-$newversion_quote = $newversion + '"'
-$newversion_period = $newversion + '.'
+$new_version = '2.2.4'
+$new_version_comma = $new_version -Replace '\.',','
+$new_version_plus_quote = $new_version + '"'
+$new_version_plus_period = $new_version + '.'
 
-$newGuid0 = New-Guid
-$newGuid1 = New-Guid
+$new_Guid_for_ProductCode = New-Guid
+$new_Guid_for_PackageCode = New-Guid
 
 # Extract the lines including VersionNumber
-#Get-Content -Path $VDPROJPATH | Select-String -Pattern $VDPROJVERSIONPATTERN
-#ForEach ($item in $RCPATHARR) {
-#	Get-Content -Path $item | Select-String -Pattern $RCVERSIONPATTERN
+#Get-Content -Path $VDPROJ_PATH | Select-String -Pattern $VDPROJ_VERSION_PATTERN
+#ForEach ($item in $RC_PATH_ARR) {
+#	Get-Content -Path $item | Select-String -Pattern $RC_VERSION_PATTERN
 #}
 
 # Prepare a new GUID for ProductCode and PackageCode
 # *.vdproj
-$newcode = (Get-Content -Path $VDPROJPATH) | Select-String -Pattern $GUIDPATTERN_TORENUM
-$newcode = ForEach-Object {$newcode -Replace $GUIDPATTERN_TORENUM, '$1$2'}
-$newcode[0] = $newcode[0].TrimStart() + $newGuid0 + '}"'
-$newcode[1] = $newcode[1].TrimStart() + $newGuid1 + '}"'
-Write-Host $newcode
+$new_code_arr = (Get-Content -Path $VDPROJ_PATH) | Select-String -Pattern $GUID_PATTERN_TO_RENUM
+$new_code_arr = ForEach-Object {$new_code_arr -Replace $GUID_PATTERN_TO_RENUM, '$1$2'}
+$new_code_arr[$INDEX_FOR_PRODUCTCODE] = $new_code_arr[$INDEX_FOR_PRODUCTCODE].TrimStart() + $new_Guid_for_ProductCode + '}"'
+$new_code_arr[$INDEX_FOR_PACKAGECODE] = $new_code_arr[$INDEX_FOR_PACKAGECODE].TrimStart() + $new_Guid_for_PackageCode + '}"'
+Write-Host $new_code_arr
 
-# Replace the current version with the newversion
+# Replace the current version with the new_version
 # *.vdproj
-(Get-Content -Path $VDPROJPATH) |
-	ForEach-Object {$_ -Replace $VDPROJVERSIONPATTERN_QUOTE, $newversion_quote} |
-	ForEach-Object {$_ -Replace $VDPROJVERSIONPATTERN_PERIOD, $newversion_period} |
+(Get-Content -Path $VDPROJ_PATH) |
+	ForEach-Object {$_ -Replace $VDPROJ_VERSION_PATTERN_QUOTE, $new_version_plus_quote} |
+	ForEach-Object {$_ -Replace $VDPROJ_VERSION_PATTERN_PERIOD, $new_version_plus_period} |
 	# Set ProductCode and PackageCode with the new GUIDs 
-	ForEach-Object {$_ -Replace $GUIDPATTERN_PRODUCT, $newcode[0]} |
-	ForEach-Object {$_ -Replace $GUIDPATTERN_PACKAGE, $newcode[1]} |
-	Set-Content -Path $VDPROJPATH -Encoding UTF8
+	ForEach-Object {$_ -Replace $GUID_PATTERN_PRODUCT, $new_code_arr[$INDEX_FOR_PRODUCTCODE]} |
+	ForEach-Object {$_ -Replace $GUID_PATTERN_PACKAGE, $new_code_arr[$INDEX_FOR_PACKAGECODE]} |
+	Set-Content -Path $VDPROJ_PATH -Encoding UTF8
 # Show the result of replacement on the screen
-Select-String -Path $VDPROJPATH -Pattern $VDPROJVERSIONPATTERN
-Select-String -Path $VDPROJPATH -Pattern $GUIDPATTERN_TORENUM
+Select-String -Path $VDPROJ_PATH -Pattern $VDPROJ_VERSION_PATTERN
+Select-String -Path $VDPROJ_PATH -Pattern $GUID_PATTERN_TO_RENUM
 Write-Host `n
 # *.rc
-ForEach ($item in $RCPATHARR) {
+ForEach ($item in $RC_PATH_ARR) {
 	$replacedcontent = (Get-Content -Path $item) |
-		ForEach-Object {$_ -Replace $RCVERSIONPERIOD, $newversion} |
-		ForEach-Object {$_ -Replace $RCVERSIONCOMMA, $newversion_comma}
+		ForEach-Object {$_ -Replace $RC_VERSION_PERIOD, $new_version} |
+		ForEach-Object {$_ -Replace $RC_VERSION_COMMA, $new_version_comma}
 	Set-Content -Path $item -Value $replacedcontent -Encoding Unicode
 	# Show the result of replacement on the screen
-	Select-String -Path $item -Pattern $RCVERSIONPATTERN
+	Select-String -Path $item -Pattern $RC_VERSION_PATTERN
 	Write-Host `n
 }

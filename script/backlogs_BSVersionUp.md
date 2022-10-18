@@ -10,12 +10,21 @@
 
 ## 現在の機能
 
-- 2.2.4 に更新する
+- バージョン番号を`$new_version` の値へ一括更新する
 - ProductCode と PackageCode の GUID を付け直す
 
 ### 注意事項
 
 実行環境上で事前に PowerShell スクリプトの実行権限を付与しておくこと。詳細は<https://go.microsoft.com/fwlink/?LinkID=135170> を参照
+
+### 実行手順
+
+1. エクスプローラー上で`script` フォルダを右クリックして「PowerShell ウィンドウをここで開く」を選択する
+2. PowerShell ウィンドウで下記を実施する
+
+```PowerShell
+~\browserselector\script> ./BSVersionUp.ps1
+```
 
 ## バックログ
 
@@ -34,6 +43,7 @@
 
 - x,y,z のいずれかを 1 加算するとき
 - 加算された後ろの値を「0」にする
+
   2.2.3  
   → 2.2.4  
   → 2.3.0  
