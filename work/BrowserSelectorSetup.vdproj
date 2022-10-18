@@ -1,0 +1,2162 @@
+﻿"DeployProject"
+{
+"VSVersion" = "3:800"
+"ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
+"IsWebType" = "8:FALSE"
+"ProjectName" = "8:BrowserSelectorSetup"
+"LanguageId" = "3:1041"
+"CodePage" = "3:932"
+"UILanguageId" = "3:1041"
+"SccProjectName" = "8:"
+"SccLocalPath" = "8:"
+"SccAuxPath" = "8:"
+"SccProvider" = "8:"
+    "Hierarchy"
+    {
+        "Entry"
+        {
+        "MsmKey" = "8:_08C129AA0D75499A96B4D65BA05FBFF4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0AE7A25D92AC40B5841F49AC20030DDA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_112521A380F042CCBEDBA7B4D3763DE7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F7479952FCF4992982BBDF834E5FE6E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2DA6F27C8C9F48D29B180B027C2340F2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3BF7B80D023F407197BA479BED617B91"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3ED579E85E6945179AA82C490F77FD7B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_410639E4373C41A6A66A40D6FF90C521"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5FC23298C06B421AA0C512E8333D1B2C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_70862CE947C6440BAC06511E3774EBA4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7C21C84AA35148EEBE8E78FA30BB337C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7FFB50995C264038955CF7C4BDCBCD1F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A41BF1FC9A2F4F4B9FF848DAE2CDB401"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B283AE0F4FEE48C6893CDE34F08A3685"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B2DEDD8EDD7248378E828ADBBA787D6A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B58A939B42EB49F280F9BD2C26F9AE32"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD5F2D2716624CEA964EA6BE2A1FE592"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C03D314614CD4F4EA4A20243C8EF8F15"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D7CBFF2134734B61819A19A32DDD4B69"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DAA3180501C64DB79ACCE6472EF2E91E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F8071BB26F19402995A00DFEEFC33C5B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F9A258588925413AA6114CDB58A0893F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FE93BB0C76C44FEBB21DC0492B2CDACE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FFB5F1154C72499D88CD39C05DBD1E32"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+    }
+    "Configurations"
+    {
+        "Debug"
+        {
+        "DisplayName" = "8:Debug"
+        "IsDebugOnly" = "11:TRUE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:Debug\\BrowserSelectorSetup.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:2"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
+        }
+        "Release"
+        {
+        "DisplayName" = "8:Release"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:TRUE"
+        "OutputFilename" = "8:Release\\BrowserSelectorSetup-2.2.3.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:2"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
+        }
+    }
+    "Deployable"
+    {
+        "CustomAction"
+        {
+        }
+        "DefaultFeature"
+        {
+        "Name" = "8:DefaultFeature"
+        "Title" = "8:"
+        "Description" = "8:"
+        }
+        "ExternalPersistence"
+        {
+            "LaunchCondition"
+            {
+            }
+        }
+        "File"
+        {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_08C129AA0D75499A96B4D65BA05FBFF4"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorIncludeExample.ini"
+            "TargetName" = "8:BrowserSelectorIncludeExample.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0AE7A25D92AC40B5841F49AC20030DDA"
+            {
+            "SourcePath" = "8:..\\COPYING.MIT"
+            "TargetName" = "8:COPYING.MIT"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_112521A380F042CCBEDBA7B4D3763DE7"
+            {
+            "SourcePath" = "8:..\\policy\\BrowserSelector.admx"
+            "TargetName" = "8:BrowserSelector.admx"
+            "Tag" = "8:"
+            "Folder" = "8:_E06C874C5E654C00BD287B78352A6CA3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1F7479952FCF4992982BBDF834E5FE6E"
+            {
+            "SourcePath" = "8:..\\BrowserSelectorTalk\\manifest\\BrowserSelectorTalkFirefox.json"
+            "TargetName" = "8:BrowserSelectorTalkFirefox.json"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2DA6F27C8C9F48D29B180B027C2340F2"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorWOW64Example.reg"
+            "TargetName" = "8:BrowserSelectorWOW64Example.reg"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3ED579E85E6945179AA82C490F77FD7B"
+            {
+            "SourcePath" = "8:..\\README.md"
+            "TargetName" = "8:README.md"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_410639E4373C41A6A66A40D6FF90C521"
+            {
+            "SourcePath" = "8:..\\sample\\chrome.reg"
+            "TargetName" = "8:chrome.reg"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5FC23298C06B421AA0C512E8333D1B2C"
+            {
+            "SourcePath" = "8:..\\policy\\ja-JP\\BrowserSelector.adml"
+            "TargetName" = "8:BrowserSelector.adml"
+            "Tag" = "8:"
+            "Folder" = "8:_5D4D9AE0A6024A96922335F398B6D5E6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70862CE947C6440BAC06511E3774EBA4"
+            {
+            "SourcePath" = "8:..\\sample\\policies.json"
+            "TargetName" = "8:policies.json"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C21C84AA35148EEBE8E78FA30BB337C"
+            {
+            "SourcePath" = "8:..\\policy\\ja-JP\\ClearCode.adml"
+            "TargetName" = "8:ClearCode.adml"
+            "Tag" = "8:"
+            "Folder" = "8:_5D4D9AE0A6024A96922335F398B6D5E6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7FFB50995C264038955CF7C4BDCBCD1F"
+            {
+            "SourcePath" = "8:..\\sample\\CrashDump.reg"
+            "TargetName" = "8:CrashDump.reg"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A41BF1FC9A2F4F4B9FF848DAE2CDB401"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorExample.reg"
+            "TargetName" = "8:BrowserSelectorExample.reg"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B283AE0F4FEE48C6893CDE34F08A3685"
+            {
+            "SourcePath" = "8:..\\sample\\edge.reg"
+            "TargetName" = "8:edge.reg"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B2DEDD8EDD7248378E828ADBBA787D6A"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorRegexExample.ini"
+            "TargetName" = "8:BrowserSelectorRegexExample.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BD5F2D2716624CEA964EA6BE2A1FE592"
+            {
+            "SourcePath" = "8:..\\README-ja.md"
+            "TargetName" = "8:README-ja.md"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D7CBFF2134734B61819A19A32DDD4B69"
+            {
+            "SourcePath" = "8:..\\x64\\Release\\BrowserSelectorBHO64.dll"
+            "TargetName" = "8:BrowserSelectorBHO64.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DAA3180501C64DB79ACCE6472EF2E91E"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorExample.ini"
+            "TargetName" = "8:BrowserSelectorExample.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F8071BB26F19402995A00DFEEFC33C5B"
+            {
+            "SourcePath" = "8:..\\BrowserSelectorTalk\\manifest\\BrowserSelectorTalkEdge.json"
+            "TargetName" = "8:BrowserSelectorTalkEdge.json"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F9A258588925413AA6114CDB58A0893F"
+            {
+            "SourcePath" = "8:..\\BrowserSelectorTalk\\manifest\\BrowserSelectorTalkChrome.json"
+            "TargetName" = "8:BrowserSelectorTalkChrome.json"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FE93BB0C76C44FEBB21DC0492B2CDACE"
+            {
+            "SourcePath" = "8:..\\policy\\ClearCode.admx"
+            "TargetName" = "8:ClearCode.admx"
+            "Tag" = "8:"
+            "Folder" = "8:_E06C874C5E654C00BD287B78352A6CA3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FFB5F1154C72499D88CD39C05DBD1E32"
+            {
+            "SourcePath" = "8:..\\sample\\BrowserSelectorEdgeExample.ini"
+            "TargetName" = "8:BrowserSelectorEdgeExample.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_3613CB428E7E46C8B8B34688C6638883"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+        }
+        "FileType"
+        {
+        }
+        "Folder"
+        {
+            "{1525181F-901A-416C-8A58-119130FE478E}:_70DBDBC1318A4585B98DC8DA3C6C49FC"
+            {
+            "Name" = "8:#1919"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:ProgramMenuFolder"
+                "Folders"
+                {
+                }
+            }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_B559A88C08734C6194FE765088D59651"
+            {
+            "Name" = "8:#1916"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:DesktopFolder"
+                "Folders"
+                {
+                }
+            }
+            "{3C67513D-01DD-4637-8A68-80971EB9504F}:_EFD80C7B4A164AA691FA4C75A672BE63"
+            {
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "Name" = "8:#1925"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:TARGETDIR"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3613CB428E7E46C8B8B34688C6638883"
+                    {
+                    "Name" = "8:sample"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_66650F3C216F4F0CB542196A2CB1C238"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_E06C874C5E654C00BD287B78352A6CA3"
+                    {
+                    "Name" = "8:policy"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A774871CC0F24179BEB205E0A8D918D2"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_5D4D9AE0A6024A96922335F398B6D5E6"
+                            {
+                            "Name" = "8:ja-JP"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_1114A742968B42E19FEAD6B4463BC53D"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "LaunchCondition"
+        {
+        }
+        "Locator"
+        {
+        }
+        "MsiBootstrapper"
+        {
+        "LangId" = "3:1041"
+        "RequiresElevation" = "11:FALSE"
+        }
+        "Product"
+        {
+        "Name" = "8:Microsoft Visual Studio"
+        "ProductName" = "8:BrowserSelector"
+        "ProductCode" = "8:{94F3B154-F529-11EC-9724-534532E1B136}"
+        "PackageCode" = "8:{71118540-F529-11EC-80C7-5FCB980996E0}"
+        "UpgradeCode" = "8:{864B7071-7281-4A14-B718-57CB190FE7B7}"
+        "AspNetVersion" = "8:4.0.30319.0"
+        "RestartWWWService" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
+        "DetectNewerInstalledVersion" = "11:TRUE"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:2.2.3"
+        "Manufacturer" = "8:ClearCode"
+        "ARPHELPTELEPHONE" = "8:"
+        "ARPHELPLINK" = "8:"
+        "Title" = "8:BrowserSelector"
+        "Subject" = "8:"
+        "ARPCONTACT" = "8:ClearCode Inc."
+        "Keywords" = "8:"
+        "ARPCOMMENTS" = "8:"
+        "ARPURLINFOABOUT" = "8:https://www.clear-code.com"
+        "ARPPRODUCTICON" = "8:_3BF7B80D023F407197BA479BED617B91"
+        "ARPIconIndex" = "3:107"
+        "SearchPath" = "8:"
+        "UseSystemSearchPath" = "11:TRUE"
+        "TargetPlatform" = "3:0"
+        "PreBuildEvent" = "8:"
+        "PostBuildEvent" = "8:powershell Compress-Archive -Force -Path $(ProjectDir)/../$(Configuration)/BrowserSelector*.pdb,$(ProjectDir)/../x64/$(Configuration)/BrowserSelectorBHO64.pdb -DestinationPath $(ProjectDir)/$(Configuration)/BrowserSelectorDebug-2.2.3.zip"
+        "RunPostBuildEvent" = "3:0"
+        }
+        "Registry"
+        {
+            "HKLM"
+            {
+                "Keys"
+                {
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_A4BA91EA7491400BBB1B7DC9D5D08220"
+                    {
+                    "Name" = "8:Software"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_0AAEB2C6FC0A455EB320A8507680CBDF"
+                            {
+                            "Name" = "8:RegisteredApplications"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                }
+                                "Values"
+                                {
+                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_703DCC43FCD046B3B509C9A25F5368EE"
+                                    {
+                                    "Name" = "8:[ProductName]"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "ValueTypes" = "3:1"
+                                    "Value" = "8:Software\\Clients\\StartMenuInternet\\[ProductName]\\Capabilities"
+                                    }
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_3398E36631C04822952BC31FA75059B3"
+                            {
+                            "Name" = "8:Microsoft"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_AF46E0B8908541AAA1FC536C937904C8"
+                                    {
+                                    "Name" = "8:Internet Explorer"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_1B106FB04F3348118465564173955810"
+                                            {
+                                            "Name" = "8:Low Rights"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E44689DEA94C482FB3901920215E9B43"
+                                                    {
+                                                    "Name" = "8:ElevationPolicy"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_761E9443D1F947228EA8B0C3B26AFE67"
+                                                            {
+                                                            "Name" = "8:{0DA124F2-E49B-4B8B-A462-EF6305282B40}"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_0731D1CE9DCE4365AACD62F5CB7B4C0B"
+                                                                    {
+                                                                    "Name" = "8:AppName"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:BrowserSelector.exe"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_43DA97F333FE4167AE8C92193A11F7D6"
+                                                                    {
+                                                                    "Name" = "8:AppPath"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[TARGETDIR]"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_A11535A3DE434D1489BC629F83D634DB"
+                                                                    {
+                                                                    "Name" = "8:Policy"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:3"
+                                                                    "Value" = "3:3"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B04D35C7A48C4E528ED9AB233665600F"
+                                    {
+                                    "Name" = "8:Edge"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E071CBC643F0459C8C02F47143FFF7B9"
+                                            {
+                                            "Name" = "8:NativeMessagingHosts"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_D5CC76AE6C46426A9AA68297D1DD84EB"
+                                                    {
+                                                    "Name" = "8:com.clear_code.browserselector_talk"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                        }
+                                                        "Values"
+                                                        {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_E74A1F60ECA34036A7F6A3AB1BAC9092"
+                                                            {
+                                                            "Name" = "8:"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[TARGETDIR][ProductName]TalkEdge.json"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E097ED16D8374C3F96EB2CB9C23F5954"
+                                    {
+                                    "Name" = "8:Windows"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_3D7E5B41503D408295A4D83DE38045FB"
+                                            {
+                                            "Name" = "8:CurrentVersion"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_2DB13CE1CB804586878E40BE5CC27F68"
+                                                    {
+                                                    "Name" = "8:Explorer"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_FD01B9E3D2E04D24A56F986C6CC6B88A"
+                                                            {
+                                                            "Name" = "8:Browser Helper Objects"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_4E14F8FC42304EE8AFD038615E4C9DBA"
+                                                                    {
+                                                                    "Name" = "8:{204D767E-FEA2-46DA-A88F-52F6C0C38EF1}"
+                                                                    "Condition" = "8:"
+                                                                    "AlwaysCreate" = "11:TRUE"
+                                                                    "DeleteAtUninstall" = "11:TRUE"
+                                                                    "Transitive" = "11:FALSE"
+                                                                        "Keys"
+                                                                        {
+                                                                        }
+                                                                        "Values"
+                                                                        {
+                                                                        }
+                                                                    }
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E0C7D7FC707340138A4C75DF290AA3F0"
+                                                    {
+                                                    "Name" = "8:App Paths"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_43DF11202DF44E668BE7246BEB695816"
+                                                            {
+                                                            "Name" = "8:BrowserSelector.exe"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:TRUE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_BE79663F42AC46B1B23BC826EA25BA14"
+                                                                    {
+                                                                    "Name" = "8:"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[TARGETDIR][ProductName].exe"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_F34327DA541C4AF5869184CE02C4B016"
+                                                                    {
+                                                                    "Name" = "8:Path"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[TARGETDIR]"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_57C0A3A7CA334210B028A5AFB2E4EC87"
+                            {
+                            "Name" = "8:[Manufacturer]"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B76B8F14E4824447BD9424783A31740E"
+                                    {
+                                    "Name" = "8:[ProductName]"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_40995F1BF4244B148A53A18B4E9468F1"
+                                            {
+                                            "Name" = "8:HostNamePatterns"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:TRUE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_90F4CDAB973C462783E9F31AF8E408BC"
+                                            {
+                                            "Name" = "8:URLPatterns"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:TRUE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_9A71AB7792EA4B53B945732E89ED3A30"
+                            {
+                            "Name" = "8:Classes"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_161F3437E894443F8AB4E9CB3C2B84A8"
+                                    {
+                                    "Name" = "8:[ProductName]HTML"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:TRUE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_A6D012AB59DC45FFA7EE7985577F8B55"
+                                            {
+                                            "Name" = "8:Application"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_13ED68A150BF48878A061EAE40489F40"
+                                                    {
+                                                    "Name" = "8:ApplicationName"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[ProductName]"
+                                                    }
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_15AAA6861F8F4B308CF8F74B2983BAFC"
+                                                    {
+                                                    "Name" = "8:ApplicationIcon"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[TARGETDIR][ProductName].exe,0"
+                                                    }
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_6ADADFA6263E46A3A52321DC0D8328CE"
+                                                    {
+                                                    "Name" = "8:ApplicationCompany"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[Manufacturer]"
+                                                    }
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_9759E85630CC4BB894A1495D47E3C88B"
+                                                    {
+                                                    "Name" = "8:AppUserModelId"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[ProductName]"
+                                                    }
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_AE75B72EE4C74CE7BEBC2C0913D42CCF"
+                                                    {
+                                                    "Name" = "8:ApplicationDescription"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:A browser launcher which selects appropriate one to open specified URL"
+                                                    }
+                                                }
+                                            }
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_CC015B3F1C5749F8A9844744883E3B4B"
+                                            {
+                                            "Name" = "8:shell"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_661CB166437942F098DB4F2BA7AA16C4"
+                                                    {
+                                                    "Name" = "8:open"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_D442A01969064D8C9FB9CCB0518A6D4E"
+                                                            {
+                                                            "Name" = "8:command"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_D4C9146F2A3E4E2C9DEDF9155B276EC2"
+                                                                    {
+                                                                    "Name" = "8:"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:\"[TARGETDIR][ProductName].exe\" \"%1\""
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_CC7F2C8E0D0541E692CDA8D5F2E75ED2"
+                                            {
+                                            "Name" = "8:DefaultIcon"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_7B1471C9E99E44199B45A67796D543A2"
+                                                    {
+                                                    "Name" = "8:"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[TARGETDIR][ProductName].exe,0"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_4F703AFA94FD4B8F97D5C3E1BC117BB3"
+                                            {
+                                            "Name" = "8:"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:BrowserSelector HTML Document"
+                                            }
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B55AE18CB3E14BB7B66CCE6DED83EE4D"
+                            {
+                            "Name" = "8:Google"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_2C5A8488906F4D589A638685D3F5902F"
+                                    {
+                                    "Name" = "8:Chrome"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_314CF4D9517C4E57AEF12BA11CEB40C1"
+                                            {
+                                            "Name" = "8:NativeMessagingHosts"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_AAAFC5A0C76145D1928DF00270BD618B"
+                                                    {
+                                                    "Name" = "8:com.clear_code.browserselector_talk"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                        }
+                                                        "Values"
+                                                        {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_60A1A5BC1CB042458A1C370259490986"
+                                                            {
+                                                            "Name" = "8:"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[TARGETDIR][ProductName]TalkChrome.json"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_BE936EBD92C74846ACF6EE595C9D44DE"
+                            {
+                            "Name" = "8:Mozilla"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_10086AD17203496E8D3B114F023BAA4A"
+                                    {
+                                    "Name" = "8:NativeMessagingHosts"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_D66DD4EE7DE54CA8A68DE3274BA572A6"
+                                            {
+                                            "Name" = "8:com.clear_code.browserselector_talk"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:TRUE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_1DE9EFC3330F437091C279823DC1951B"
+                                                    {
+                                                    "Name" = "8:"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[TARGETDIR][ProductName]TalkFirefox.json"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F39BD5D180E9405D87FE6A6D2ADACA92"
+                            {
+                            "Name" = "8:Clients"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_EA2B56931BCA4BB19390C8359280B82E"
+                                    {
+                                    "Name" = "8:StartMenuInternet"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_661592CA5CD24A9C9F4355DCFB84A864"
+                                            {
+                                            "Name" = "8:[ProductName]"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:TRUE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_54AE1DB48E8C4089AA70DFF403C46A12"
+                                                    {
+                                                    "Name" = "8:Capabilities"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_16B6818FA8074A6A90CDAABF374AC9AF"
+                                                            {
+                                                            "Name" = "8:URLAssociations"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_3BBCB07E03C646A79A85A9B5D6F20D0F"
+                                                                    {
+                                                                    "Name" = "8:https"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_774FCE5A17024D6E81B8356D1118A108"
+                                                                    {
+                                                                    "Name" = "8:http"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_E7547A9332214D5D8C5D89E3C0F9AD34"
+                                                                    {
+                                                                    "Name" = "8:ftp"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                }
+                                                            }
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_176A451904574ECDBD0CC2D318301CE9"
+                                                            {
+                                                            "Name" = "8:StartMenu"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_8C9A416A0FFD4DF494C8F572FC7511ED"
+                                                                    {
+                                                                    "Name" = "8:StartMenuInternet"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]"
+                                                                    }
+                                                                }
+                                                            }
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_260CA10E1130465EB3BD53CAC8274BE7"
+                                                            {
+                                                            "Name" = "8:FileAssociations"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_3FCB18FF4BDC4242BDFD832C90E18781"
+                                                                    {
+                                                                    "Name" = "8:.xhtml"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_5A9A5350EB09410E99C11EC51F2F44D0"
+                                                                    {
+                                                                    "Name" = "8:.html"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_8CFC462874134B4B8C54C7B04CD54B11"
+                                                                    {
+                                                                    "Name" = "8:.htm"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_A6E0A8F98A2C4424ABA99C61A71E117C"
+                                                                    {
+                                                                    "Name" = "8:.shtml"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_FC52A23AE50E4EBAB5D79C9184C232F4"
+                                                                    {
+                                                                    "Name" = "8:xht"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProductName]HTML"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_23431D78FA8942A5A2B66CA7A7689DD7"
+                                                            {
+                                                            "Name" = "8:ApplicationName"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[ProductName]"
+                                                            }
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_6D2637C421224C51BD9781D8A47696E6"
+                                                            {
+                                                            "Name" = "8:ApplicationIcon"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[TARGETDIR][ProductName].exe,0"
+                                                            }
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_D583BFBDC52F4DBD861555293BAE4C15"
+                                                            {
+                                                            "Name" = "8:ApplicationDescription"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:A browser launcher which selects appropriate one to open specified URL"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_DF85010FE4A24CC397432DFB6D6A6BFD"
+                                                    {
+                                                    "Name" = "8:"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[ProductName]"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                        }
+                    }
+                }
+            }
+            "HKCU"
+            {
+                "Keys"
+                {
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_C02DD5A9E0874C0FB081C821D53BEFDF"
+                    {
+                    "Name" = "8:Software"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_996301620F25424D884FF66FBB69A9E7"
+                            {
+                            "Name" = "8:[Manufacturer]"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                        }
+                    }
+                }
+            }
+            "HKCR"
+            {
+                "Keys"
+                {
+                }
+            }
+            "HKU"
+            {
+                "Keys"
+                {
+                }
+            }
+            "HKPU"
+            {
+                "Keys"
+                {
+                }
+            }
+        }
+        "Sequences"
+        {
+        }
+        "Shortcut"
+        {
+        }
+        "UserInterface"
+        {
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_0BAFAA10F5E94A59912582D4782E8996"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdUserInterface.wim"
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_22EACD626B7244A097C71510D00885DE"
+            {
+            "Name" = "8:#1900"
+            "Sequence" = "3:2"
+            "Attributes" = "3:1"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_591311821BA84DFDABC0507D6BB400DC"
+                    {
+                    "Sequence" = "3:300"
+                    "DisplayName" = "8:インストールの確認"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D01DE6F464BB45DFB16CBA723E965489"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:インストール フォルダー"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_E495AE1EE812455CAD2793670F4ECDEF"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:ようこそ"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "CopyrightWarning"
+                            {
+                            "Name" = "8:CopyrightWarning"
+                            "DisplayName" = "8:#1002"
+                            "Description" = "8:#1102"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:このソフトウェアは、MITライセンスのもとで公開されています。"
+                            "DefaultValue" = "8:#1202"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Welcome"
+                            {
+                            "Name" = "8:Welcome"
+                            "DisplayName" = "8:#1003"
+                            "Description" = "8:#1103"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1203"
+                            "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_451F6C3E80A24CDDAC1C2EBC3FC5879D"
+            {
+            "Name" = "8:#1901"
+            "Sequence" = "3:2"
+            "Attributes" = "3:2"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_7428597E2F2B44E987CCEC4FF68A5A04"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:進行状況"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "ShowProgress"
+                            {
+                            "Name" = "8:ShowProgress"
+                            "DisplayName" = "8:#1009"
+                            "Description" = "8:#1109"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_4EEA39D494414AC4AC8A4E49B34F4107"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdBasicDialogs.wim"
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_AA43A2E8F2EC41F69590C26C3941D885"
+            {
+            "Name" = "8:#1902"
+            "Sequence" = "3:1"
+            "Attributes" = "3:3"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F0EB751389F54FA98E6EEF60ADC8873E"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:完了"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "UpdateText"
+                            {
+                            "Name" = "8:UpdateText"
+                            "DisplayName" = "8:#1058"
+                            "Description" = "8:#1158"
+                            "Type" = "3:15"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:#1258"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_C3CB2DE69D0549CC8EC333E66094ED14"
+            {
+            "Name" = "8:#1900"
+            "Sequence" = "3:1"
+            "Attributes" = "3:1"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_580B576C2B5B4367B6533AFE8FEFFA98"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:ようこそ"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "CopyrightWarning"
+                            {
+                            "Name" = "8:CopyrightWarning"
+                            "DisplayName" = "8:#1002"
+                            "Description" = "8:#1102"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:このソフトウェアは、MITライセンスのもとで公開されています。"
+                            "DefaultValue" = "8:#1202"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Welcome"
+                            {
+                            "Name" = "8:Welcome"
+                            "DisplayName" = "8:#1003"
+                            "Description" = "8:#1103"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1203"
+                            "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_7D6B84A0225A420DA22AC9162338DBC0"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:インストール フォルダー"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "InstallAllUsersVisible"
+                            {
+                            "Name" = "8:InstallAllUsersVisible"
+                            "DisplayName" = "8:#1059"
+                            "Description" = "8:#1159"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_A90A3736C1AE4F54BD841D524039BDB3"
+                    {
+                    "Sequence" = "3:300"
+                    "DisplayName" = "8:インストールの確認"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_D986982FBF544D10BB54F2F233531FE9"
+            {
+            "Name" = "8:#1901"
+            "Sequence" = "3:1"
+            "Attributes" = "3:2"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_EB4FCB505F4F4C2BB31FA357882DCC38"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:進行状況"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "ShowProgress"
+                            {
+                            "Name" = "8:ShowProgress"
+                            "DisplayName" = "8:#1009"
+                            "Description" = "8:#1109"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_E78F06CF53BB4DDC9C28C46BC22D237F"
+            {
+            "Name" = "8:#1902"
+            "Sequence" = "3:2"
+            "Attributes" = "3:3"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_01EF2B34449A4B5BB4C4356E70AA3000"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:完了"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "MergeModule"
+        {
+        }
+        "ProjectOutput"
+        {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3BF7B80D023F407197BA479BED617B91"
+            {
+            "SourcePath" = "8:..\\Release\\BrowserSelector.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{AE9FFFAA-81B6-4B4D-BC28-D6E2B9D3B7C4}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B58A939B42EB49F280F9BD2C26F9AE32"
+            {
+            "SourcePath" = "8:..\\Release\\BrowserSelectorTalk.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{A4D67B59-28E3-43B2-A93A-898506DFFE29}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C03D314614CD4F4EA4A20243C8EF8F15"
+            {
+            "SourcePath" = "8:..\\Release\\BrowserSelectorBHO.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_EFD80C7B4A164AA691FA4C75A672BE63"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:2"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{5AC47C86-1BED-4FA4-9A12-FC88A11459D3}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+        }
+    }
+}
