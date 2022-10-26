@@ -70,7 +70,7 @@ Explorer（以下IE）のみを対象としたものが数多く存在するた�
 3. ソリューションエクスプローラで `BrowserSelectorSetup` を選択し、プロパティペインで以下の情報を更新する。
    （または、`BrowserSelectorSetup/BrowserSelectorSetup.vdproj` の以下の情報を更新する。）
    - UUIDを更新
-     - `DeployProject.Deployable.Product.PackageCode`
+     - `DeployProject.Deployable.Product.ProductCode`
      - `DeployProject.Deployable.Product.PackageCode`
    - バージョン番号を更新
      - `DeployProject.Configurations.Release.OutputFilename`
