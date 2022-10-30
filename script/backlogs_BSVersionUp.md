@@ -10,12 +10,8 @@
 
 ## 現在の機能
 
-- バージョン番号を`$new_version` の値へ一括更新する
+- パラメータで指定したバージョン番号`$new_version` の値へ一括更新する
 - ProductCode と PackageCode の GUID を付け直す
-
-### 注意事項
-
-実行環境上で事前に PowerShell スクリプトの実行権限を付与しておくこと。詳細は<https://go.microsoft.com/fwlink/?LinkID=135170> を参照
 
 ### 実行手順
 
@@ -23,16 +19,21 @@
 2. PowerShell ウィンドウで下記を実施する
 
 ```PowerShell
-~\browserselector\script> ./BSVersionUp.ps1
+~\browserselector\script> ./BSVersionUp.ps1 [$new_version]
 ```
+
+- 引数なしで`./BSVersionUp.ps1` を実行した時は、リポジトリ内のバージョン情報の grep 結果を表示する
+- `$new_version` は 0 以上の 3 つの整数 x y z を.（ピリオド）で区切って指定する（例：`./BSVersionUp.ps1 2.2.4`）。「v」は不要
+- 指定した`$new_version` が「バージョン情報の体系」に合致しない場合、エラーとする
+
+### 注意事項
+
+実行環境上で事前に PowerShell スクリプトの実行権限を付与しておくこと。詳細は<https://go.microsoft.com/fwlink/?LinkID=135170> を参照
 
 ## バックログ
 
 `BSVersionUp`スクリプトの「完成目標」です。
 
-- `newversion` は引数で与えるようにする（例：`./BSVersionUp.ps1 2.2.4`）
-- `newversion`が不正な値の場合は、更新せずに終了する（「不正な」の定義は別途）
-- 引数なしで`./BSVersionUp.ps1` を実行した時は、リポジトリ内のバージョン情報の grep 結果を表示する
 - もしリポジトリ内の既存の各バージョン情報が一致していない場合は、更新せずに終了する
 
 ### 更新モード
