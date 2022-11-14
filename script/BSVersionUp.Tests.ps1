@@ -2,11 +2,16 @@
 
 Describe "Check if the current version is proper" {
     Context "Compare the extracted current version to the expected" {
-        $result = .\BSVersionUp.ps1
+        BeforeEach {
+            $Env:BSVersionUpRootPath = "./fixtures/"
+        }
         It "Validity of the current version" {
             # Be sure to update this number according to the version it should be
-            $result | Should Match "2.2.3"
-            # 
+            $result = .\BSVersionUp.ps1
+            $result | Should Match "10.20.30"
+        }
+        AfterEach {
+            $Env:BSVersionUpRootPath = ''
         }
     }
 }

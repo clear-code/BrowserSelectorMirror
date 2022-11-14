@@ -15,8 +15,11 @@ Param (
 	[ValidatePattern('^\d{1,2}\.\d{1,2}\.\d{1,2}$')]
 	[string]$new_version = 'no_value'
 )
+
+$BS_ROOT_PATH = if ([string]::IsNullOrEmpty($Env:BSVersionUpRootPath)) { ".." } else { $Env:BSVersionUpRootPath }
+
 # Define Constants
-Set-Variable -name TARGET_VDPROJ_PATH -value "../BrowserSelectorSetup/BrowserSelectorSetup.vdproj" -Option Constant
+Set-Variable -name TARGET_VDPROJ_PATH -value ($BS_ROOT_PATH + "/BrowserSelectorSetup/BrowserSelectorSetup.vdproj") -Option Constant
 Set-Variable -name VDPROJ_VERSION_PATTERN -value '\d{1,2}\.\d{1,2}\.\d{1,2}[\""\.]' -Option Constant
 Set-Variable -name VDPROJ_VERSION_PATTERN_QUOTE -value '\d{1,2}\.\d{1,2}\.\d{1,2}"' -Option Constant
 Set-Variable -name VDPROJ_VERSION_PATTERN_PERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}\.' -Option Constant
@@ -28,9 +31,9 @@ Set-Variable -name GUID_PATTERN_PACKAGE -value '("PackageCode")(.+)([0-9A-Z]{8}-
 Set-Variable -name INDEX_FOR_PRODUCTCODE -value 0 -Option Constant
 Set-Variable -name INDEX_FOR_PACKAGECODE -value 1 -Option Constant
 
-$TARGET_RC_PATH_ARRAY = "../BrowserSelector/BrowserSelector.rc",
-	"../BrowserSelectorBHO/BrowserSelectorBHO.rc",
-	"../BrowserSelectorTalk/BrowserSelectorTalk.rc"
+$TARGET_RC_PATH_ARRAY = ($BS_ROOT_PATH + "/BrowserSelector/BrowserSelector.rc"),
+	($BS_ROOT_PATH + "/BrowserSelectorBHO/BrowserSelectorBHO.rc"),
+	($BS_ROOT_PATH + "/BrowserSelectorTalk/BrowserSelectorTalk.rc")
 
 Set-Variable -name RC_VERSION_PATTERN -value '\d{1,2}[,\.]\d{1,2}[,\.]\d{1,2}' -Option Constant
 Set-Variable -name RC_VERSION_PERIOD -value '\d{1,2}\.\d{1,2}\.\d{1,2}' -Option Constant
