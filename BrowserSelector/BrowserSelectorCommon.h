@@ -10,7 +10,7 @@
 typedef std::pair<std::wstring, std::wstring> SwitchingPattern;
 typedef std::vector<SwitchingPattern> SwitchingPatterns;
 
-static void DebugLogV(wchar_t* fmt, va_list args)
+static void DebugLogV(_Printf_format_string_ const wchar_t* fmt, va_list args)
 {
 	wchar_t buf[1024];
 	size_t len = sizeof(buf) / sizeof(wchar_t);
@@ -19,7 +19,7 @@ static void DebugLogV(wchar_t* fmt, va_list args)
 		OutputDebugString(buf);
 }
 
-static void DebugLog(wchar_t *fmt, ...)
+static void DebugLog(_Printf_format_string_ const wchar_t *fmt, ...)
 {
 	va_list args;
 	va_start (args, fmt);
@@ -816,7 +816,7 @@ public:
 
 	const Config &m_config;
 
-	void DebugLog(wchar_t *fmt, ...) const
+	void DebugLog(_Printf_format_string_ const wchar_t *fmt, ...) const
 	{
 		if (m_config.m_debug <= 0)
 			return;
@@ -826,7 +826,7 @@ public:
 		va_end(args);
 	}
 
-	void ErrorLog(wchar_t *fmt, ...) const
+	void ErrorLog(_Printf_format_string_ const wchar_t *fmt, ...) const
 	{
 		va_list args;
 		va_start(args, fmt);
@@ -887,7 +887,8 @@ public:
 			return std::regex_match(urlASCII, match, re);
 		}
 		catch (std::regex_error &e) {
-			DebugLog(L"Failed to compile the regex! pattern: %ls, message: %ls", pattern.c_str(), e.what());
+			CComBSTR reason(e.what());
+			DebugLog(L"Failed to compile the regex! pattern: %ls, message: %ls", pattern.c_str(), reason.m_str);
 			return false;
 		}
 	}
@@ -1048,7 +1049,7 @@ public:
 	 */
 	bool LaunchBrowser(const std::wstring &browser, const std::wstring &url, int flags) const
 	{
-		DebugLog(L"Trying to launch specific browser (%s).", &browser);
+		DebugLog(L"Trying to launch specific browser (%s).", browser.c_str());
 		std::wstring cmd;
 		std::wstring args(L"");
 		wchar_t *buf;
@@ -1098,7 +1099,7 @@ public:
 		const std::wstring &url,
 		bool bypassElevationDialog = false) const
 	{
-		DebugLog(L"Trying to open modern browser (browserName=%s, bypassElevationDialog=%i).", &browserName, bypassElevationDialog);
+		DebugLog(L"Trying to open modern browser (browserName=%s, bypassElevationDialog=%i).", browserName.c_str(), bypassElevationDialog);
 		std::wstring command;
 		std::wstring args(std::wstring(L"\"") + url + std::wstring(L"\""));
 
@@ -1114,7 +1115,7 @@ public:
 				return LaunchBrowser(browserName, url, 0);
 			}
 		}
-		DebugLog(L"command line: ", command.c_str());
+		DebugLog(L"command line: %ls", command.c_str());
 
 		HINSTANCE hInstance = 0;
 		if (!command.empty())
@@ -1127,10 +1128,10 @@ public:
 				SW_SHOW);
 
 		if (reinterpret_cast<uint64_t>(hInstance) > 32) {
-			DebugLog(L"successfully started process (pid=%i)", hInstance);
+			DebugLog(L"successfully started process (pid=%p)", hInstance);
 			return true;
 		} else {
-			ErrorLog(L"Failed to launch: code=%d, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
+			ErrorLog(L"Failed to launch: code=%p, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
 			return false;
 		}
 	}
