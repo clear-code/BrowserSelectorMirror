@@ -152,7 +152,7 @@ void CBrowserSelector::DoNavigate(BSTR url, VARIANT_BOOL *cancel)
 	}
 
 	wstring browserName = GetBrowserNameToOpenURL(URL);
-	DebugLog(L"Detected target browser: %s", browserName);
+	DebugLog(L"Detected target browser: %s", browserName.c_str());
 	if (browserName == L"ie") {
 		DebugLog(L"Already opened in IE.");
 		return;

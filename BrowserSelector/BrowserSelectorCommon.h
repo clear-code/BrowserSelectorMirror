@@ -1048,7 +1048,7 @@ public:
 	 */
 	bool LaunchBrowser(const std::wstring &browser, const std::wstring &url, int flags) const
 	{
-		DebugLog(L"Trying to launch specific browser (%s).", &browser);
+		DebugLog(L"Trying to launch specific browser (%s).", browser.c_str());
 		std::wstring cmd;
 		std::wstring args(L"");
 		wchar_t *buf;
@@ -1098,7 +1098,7 @@ public:
 		const std::wstring &url,
 		bool bypassElevationDialog = false) const
 	{
-		DebugLog(L"Trying to open modern browser (browserName=%s, bypassElevationDialog=%i).", &browserName, bypassElevationDialog);
+		DebugLog(L"Trying to open modern browser (browserName=%s, bypassElevationDialog=%i).", browserName.c_str(), bypassElevationDialog);
 		std::wstring command;
 		std::wstring args(std::wstring(L"\"") + url + std::wstring(L"\""));
 
