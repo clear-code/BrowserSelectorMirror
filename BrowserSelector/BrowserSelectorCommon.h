@@ -10,7 +10,7 @@
 typedef std::pair<std::wstring, std::wstring> SwitchingPattern;
 typedef std::vector<SwitchingPattern> SwitchingPatterns;
 
-static void DebugLogV(wchar_t* fmt, va_list args)
+static void DebugLogV(_Printf_format_string_ const wchar_t* fmt, va_list args)
 {
 	wchar_t buf[1024];
 	size_t len = sizeof(buf) / sizeof(wchar_t);
@@ -19,7 +19,7 @@ static void DebugLogV(wchar_t* fmt, va_list args)
 		OutputDebugString(buf);
 }
 
-static void DebugLog(wchar_t *fmt, ...)
+static void DebugLog(_Printf_format_string_ const wchar_t *fmt, ...)
 {
 	va_list args;
 	va_start (args, fmt);
@@ -816,7 +816,7 @@ public:
 
 	const Config &m_config;
 
-	void DebugLog(wchar_t *fmt, ...) const
+	void DebugLog(_Printf_format_string_ const wchar_t *fmt, ...) const
 	{
 		if (m_config.m_debug <= 0)
 			return;
@@ -826,7 +826,7 @@ public:
 		va_end(args);
 	}
 
-	void ErrorLog(wchar_t *fmt, ...) const
+	void ErrorLog(_Printf_format_string_ const wchar_t *fmt, ...) const
 	{
 		va_list args;
 		va_start(args, fmt);
