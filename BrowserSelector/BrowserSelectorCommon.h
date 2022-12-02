@@ -1127,7 +1127,7 @@ public:
 				SW_SHOW);
 
 		if (reinterpret_cast<uint64_t>(hInstance) > 32) {
-			DebugLog(L"successfully started process (pid=%i)", hInstance);
+			DebugLog(L"successfully started process (pid=%p)", hInstance);
 			return true;
 		} else {
 			ErrorLog(L"Failed to launch: code=%d, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
