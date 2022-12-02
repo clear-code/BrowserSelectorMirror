@@ -887,7 +887,8 @@ public:
 			return std::regex_match(urlASCII, match, re);
 		}
 		catch (std::regex_error &e) {
-			DebugLog(L"Failed to compile the regex! pattern: %ls, message: %ls", pattern.c_str(), e.what());
+			CComBSTR reason(e.what());
+			DebugLog(L"Failed to compile the regex! pattern: %ls, message: %ls", pattern.c_str(), reason.m_str);
 			return false;
 		}
 	}
@@ -1114,7 +1115,7 @@ public:
 				return LaunchBrowser(browserName, url, 0);
 			}
 		}
-		DebugLog(L"command line: ", command.c_str());
+		DebugLog(L"command line: %ls", command.c_str());
 
 		HINSTANCE hInstance = 0;
 		if (!command.empty())
@@ -1130,7 +1131,7 @@ public:
 			DebugLog(L"successfully started process (pid=%p)", hInstance);
 			return true;
 		} else {
-			ErrorLog(L"Failed to launch: code=%d, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
+			ErrorLog(L"Failed to launch: code=%p, browser=%ls, url=%ls", hInstance, browserName.c_str(), url.c_str());
 			return false;
 		}
 	}
