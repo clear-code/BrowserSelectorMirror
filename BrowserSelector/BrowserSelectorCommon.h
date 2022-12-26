@@ -141,8 +141,7 @@ public:
 		if (!productVersion)
 			return L"unknown (null version)";
 
-		std::wstring returnProductVersion(static_cast<LPCWSTR>(productVersion), productVersionLength);
-		return returnProductVersion;
+		return std::wstring(static_cast<LPCWSTR>(productVersion), productVersionLength);
 	};
 
 	virtual void dump()
