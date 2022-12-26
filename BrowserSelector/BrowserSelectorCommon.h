@@ -6,6 +6,7 @@
 #include <ShellAPI.h>
 #include <Shlobj.h>
 #include <Ddeml.h>
+#include <strsafe.h>
 
 typedef std::pair<std::wstring, std::wstring> SwitchingPattern;
 typedef std::vector<SwitchingPattern> SwitchingPatterns;
@@ -61,6 +62,7 @@ public:
 		, m_closeEmptyTab(-1)
 		, m_onlyOnAnchorClick(-1)
 		, m_useRegex(-1)
+		, m_hInstance(getInstanceHandler())
 	{
 	}
 	virtual ~Config()
@@ -72,11 +74,82 @@ public:
 		return std::wstring();
 	};
 
+private:
+	virtual HINSTANCE getInstanceHandler()
+	{
+		try {
+			return ATL::_AtlBaseModule.GetModuleInstance();
+		}
+		catch(...) {
+			return nullptr;
+		}
+	};
+
+public:
+	virtual std::wstring getProductVersion()
+	{
+		WCHAR filename[MAX_PATH] = { 0 };
+		DWORD nWritten = ::GetModuleFileNameW(m_hInstance, filename, MAX_PATH);
+		if (nWritten == 0)
+			return L"unknown (failed to get module file name))";
+
+		DWORD dummy;
+		DWORD size = ::GetFileVersionInfoSizeW(filename, &dummy);
+		if (size == 0)
+			return L"unknown (failed to get the size of the data)";
+
+		BOOL succeeded;
+		std::vector<BYTE> data(size);
+		succeeded = ::GetFileVersionInfoW(filename, NULL, size, &data[0]);
+		if (!succeeded)
+			return L"unknown (failed to get version information)";
+
+		struct LANGANDCODEPAGE {
+			WORD wLanguage;
+			WORD wCodePage;
+		} *translate;
+		unsigned int translateBytes = 0;
+
+		LPWSTR productVersion = NULL;
+		unsigned int productVersionLength = 0;
+
+		succeeded = VerQueryValueW(
+			&data[0],
+			L"\\VarFileInfo\\Translation",
+			reinterpret_cast<LPVOID*>(&translate),
+			&translateBytes);
+		if (!succeeded)
+			return L"unknown (failed to get supported languages)";
+
+		for (unsigned int i = 0; i < (translateBytes / sizeof(struct LANGANDCODEPAGE)); i++) {
+			WCHAR subBlock[64];
+			StringCchPrintfW(subBlock, sizeof(subBlock) / sizeof(WCHAR), TEXT("\\StringFileInfo\\%04x%04x\\ProductVersion"),
+				translate[i].wLanguage,
+				translate[i].wCodePage);
+			succeeded = ::VerQueryValueW(
+				&data[0],
+				subBlock,
+				reinterpret_cast<LPVOID*>(&productVersion),
+				&productVersionLength);
+			if (!succeeded)
+				continue;
+			if (productVersion)
+				break;
+		}
+		if (!succeeded)
+			return L"unknown (failed to get product version)";
+		if (!productVersion)
+			return L"unknown (null version)";
+
+		return std::wstring(static_cast<LPCWSTR>(productVersion), productVersionLength);
+	};
+
 	virtual void dump()
 	{
 		if (m_debug <= 0)
 			return;
 
+		DebugLog(L"BrowserSelector version: %ls", getProductVersion().c_str());
 		DebugLog(L"Config: %ls", getName().c_str());
 		DebugLog(L"  DefaultBrowser: %ls", m_defaultBrowser.c_str());
 		DebugLog(L"  SecondBrowser: %ls", m_secondBrowser.c_str());
@@ -256,6 +329,8 @@ public:
 	SwitchingPatterns m_zonePatterns;
 	SwitchingPatterns m_hostNamePatterns;
 	SwitchingPatterns m_urlPatterns;
+private:
+	HINSTANCE m_hInstance;
 };
 
 class DefaultConfig : public Config
