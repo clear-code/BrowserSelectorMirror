@@ -54,7 +54,7 @@ public:
 	STDMETHOD(SetSite)(IUnknown *pUnkSite);
 
 private:
-	void DebugLog(wchar_t* fmt, ...)
+	void DebugLog(_Printf_format_string_ wchar_t* fmt, ...)
 	{
 		if (m_config.m_debug > 0)
 			return;
