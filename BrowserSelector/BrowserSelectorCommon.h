@@ -6,6 +6,7 @@
 #include <ShellAPI.h>
 #include <Shlobj.h>
 #include <Ddeml.h>
+#include <strsafe.h>
 
 typedef std::pair<std::wstring, std::wstring> SwitchingPattern;
 typedef std::vector<SwitchingPattern> SwitchingPatterns;
@@ -98,13 +99,40 @@ public:
 		if (!succeeded)
 			return L"unknown (failed to get version information)";
 
-		LPCTSTR block = L"\\StringFileInfo\\000004b0\\ProductVersion";
-		LPVOID productVersion = NULL;
+		struct LANGANDCODEPAGE {
+			WORD wLanguage;
+			WORD wCodePage;
+		} *translate;
+		unsigned int translateBytes = 0;
+
+		LPWSTR productVersion = NULL;
 		unsigned int productVersionLength = 0;
-		succeeded = ::VerQueryValueW(&data[0], block, &productVersion, &productVersionLength);
+
+		succeeded = VerQueryValueW(
+			&data[0],
+			L"\\VarFileInfo\\Translation",
+			reinterpret_cast<LPVOID*>(&translate),
+			&translateBytes);
+		if (!succeeded)
+			return L"unknown (failed to get supported languages)";
+
+		for (unsigned int i = 0; i < (translateBytes / sizeof(struct LANGANDCODEPAGE)); i++) {
+			WCHAR subBlock[128];
+			StringCchPrintfW(subBlock, 128, TEXT("\\StringFileInfo\\%04x%04x\\ProductVersion"),
+				translate[i].wLanguage,
+				translate[i].wCodePage);
+			succeeded = ::VerQueryValueW(
+				&data[0],
+				subBlock,
+				reinterpret_cast<LPVOID*>(&productVersion),
+				&productVersionLength);
+			if (!succeeded)
+				continue;
+			if (productVersion)
+				break;
+		}
 		if (!succeeded)
 			return L"unknown (failed to get product version)";
-
 		if (!productVersion)
 			return L"unknown (null version)";
 
