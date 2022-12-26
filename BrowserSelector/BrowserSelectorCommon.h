@@ -149,7 +149,7 @@ public:
 		if (m_debug <= 0)
 			return;
 
-		DebugLog(L"BrowserSelector version: %s", getProductVersion().c_str());
+		DebugLog(L"BrowserSelector version: %ls", getProductVersion().c_str());
 		DebugLog(L"Config: %ls", getName().c_str());
 		DebugLog(L"  DefaultBrowser: %ls", m_defaultBrowser.c_str());
 		DebugLog(L"  SecondBrowser: %ls", m_secondBrowser.c_str());
