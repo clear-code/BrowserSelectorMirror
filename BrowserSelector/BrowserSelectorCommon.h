@@ -122,8 +122,8 @@ public:
 			return L"unknown (failed to get supported languages)";
 
 		for (unsigned int i = 0; i < (translateBytes / sizeof(struct LANGANDCODEPAGE)); i++) {
-			WCHAR subBlock[128];
-			StringCchPrintfW(subBlock, 128, TEXT("\\StringFileInfo\\%04x%04x\\ProductVersion"),
+			WCHAR subBlock[64];
+			StringCchPrintfW(subBlock, sizeof(subBlock) / sizeof(WCHAR), TEXT("\\StringFileInfo\\%04x%04x\\ProductVersion"),
 				translate[i].wLanguage,
 				translate[i].wCodePage);
 			succeeded = ::VerQueryValueW(
