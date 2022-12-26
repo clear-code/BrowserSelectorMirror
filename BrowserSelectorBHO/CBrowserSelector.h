@@ -10,14 +10,6 @@ using namespace ATL;
 
 #include "../BrowserSelector/BrowserSelectorCommon.h"
 
-class BHOConfig : public Config {
-private:
-	virtual HINSTANCE getInstanceHandler()
-	{
-		return ATL::_AtlBaseModule.GetModuleInstance();
-	};
-};
-
 class ATL_NO_VTABLE CBrowserSelector :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CBrowserSelector, &CLSID_BrowserSelector>,
@@ -106,7 +98,7 @@ private:
 
 private:
 	CComQIPtr<IWebBrowser2, &IID_IWebBrowser2> m_webBrowser2;
-	BHOConfig m_config;
+	Config m_config;
 	BrowserSelector m_app;
 	bool m_isEmptyFrame;
 	DWORD m_lastClickedTime;

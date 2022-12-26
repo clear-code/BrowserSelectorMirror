@@ -62,6 +62,7 @@ public:
 		, m_closeEmptyTab(-1)
 		, m_onlyOnAnchorClick(-1)
 		, m_useRegex(-1)
+		, m_hInstance(getInstanceHandler())
 	{
 	}
 	virtual ~Config()
@@ -76,15 +77,19 @@ public:
 private:
 	virtual HINSTANCE getInstanceHandler()
 	{
-		return NULL;
+		try {
+			return ATL::_AtlBaseModule.GetModuleInstance();
+		}
+		catch(...) {
+			return nullptr;
+		}
 	};
 
 public:
 	virtual std::wstring getProductVersion()
 	{
-		HINSTANCE hInstance = getInstanceHandler();
 		WCHAR filename[MAX_PATH] = { 0 };
-		DWORD nWritten = ::GetModuleFileNameW(hInstance, filename, MAX_PATH);
+		DWORD nWritten = ::GetModuleFileNameW(m_hInstance, filename, MAX_PATH);
 		if (nWritten == 0)
 			return L"unknown (failed to get module file name))";
 
@@ -325,6 +330,8 @@ public:
 	SwitchingPatterns m_zonePatterns;
 	SwitchingPatterns m_hostNamePatterns;
 	SwitchingPatterns m_urlPatterns;
+private:
+	HINSTANCE m_hInstance;
 };
 
 class DefaultConfig : public Config
