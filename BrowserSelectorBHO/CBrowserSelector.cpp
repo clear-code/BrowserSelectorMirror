@@ -217,7 +217,7 @@ void STDMETHODCALLTYPE CBrowserSelector::OnNavigateComplete2(
 		m_isEmptyFrame = false;
 	} else {
 		if (m_isEmptyFrame)
-			DebugLog(L"Still detected as an empty tab: this=%p, pDisp=%p");
+			DebugLog(L"Still detected as an empty tab: this=%p, pDisp=%p", this, pDisp);
 	}
 }
 
