@@ -36,33 +36,8 @@
 
 ### BrowserSelector 本体のリリース
 
-1. [作業者のローカル環境] Visual StudioまたはUTF-16対応テキストエディタを用いてバージョン情報を更新する
-    - 【各プロジェクトのリソースファイルのバージョン番号】  
-    BrowserSelector.sln を開き更新する
-        - BrowserSelector/BrowserSelector.rc
-          - `FILEVERSION`
-          - `PRODUCTVERSION`
-        - BrowserSelectorBHO/BrowserSelectorBHO.rc
-          - `FILEVERSION`
-          - `PRODUCTVERSION`
-        - BrowserSelectorBHO/BrowserSelectorTalk.rc
-          - `FILEVERSION`
-          - `PRODUCTVERSION`
-    - 【インストーラのバージョン番号】  
-     BrowserSelectorSetup/BrowserSelectorSetup.vdproj に記載されている。GUI から更新する場合は、ソリューションエクスプローラで BrowserSelectorSetup を選択し、プロパティペインで各値を変更する。
-        - `"ProductVersion" = "8:x.y.z"`
-          - GUI 上の表記は`Version`
-        - `"ProductCode" = "8:{55805B9F-BE3A-404D-972D-C91CEBBCB716}"`
-          - GUI で`Version`を変更する際に、`ProductCode`の変更を促すダイアログが表示される。`はい`を選択すると自動で更新される
-          - テキストエディタ使用の場合は適当な GUID を生成して置き換える
-        - `"PackageCode" = "8:{72E97651-B376-4553-994F-DD1B580AF80E}"`
-          - GUI で`Version`を変更する際に、`ProductCode`の変更を促すダイアログが表示される。`はい`を選択するとこちらも自動で更新される
-          - 手動で行う場合、ツール > GUID の作成 > 4. レジストリ形式で生成したものに更新する
-        - `"OutputFilename" = "8:Release\\BrowserSelectorSetup-x.y.z.msi"`
-          - GUI ではプロパティペインのスパナボタンから`BrowserSelectorSetup プロパティ ページ`を開き、`構成`で`Release`を選択して`Output file name`を編集する
-          - セットアッププロジェクトでは上記をマクロ化することができない。面倒だが直接バージョンを埋め込む
-        - `"PostBuildEvent" = "8:powershell Compress-Archive -Force -Path $(ProjectDir)/../$(Configuration)/BrowserSelector*.pdb,$(ProjectDir)/../x64/$(Configuration)/BrowserSelectorBHO64.pdb -DestinationPath $(ProjectDir)/$(Configuration)/BrowserSelectorDebug-x.y.z.zip"`
-          - 同じく、直接バージョンを埋め込む
+1. [作業者のローカル環境] `BSVersionUp.ps1`スクリプトを使用してバージョン情報を更新する
+    - 使用方法は`script`フォルダの[BSVersionUp.HowToUse.md](../script/BSVersionUp.HowToUse.md)を参照  
 2. [作業者のローカル環境] 新しいバージョンのタグ `vx.y.z` を切り、プッシュする
 3. [作業者のローカル環境] BrowserSelector インストーラの作成  
  GitLab の最新の状態に同期し、自動ビルドを行う
