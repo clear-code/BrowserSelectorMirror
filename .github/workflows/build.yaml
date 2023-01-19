@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: [ windows-2022 ]
     env:
-      VSPATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise'
+      VSPATH: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise'
       EXTSITE: https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2015InstallerProjects
       EXTURL: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/1.0.0/vspackage
       # The following envs are used in BrowserSelectorBHO.vcxproj
