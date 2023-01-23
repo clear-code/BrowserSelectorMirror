@@ -70,8 +70,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,4,0
- PRODUCTVERSION 2,2,4,0
+ FILEVERSION 2,2,5,0
+ PRODUCTVERSION 2,2,5,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -88,12 +88,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "ClearCode Inc."
             VALUE "FileDescription", "A browser launcher which selects an external browser to open URL"
-            VALUE "FileVersion", "2.2.4.0"
+            VALUE "FileVersion", "2.2.5.0"
             VALUE "InternalName", "BrowserSelector.exe"
             VALUE "LegalCopyright", "ClearCode Inc.  All rights reserved."
             VALUE "OriginalFilename", "BrowserSelector.exe"
             VALUE "ProductName", "BrowserSelector"
-            VALUE "ProductVersion", "2.2.4.0"
+            VALUE "ProductVersion", "2.2.5.0"
         END
     END
     BLOCK "VarFileInfo"
