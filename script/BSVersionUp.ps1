@@ -44,8 +44,8 @@ $new_version_comma = $new_version -Replace '\.',','
 $new_version_plus_quote = $new_version + '"'
 $new_version_plus_period = $new_version + '.'
 
-$new_Guid_for_ProductCode = New-Guid
-$new_Guid_for_PackageCode = New-Guid
+$new_Guid_for_ProductCode = [guid]::NewGuid().toString().ToUpper()
+$new_Guid_for_PackageCode = [guid]::NewGuid().toString().ToUpper()
 
 # 1. function to extract the lines including the version number
 function Extract-current_version() {
