@@ -19,7 +19,7 @@
 2. PowerShell ウィンドウで下記を実施する
 
 ```PowerShell
-~\browserselector\script> .\BSVersionUp.ps1 [$new_version]
+~\browserselector\script> powershell.exe -ExecutionPolicy Bypass -file .\BSVersionUp.ps1 [$new_version]
 ```
 
 - 引数なしで`.\BSVersionUp.ps1` を実行した時は、リポジトリ内のバージョン情報の grep 結果を表示する
@@ -41,7 +41,6 @@ PowerShell のテスティングフレームワーク「[Pester](https://pester.
 
 - 上記テストは、`script` 以外のパスから Invoke すると一部"Failed" となる（`script` を基準として更新対象ファイルの存在チェックを行っているため）
 
-### 実行前・実行後の注意事項
+### 実行後の注意事項
 
-- 実行環境上で事前に PowerShell スクリプトの実行権限を付与しておくこと。詳細は<https://go.microsoft.com/fwlink/?LinkID=135170> を参照
 - 当スクリプトによって変更したファイルのコミットの前に、diff を確認すること
