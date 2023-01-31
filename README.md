@@ -416,10 +416,17 @@ available.
     * 0: Don't Use (Default)
     * 1: Use
 
-The cache files are stored under a user's LocalAppDataLow folder.
+The cache files are stored under a user's LocalAppDataLow (shell:LocalAppDataLow) folder.
 
-  e.g.) C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\BrowserSelectror.ini
+Note that the filename of cache file should be replaced from `\`, `:` to `_` in `Include`.
 
+e.g.)
+
+* `Include="c:\\Users\\Public\\BrowserSelector.ini"` will be cached as:
+  * `C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\C__Users_Public_BrowserSelectror.ini`
+
+* `Include="\\\\HostName\\ShareName\\path\\to\\BrowserSelector.ini"` will be cached as:
+   * `C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\__HostName_ShareName_path_to_BrowserSelectror.ini`
 
 ## How to collect logs
 
