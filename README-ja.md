@@ -395,9 +395,17 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * 0: 使用しない（デフォルト）
     * 1: 使用する
 
-キャッシュはユーザーフォルダのLocalAppDataLow以下に保存されます。
+キャッシュは`%USERPROFILE%\AppData\LocalLow` (`shell:LocalAppDataLow`) 以下に保存されます。
 
-  例) C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\BrowserSelectror.ini
+なお、キャッシュファイル名は、`Include`で指定されたパスの`\`と`:`を`_`に置換したものになります。
+
+例)
+
+* `Include="c:\\Users\\Public\\BrowserSelector.ini"`
+  * `C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\C__Users_Public_BrowserSelectror.ini`
+
+* `Include="\\\\HostName\\ShareName\\path\\to\\BrowserSelector.ini"`
+  * `C:\Users\[UserName]\AppData\LocalLow\ClearCode\BrowserSelector\__HostName_ShareName_path_to_BrowserSelectror.ini`
 
 ## ログの採取手順
 
