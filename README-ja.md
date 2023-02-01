@@ -395,7 +395,7 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * 0: 使用しない（デフォルト）
     * 1: 使用する
 
-キャッシュはユーザーフォルダのLocalAppDataLow (shell:LocalAppDataLow) 以下に保存されます。
+キャッシュは`%USERPROFILE%\AppData\LocalLow` (`shell:LocalAppDataLow`) 以下に保存されます。
 
 なお、キャッシュファイル名は、`Include`で指定されたパスの`\`と`:`を`_`に置換したものになります。
 

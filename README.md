@@ -416,7 +416,7 @@ available.
     * 0: Don't Use (Default)
     * 1: Use
 
-The cache files are stored under a user's LocalAppDataLow (shell:LocalAppDataLow) folder.
+The cache files are stored under `%USERPROFILE%\AppData\LocalLow` (`shell:LocalAppDataLow`) folder.
 
 Note that the filename of cache file should be replaced from `\`, `:` to `_` in `Include`.
 
