@@ -4,7 +4,7 @@ CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
 title: "BrowserSelector利用ガイド v2.2.5"
 author: "株式会社クリアコード"
-date: "2023-01-23"
+date: "2023-02-03"
 titlepage: true
 logo: logo.png
 logo-width: 250
@@ -106,14 +106,13 @@ BrowserSelectorはINI形式の設定ファイルによって管理すること�
 
 INIファイルに設定できる項目の詳細は「設定項目の一覧」の章を参照下さい。
 
-## Edgeにアドオンをインストールする
+## 拡張機能／アドオンをインストールする
 
 BrowserSelectorはEdge・Chrome・Firefox向けに専用のアドオンを提供しています。
 
-EdgeでBrowserSelectorアドオンを使用するためには、アドオンをグループポリシーで強制インストールします[^edge-addon-force-install]。
-[Edgeのポリシーテンプレート](https://www.microsoft.com/ja-jp/edge/business/download)を導入した状態で、以下の通り設定します。
+### Edgeアドオンを管理者インストールする
 
-[^edge-addon-force-install]: Edgeの仕様のため、ユーザー権限でアドオンをインストールした場合には期待通りに動作しません。必ず、グループポリシーで強制インストールする必要があります。
+グループポリシーを利用することで、Edgeアドオンを組織の端末に一括導入できます。
 
  1. Microsoft公式サイトからEdgeの管理者テンプレートを入手します。
 
@@ -129,7 +128,63 @@ EdgeでBrowserSelectorアドオンを使用するためには、アドオンを�
 
     `ifghihgjehplhamcpkmgcfjehjhkijgp`
 
-他のブラウザーの場合も含めた詳細な手順は、本マニュアルの「その他のセットアップ」の章をご参照ください。
+ 5. Edgeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
+
+なお、Edgeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
+Edgeアドオンストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
+
+### Chromeアドオンを管理者インストールする
+
+切り替え先のブラウザにChromeを利用する場合、
+グループポリシーを利用することで、Chromeアドオンを組織の端末に一括導入できます。
+
+ 1. Google公式サイトからChromeの管理者テンプレートを入手します。
+
+    https://chromeenterprise.google/browser/download/
+
+ 2. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
+
+    * 管理用テンプレート > Google > Google Chrome > 拡張機能 > 自動インストールするアプリと拡張機能のリストの設定
+
+ 3. 設定を有効化した上で、オプション欄の「表示」ボタンをクリックします。
+
+ 4. 入力ダイアログに以下の設定値（BrowserSelectorのアドオンID）を記入して確定します。
+
+    `nhcenbjbddlhdkdpfkbilmjpbkiigick`
+
+ 5. Chromeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
+
+なお、Chromeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
+Chromeウェブストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
+
+### Firefoxアドオンを管理者インストールする
+
+切り替え先のブラウザにChromeを利用する場合、
+ポリシー設定ファイルを利用することで、Firefoxアドオンを組織の端末に管理者インストールできます。
+
+ 1. Firefoxのインストールパスに「distribution」というフォルダを作成します。
+
+    (例: `C:\Program Files\Mozilla Firefox\distribution`)
+
+ 2. 作成したフォルダにファイル「policies.json」を作成し、次の内容を保存します。
+
+    ```json
+    {
+      "policies": {
+        "Extensions": {
+          "Install": ["https://addons.mozilla.org/firefox/downloads/latest/browserselector/latest.xpi"],
+          "Locked": ["browserselector@clear-code.com"]
+        }
+      }
+    }
+    ```
+
+ 3. Firefoxを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
+
+Firefoxの場合、ポリシー設定ファイルを利用せずにアドオンを導入することも可能です。
+次のMozillaアドオンストアのページからインストールいただけます。
+
+https://addons.mozilla.org/ja/firefox/addon/browserselector/
 
 ## ブラウザの動作を確認する
 
@@ -143,22 +198,7 @@ EdgeでBrowserSelectorアドオンを使用するためには、アドオンを�
 
     - IEが立ち上がることを確認します。
 
-動作確認後、導入したソフトウェアを削除したい場合は、次の手順に従います。
-
- 1. Windowsのスタートメニューから「プログラムの追加と削除」を起動します。
-
- 2. BrowserSelectorを選択し、アンインストールを実行します。
-
- 3. Edge用アドオンを削除します。
-
-    1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
-
-       * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
-
-    2. オプション欄の「表示」ボタンをクリックします。
-
-    3. BrowserSelectorのアドオンIDを一覧から削除します。
-
+動作確認後、導入したソフトウェアを削除したい場合は、本マニュアルの「その他のセットアップ」の章をご参照ください。
 
 # 設定項目の一覧
 
@@ -312,80 +352,6 @@ Windowsのグループポリシーで設定を集中管理することができ�
 
     - 管理用テンプレート > Clear Code > BrowserSelector を確認ください。
 
-## Firefoxアドオンを管理者インストールする
-
-ポリシー設定ファイルを利用することで、Firefoxアドオンを組織の端末に管理者インストールできます。
-
- 1. Firefoxのインストールパスに「distribution」というフォルダを作成します。
-
-    (例: `C:\Program Files\Mozilla Firefox\distribution`)
-
- 2. 作成したフォルダにファイル「policies.json」を作成し、次の内容を保存します。
-
-    ```json
-    {
-      "policies": {
-        "Extensions": {
-          "Install": ["https://addons.mozilla.org/firefox/downloads/latest/browserselector/latest.xpi"],
-          "Locked": ["browserselector@clear-code.com"]
-        }
-      }
-    }
-    ```
-
- 3. Firefoxを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
-
-なお、検証などの目的でポリシー設定ファイルを利用せずにアドオンを導入する場合は、
-次のMozillaアドオンストアのページからインストールいただけます。
-
-https://addons.mozilla.org/ja/firefox/addon/browserselector/
-
-## Chromeアドオンを管理者インストールする
-
-グループポリシーを利用することで、Chromeアドオンを組織の端末に一括導入できます。
-
- 1. Google公式サイトからChromeの管理者テンプレートを入手します。
-
-    https://chromeenterprise.google/browser/download/
-
- 2. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
-
-    * 管理用テンプレート > Google > Google Chrome > 拡張機能 > 自動インストールするアプリと拡張機能のリストの設定
-
- 3. 設定を有効化した上で、オプション欄の「表示」ボタンをクリックします。
-
- 4. 入力ダイアログに以下の設定値（BrowserSelectorのアドオンID）を記入して確定します。
-
-    `nhcenbjbddlhdkdpfkbilmjpbkiigick`
-
- 5. Chromeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
-
-なお、Chromeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
-Chromeウェブストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
-
-## Edgeアドオンを管理者インストールする
-
-グループポリシーを利用することで、Edgeアドオンを組織の端末に一括導入できます。
-
- 1. Microsoft公式サイトからEdgeの管理者テンプレートを入手します。
-
-    https://www.microsoft.com/en-us/edge/business/download
-
- 2. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
-
-    * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
-
- 3. 設定を有効化した上で、オプション欄の「表示」ボタンをクリックします。
-
- 4. 入力ダイアログに以下の設定値（BrowserSelectorのアドオンID）を記入して確定します。
-
-    `ifghihgjehplhamcpkmgcfjehjhkijgp`
-
- 5. Edgeを起動し、BrowserSelectorのアドオンが自動的にインストールされることを確認します。
-
-なお、Edgeの仕様上の制限により、検証などの目的であってもアドオンの導入にはグループポリシーの利用が必要です。
-Edgeアドオンストアのページからユーザー権限でインストールした場合、期待通りの動作結果を得られませんのでご注意ください。
-
 ## BrowserSelectorをアンインストールする
 
 BrowserSelectorをシステムから削除したい場合は次の手順に従います。
@@ -394,9 +360,21 @@ BrowserSelectorをシステムから削除したい場合は次の手順に従�
 
  2. BrowserSelectorを選択し、アンインストールを実行します。
 
- 3. ブラウザにアドオンを導入した場合は、次の手順で削除します。
+## 拡張機能／アドオンをアンインストールする
 
-Chromeのアドオンを削除する
+ブラウザにアドオンを導入した場合は、次の手順で削除します。
+
+### Edgeのアドオンを削除する
+
+ 1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
+
+    * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
+
+ 2. オプション欄の「表示」ボタンをクリックします。
+
+ 3. BrowserSelectorのアドオンIDを一覧から削除します。
+
+### Chromeのアドオンを削除する
 
  1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
 
@@ -406,17 +384,7 @@ Chromeのアドオンを削除する
 
  3. BrowserSelectorのアドオンIDを一覧から削除します。
 
-Edgeのアドオンを削除する
-
- 1. Windowsのグループポリシーエディタを起動し、次の順番で選択します。
-
-    * 管理用テンプレート > Microsoft Edge > 拡張機能 > サイレントインストールされる拡張機能を制御する
-
- 2. オプション欄の「表示」ボタンをクリックします。
-
- 3. BrowserSelectorのアドオンIDを一覧から削除します。
-
-Firefoxのアドオンを削除する
+### Firefoxのアドオンを削除する
 
  1. Firefoxのインストールパス配下の「distribution」フォルダに移動します。
 
