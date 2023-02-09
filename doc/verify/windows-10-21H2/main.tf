@@ -441,6 +441,14 @@ resource "local_file" "playbook" {
       win_shortcut:
         src: '%LocalAppData%'
         dest: '%Public%\Desktop\LocalAppData.lnk'
+    - name: Copy batch to join dummy domain
+      copy:
+        src: join-dummy-domain.bat
+        dest: 'c:\Users\Public\join-dummy-domain.bat'
+    - name: Copy batch to leave dummy domain
+      copy:
+        src: leave-dummy-domain.bat
+        dest: 'c:\Users\Public\leave-dummy-domain.bat'
 EOL
 }
 
