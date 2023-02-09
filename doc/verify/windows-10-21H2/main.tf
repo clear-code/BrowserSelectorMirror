@@ -449,6 +449,28 @@ resource "local_file" "playbook" {
       copy:
         src: leave-dummy-domain.bat
         dest: 'c:\Users\Public\leave-dummy-domain.bat'
+    - name: Copy Chrome ADM/ADMX template
+      when: not "${var.chrome-policy-template-archive}" == ""
+      win_copy:
+        src: ${var.chrome-policy-template-archive}
+        dest: 'c:\Users\Public\policy_templates.zip'
+    - name: Extract Chome ADM/ADMX template
+      when: not "${var.chrome-policy-template-archive}" == ""
+      win_unzip:
+        src: 'c:\Users\Public\policy_templates.zip'
+        dest: 'c:\Users\Public\chrome'
+        remote_src: True
+    - name: Copy Edge ADM/ADMX template
+      when: not "${var.edge-policy-template-archive}" == ""
+      win_copy:
+        src: ${var.edge-policy-template-archive}
+        dest: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+    - name: Extract Edge ADM/ADMX template
+      when: not "${var.edge-policy-template-archive}" == ""
+      win_unzip:
+        src: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+        dest: 'c:\Users\Public\edge'
+        remote_src: True
 EOL
 }
 
