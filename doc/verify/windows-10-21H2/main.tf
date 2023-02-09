@@ -415,10 +415,24 @@ resource "local_file" "playbook" {
       win_shortcut:
         src: '%ProgramFiles(x86)%'
         dest: '%Public%\Desktop\Program Files (x86).lnk'
-    - name: Create shortcut to testcases
+    - name: Download BrowserSelector for webextension
+      win_get_url:
+        url: "https://gitlab.com/clear-code/browserselector/-/archive/master/browserselector-master.zip"
+        dest: 'c:\Users\Public\browserselector-master.zip'
+    - name: Extract contents
+      win_unzip:
+        src: 'c:\Users\Public\browserselector-master.zip'
+        dest: 'c:\Users\Public'
+        delete_archive: yes
+    - name: Extract only webextension
+      win_copy:
+        src: 'c:\Users\Public\browserselector-master\webextension'
+        dest: 'c:\Users\Public'
+        remote_src: True
+    - name: Create shortcut to webextension
       win_shortcut:
-        src: '%Public%\testcases'
-        dest: '%Public%\Desktop\testcases.lnk'
+        src: '%Public%\webextension'
+        dest: '%Public%\Desktop\webextension.lnk'
     - name: Create shortcut to AppData
       win_shortcut:
         src: '%AppData%'
