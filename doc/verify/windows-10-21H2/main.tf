@@ -445,6 +445,10 @@ resource "local_file" "playbook" {
       copy:
         src: join-dummy-domain.bat
         dest: 'c:\Users\Public\join-dummy-domain.bat'
+    - name: Copy batch to setup policy files
+      copy:
+        src: copy-policy-templates.bat
+        dest: 'c:\Users\Public\copy-policy-templates.bat'
     - name: Copy batch to leave dummy domain
       copy:
         src: leave-dummy-domain.bat
