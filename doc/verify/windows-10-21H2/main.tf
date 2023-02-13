@@ -453,6 +453,10 @@ resource "local_file" "playbook" {
       copy:
         src: leave-dummy-domain.bat
         dest: 'c:\Users\Public\leave-dummy-domain.bat'
+    - name: Copy manifest to apply update
+      copy:
+        src: manifest.xml
+        dest: 'c:\Users\Public\webextension\manifest.xml'
     - name: Copy Chrome ADM/ADMX template
       when: not "${var.chrome-policy-template-archive}" == ""
       win_copy:
