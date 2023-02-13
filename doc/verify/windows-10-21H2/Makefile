@@ -10,8 +10,28 @@ all: apply
 
 terraform.tfvars:
 	cat terraform.tfvars.template | sed -e "s/%password%/$$(pwgen -s --remove-chars="\'\"$$%{}" -y 20 1)/gi" > terraform.tfvars
+	# Chrome policy template via https://dl.google.com/dl/edgedl/chrome/policy/policy_templates.zip
+	@if [ -f ansible/files/policy_templates.zip ]; then \
+	  sed -i'' -e 's/chrome-policy-template-archive = ""/chrome-policy-template-archive = "policy_templates.zip"/' terraform.tfvars; \
+	else \
+	  echo "WARNING: missing Chrome ADM/ADMX policy template. Download via https://dl.google.com/dl/edgedl/chrome/policy/policy_templates.zip"; \
+	  echo "WARNING: then put it under ansible/files/policy_templates.zip."; \
+	fi
+	# Edge policy template via https://www.microsoft.com/ja-jp/edge/business/download
+	@if [ -f ansible/files/MicrosoftEdgePolicyTemplates.zip ]; then \
+	  sed -i'' -e 's/edge-policy-template-archive = ""/edge-policy-template-archive = "MicrosoftEdgePolicyTemplates.zip"/' terraform.tfvars; \
+	else \
+	  echo "WARNING: Missing Edge ADM/ADMX policy template. Download via https://www.microsoft.com/ja-jp/edge/business/download"; \
+	  echo "WARNING: then put it under ansible/files/MicrosoftEdgePolicyTemplates.zip."; \
+	fi
 
-apply: terraform.tfvars
+CHROME_WEBEXT_VERSION=$(shell cat ../../../webextension/chrome/manifest.json | jq --raw-output ".version")
+EDGE_WEBEXT_VERSION=$(shell cat ../../../webextension/edge/manifest.json | jq --raw-output ".version")
+manifest.xml:
+	cat manifest.xml.template | sed -e "s/CHROME_WEBEXT_VERSION/$(CHROME_WEBEXT_VERSION)/" \
+	                                -e "s/EDGE_WEBEXT_VERSION/$(EDGE_WEBEXT_VERSION)/" > ansible/files/manifest.xml
+
+apply: terraform.tfvars manifest.xml
 	terraform init
 	terraform plan
 	time (terraform apply -auto-approve && sleep 10 && ansible-playbook -i ansible/hosts ansible/playbook.yml)

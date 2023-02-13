@@ -415,10 +415,24 @@ resource "local_file" "playbook" {
       win_shortcut:
         src: '%ProgramFiles(x86)%'
         dest: '%Public%\Desktop\Program Files (x86).lnk'
-    - name: Create shortcut to testcases
+    - name: Download BrowserSelector for webextension
+      win_get_url:
+        url: "https://gitlab.com/clear-code/browserselector/-/archive/master/browserselector-master.zip"
+        dest: 'c:\Users\Public\browserselector-master.zip'
+    - name: Extract contents
+      win_unzip:
+        src: 'c:\Users\Public\browserselector-master.zip'
+        dest: 'c:\Users\Public'
+        delete_archive: yes
+    - name: Extract only webextension
+      win_copy:
+        src: 'c:\Users\Public\browserselector-master\webextension'
+        dest: 'c:\Users\Public'
+        remote_src: True
+    - name: Create shortcut to webextension
       win_shortcut:
-        src: '%Public%\testcases'
-        dest: '%Public%\Desktop\testcases.lnk'
+        src: '%Public%\webextension'
+        dest: '%Public%\Desktop\webextension.lnk'
     - name: Create shortcut to AppData
       win_shortcut:
         src: '%AppData%'
@@ -427,6 +441,44 @@ resource "local_file" "playbook" {
       win_shortcut:
         src: '%LocalAppData%'
         dest: '%Public%\Desktop\LocalAppData.lnk'
+    - name: Copy batch to join dummy domain
+      copy:
+        src: join-dummy-domain.bat
+        dest: 'c:\Users\Public\join-dummy-domain.bat'
+    - name: Copy batch to setup policy files
+      copy:
+        src: copy-policy-templates.bat
+        dest: 'c:\Users\Public\copy-policy-templates.bat'
+    - name: Copy batch to leave dummy domain
+      copy:
+        src: leave-dummy-domain.bat
+        dest: 'c:\Users\Public\leave-dummy-domain.bat'
+    - name: Copy manifest to apply update
+      copy:
+        src: manifest.xml
+        dest: 'c:\Users\Public\webextension\manifest.xml'
+    - name: Copy Chrome ADM/ADMX template
+      when: not "${var.chrome-policy-template-archive}" == ""
+      win_copy:
+        src: ${var.chrome-policy-template-archive}
+        dest: 'c:\Users\Public\policy_templates.zip'
+    - name: Extract Chome ADM/ADMX template
+      when: not "${var.chrome-policy-template-archive}" == ""
+      win_unzip:
+        src: 'c:\Users\Public\policy_templates.zip'
+        dest: 'c:\Users\Public\chrome'
+        remote_src: True
+    - name: Copy Edge ADM/ADMX template
+      when: not "${var.edge-policy-template-archive}" == ""
+      win_copy:
+        src: ${var.edge-policy-template-archive}
+        dest: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+    - name: Extract Edge ADM/ADMX template
+      when: not "${var.edge-policy-template-archive}" == ""
+      win_unzip:
+        src: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+        dest: 'c:\Users\Public\edge'
+        remote_src: True
 EOL
 }
 
