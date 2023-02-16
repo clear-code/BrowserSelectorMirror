@@ -253,12 +253,12 @@ the registry key, are placed at `[Common]` section in INI file.
 
 ## Config items
 
-### `HostNamePatterns` or `URLPatterns`
+### `URLPatterns` or `HostNamePatterns`
 
 #### Simple Pattern Matching
 
-You need to set hostname or URL patterns to open them by specific browsers.
-They are stored under the registry key `HostNamePatterns` and `URLPatterns` as
+You need to set URL or hostname patterns to open them by specific browsers.
+They are stored under the registry key `URLPatterns` and `HostNamePatterns` as
 string values. Although you can use any characters as the value names, we
 recommend to use numbers such as `0001` to clarify the priority. The value is
 hostname or URL pattern. Optionally you can add a browser name to open the URL
@@ -266,10 +266,10 @@ pattern by splitting the value by `|`.
 
 e.g.)
 
+  * `URLPatterns`
+    * `0001` = `http://*.example.com|firefox`
   * `HostNamePatterns`
     * `0001` = `*.example.org|firefox`
-  * URLPatterns
-    * `0001` = `http://*.example.com|firefox`
 
 The following wildcard characters are supported for specifying host names or
 URLs:
@@ -317,7 +317,7 @@ A browser names can be added in this case too. Please add a browser name after
 ### `ZonePatterns`
 
 Use this option to map browsers to security zones in Internet Explorer.
-The configuration syntax is the same as URLPatterns and HostNamePatterns.
+The configuration syntax is the same as `URLPatterns` and `HostNamePatterns`.
 
 e.g.)
 

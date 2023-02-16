@@ -230,23 +230,23 @@ BHOのみを使用してBrowserSelector.exeが必要無い場合、この手順�
 
 ## 設定項目
 
-### `HostNamePatterns` および `URLPatterns`
+### `URLPatterns` および `HostNamePatterns`
 
 #### 単純なワイルドカードによるパターンマッチング
 
 特定のURLを指定したウェブブラウザで開かせるために、ホスト名やURLのパターンを設
-定する必要があります。これらの設定はレジストリキー`HostNamePatterns`あるいは
-`URLPatterns`配下に文字列値として格納します。文字列値の名前には任意の文字列を
+定する必要があります。これらの設定はレジストリキー`URLPatterns`あるいは
+`HostNamePatterns`配下に文字列値として格納します。文字列値の名前には任意の文字列を
 使用できますが、適用順序を明確化するために`0001`といった数字を使用することをお
 勧めします。文字列値のデータにはホスト名やURLのパターンをセットします。また、
 「|」を区切り文字として、末尾に使用するブラウザ名を付加することもできます。
 
 例)
 
+  * `URLPatterns`
+    * `0001` = `http://*.example.com|firefox`
   * `HostNamePatterns`
     * `0001` = `*.example.org|firefox`
-  * URLPatterns
-    * `0001` = `http://*.example.com|firefox`
 
 ホスト名やURL名のパターンを指定するために、以下のワイルドカードがサポートされて
 います。
