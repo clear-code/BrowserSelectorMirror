@@ -4,7 +4,7 @@ CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
 title: "BrowserSelector利用ガイド v2.2.5"
 author: "株式会社クリアコード"
-date: "2023-02-03"
+date: "2023-02-17"
 titlepage: true
 logo: logo.png
 logo-width: 250
@@ -280,6 +280,9 @@ EnableIncludeCache=1
 
 このセクションには、IEのセキュリティゾーンに対応するブラウザを設定します。
 
+  - この機能はIE/Firefoxのみサポートしています。Chrome/Edgeの連携アドオンは、ゾーン判定に対応していません。
+  - [URLPatterns]と[HostNamePatterns]のルールが[ZonePatterns]よりも優先されます。
+
 利用可能なセキュリティゾーン名は以下の通りです。
 
 | 項目       |  説明                                          |
@@ -297,8 +300,6 @@ EnableIncludeCache=1
 0001=intra|ie
 0002=internet|firefox
 ```
-
-この機能はIE/Firefoxのみサポートしています。Chrome/Edgeの連携アドオンは、ゾーン判定に対応していません。
 
 # その他のセットアップ
 
