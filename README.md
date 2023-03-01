@@ -138,10 +138,10 @@ You need to load development version of addons with following steps, If you are 
    <?xml version='1.0' encoding='UTF-8'?>
    <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
      <app appid='egoppdngdcoikeknmbgiakconmchahhf'><!-- The generated ID of Chrome addon -->
-       <updatecheck codebase='file:///C:/Users/Public/webextension/chrome.crx' version='1.0.0' /><!-- Put real File URL of the `chrome.crx`. -->
+       <updatecheck codebase='file:///C:/Users/Public/webextensions/chrome.crx' version='1.0.0' /><!-- Put real File URL of the `chrome.crx`. -->
      </app>
      <app appid='oapdkmbdgdcjpacbjpcdfhncifimimcj'><!-- The generated ID of Edge addon -->
-       <updatecheck codebase='file:///C:/Users/Public/webextension/edge.crx' version='1.0.0' /><!-- Put real File URL of the `edge.crx`. -->
+       <updatecheck codebase='file:///C:/Users/Public/webextensions/edge.crx' version='1.0.0' /><!-- Put real File URL of the `edge.crx`. -->
      </app>
    </gupdate>
    ```
@@ -153,7 +153,7 @@ You need to load development version of addons with following steps, If you are 
    4. Switch to `Enabled`.
    5. Click `Show...`.
    6. Add `<Generated ID of Chrome addon>;<File URL of the manifest XML file>` to the list.
-      Assume that it is `egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextension/manifest.xml`.
+      Assume that it is `egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextensions/manifest.xml`.
 6. Install group policy template for Edge and configure Edge to load the addon.
    1. Download group policy template via the `Get policy files` link in https://www.microsoft.com/en-us/edge/business/download , and extract contents of the saved zip file.
    2. Copy `windows\admx\*.admx`, `windows\admx\en-US` and `windows\admx\ja` to `C:\Windows\PolicyDefinitions`.
@@ -161,7 +161,7 @@ You need to load development version of addons with following steps, If you are 
    4. Switch to `Enabled`.
    5. Click `Show...`.
    6. Add `<Generated ID of Edge addon>;<File URL of the manifest XML file>` to the list.
-      Assume that it is `oapdkmbdgdcjpacbjpcdfhncifimimcj;file:///C:/Users/Public/webextension/manifest.xml`.
+      Assume that it is `oapdkmbdgdcjpacbjpcdfhncifimimcj;file:///C:/Users/Public/webextensions/manifest.xml`.
 7. Set up the client as a domain member if it is not joined to any Active Directory domain. For example, lauch `cmd.exe` as the system administrator and run following commands.
    (Ref: https://hitco.at/blog/apply-edge-policies-for-non-domain-joined-devices/ )
    ```

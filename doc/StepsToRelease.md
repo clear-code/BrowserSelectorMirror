@@ -5,7 +5,7 @@
 - BrowserSelector 本体
   - browserselector リポジトリのうち、後述のアドオンを除く部分
 - BrowserSelector アドオン（ブラウザ拡張機能）
-  - browserselector/webextension 配下の各ブラウザ向けリソース
+  - browserselector/webextensions 配下の各ブラウザ向けリソース
 - 「BrowserSelector利用ガイド vx.y.z」（PDF文書）
   - `/doc/BrowserSelectorGuide.md` を元に生成するPDFファイル
 
