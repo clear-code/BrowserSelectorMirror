@@ -35,27 +35,27 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Testing Extensions
         run: |
-          cp webextension/edge/manifest.json.dev webextension/edge/manifest.json
-          make -C webextension/edge
-          cp webextension/chrome/manifest.json.dev webextension/chrome/manifest.json
-          make -C webextension/chrome
-          make -C webextension/firefox
+          cp webextensions/edge/manifest.json.dev webextensions/edge/manifest.json
+          make -C webextensions/edge
+          cp webextensions/chrome/manifest.json.dev webextensions/chrome/manifest.json
+          make -C webextensions/chrome
+          make -C webextensions/firefox
       - name: Upload Extensions
         uses: actions/upload-artifact@v2
         with:
           name: WebExtensionDev
-          path: webextension/*/*.zip
+          path: webextensions/*/*.zip
   webext:
     runs-on: [ ubuntu-latest ]
     steps:
       - uses: actions/checkout@v2
       - name: Build Web Extensions
         run: |
-          make -C webextension/edge
-          make -C webextension/chrome
-          make -C webextension/firefox
+          make -C webextensions/edge
+          make -C webextensions/chrome
+          make -C webextensions/firefox
       - name: Upload Extensions
         uses: actions/upload-artifact@v2
         with:
           name: WebExtension
-          path: webextension/*/*.zip
+          path: webextensions/*/*.zip

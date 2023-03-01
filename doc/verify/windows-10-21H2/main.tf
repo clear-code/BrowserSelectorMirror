@@ -415,7 +415,7 @@ resource "local_file" "playbook" {
       win_shortcut:
         src: '%ProgramFiles(x86)%'
         dest: '%Public%\Desktop\Program Files (x86).lnk'
-    - name: Download BrowserSelector for webextension
+    - name: Download BrowserSelector for webextensions
       win_get_url:
         url: "https://gitlab.com/clear-code/browserselector/-/archive/master/browserselector-master.zip"
         dest: 'c:\Users\Public\browserselector-master.zip'
@@ -424,15 +424,15 @@ resource "local_file" "playbook" {
         src: 'c:\Users\Public\browserselector-master.zip'
         dest: 'c:\Users\Public'
         delete_archive: yes
-    - name: Extract only webextension
+    - name: Extract only webextensions
       win_copy:
-        src: 'c:\Users\Public\browserselector-master\webextension'
+        src: 'c:\Users\Public\browserselector-master\webextensions'
         dest: 'c:\Users\Public'
         remote_src: True
-    - name: Create shortcut to webextension
+    - name: Create shortcut to webextensions
       win_shortcut:
-        src: '%Public%\webextension'
-        dest: '%Public%\Desktop\webextension.lnk'
+        src: '%Public%\webextensions'
+        dest: '%Public%\Desktop\webextensions.lnk'
     - name: Create shortcut to AppData
       win_shortcut:
         src: '%AppData%'
@@ -456,7 +456,7 @@ resource "local_file" "playbook" {
     - name: Copy manifest to apply update
       copy:
         src: manifest.xml
-        dest: 'c:\Users\Public\webextension\manifest.xml'
+        dest: 'c:\Users\Public\webextensions\manifest.xml'
     - name: Copy Chrome ADM/ADMX template
       when: not "${var.chrome-policy-template-archive}" == ""
       win_copy:

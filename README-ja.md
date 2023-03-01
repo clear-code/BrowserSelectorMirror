@@ -107,10 +107,10 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
    <?xml version='1.0' encoding='UTF-8'?>
    <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
      <app appid='egoppdngdcoikeknmbgiakconmchahhf'><!-- 先ほど控えたChrome用アドオンのIDを書く -->
-       <updatecheck codebase='file:///C:/Users/Public/webextension/chrome.crx' version='1.0.0' /><!-- `chrome.crx` の実際のFile URLを書く -->
+       <updatecheck codebase='file:///C:/Users/Public/webextensions/chrome.crx' version='1.0.0' /><!-- `chrome.crx` の実際のFile URLを書く -->
      </app>
      <app appid='oapdkmbdgdcjpacbjpcdfhncifimimcj'><!-- 先ほど控えたEdge用アドオンのIDを書く -->
-       <updatecheck codebase='file:///C:/Users/Public/webextension/edge.crx' version='1.0.0' /><!-- `edge.crx` の実際のFile URLを書く -->
+       <updatecheck codebase='file:///C:/Users/Public/webextensions/edge.crx' version='1.0.0' /><!-- `edge.crx` の実際のFile URLを書く -->
      </app>
    </gupdate>
    ```
@@ -123,7 +123,7 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
    4. 設定値を `Enabled`（有効）に切り替える。
    5. `Show...` （`表示...`）をクリックする。
    6. 設定のデータ一覧に `<ChromeアドオンのID>;<マニフェストファイルの位置>` を追加する。
-      ここまでの例に倣った場合、`egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextension/manifest.xml` のようになる。
+      ここまでの例に倣った場合、`egoppdngdcoikeknmbgiakconmchahhf;file:///C:/Users/Public/webextensions/manifest.xml` のようになる。
 6. Edgeのグループポリシーテンプレートを導入し、Chromeでアドオンを読み込むための設定を行う。
    1. https://www.microsoft.com/ja-jp/edge/business/download
       の「ポリシー ファイルを取得」からポリシーテンプレートをダウンロードし、保存されたMicrosoftEdgePolicyTemplates.cabファイル(zipをcabで再圧縮されている)を展開する。
@@ -132,7 +132,7 @@ ChromeおよびEdgeでは、BrowserSelectorのアドオンはグループポリ�
    5. 設定値を `Enabled`（有効）に切り替える。
    6. `Show...` （`表示...`）をクリックする。
    7. 設定のデータ一覧に `<EdgeアドオンのID>;<マニフェストファイルの位置>` を追加する。
-      ここまでの例に倣った場合、`oapdkmbdgdcjpacbjpcdfhncifimimcj;file:///C:/Users/Public/webextension/manifest.xml` のようになる。
+      ここまでの例に倣った場合、`oapdkmbdgdcjpacbjpcdfhncifimimcj;file:///C:/Users/Public/webextensions/manifest.xml` のようになる。
 7. 端末がドメイン参加状態でない場合、管理者権限で `cmd.exe` を開き、以下のコマンド群を実行してドメイン参加状態にする。
    （参考： https://hitco.at/blog/apply-edge-policies-for-non-domain-joined-devices/ ）
    ```
