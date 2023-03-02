@@ -24,7 +24,7 @@ enterprise-dev:
 	rm -rf enterprise-dev
 	mkdir -p enterprise-dev
 	cp -R _locales misc *.js enterprise-dev/
-	sed -i -E -e 's/BrowserSelector/BrowserSelector Enterrpise Developer Edition/g' enterprise-dev/_locales/*/messages.json
+	sed -i -E -e 's/BrowserSelector/BrowserSelector Enterprise Developer Edition/g' enterprise-dev/_locales/*/messages.json
 	cp manifest.json enterprise-dev/manifest.json
 	rm -f BrowserSelectorEdgeEnterpriseDev.zip
 	cd enterprise-dev && zip -9 - $(FILES) > ../BrowserSelectorEdgeEnterpriseDev.zip
