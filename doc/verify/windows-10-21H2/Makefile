@@ -34,7 +34,7 @@ manifest.xml:
 apply: terraform.tfvars manifest.xml
 	terraform init
 	terraform plan
-	time (terraform apply -auto-approve && sleep 10 && ansible-playbook -i ansible/hosts ansible/playbook.yml)
+	time (terraform apply -auto-approve && ansible-playbook -i ansible/hosts ansible/playbook.yml)
 
 apply-playbook:
 	ansible-playbook -i ansible/hosts ansible/playbook.yml
