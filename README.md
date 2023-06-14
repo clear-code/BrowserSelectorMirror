@@ -404,8 +404,8 @@ support recursive loading (`Include` in the child config is ignored).
 
   * Type: String
     * Both following formats are available.
-    * Local Windows Path Fromat: C:\path\to\file.ini
-    * UNC Format: \\HostName\ShareName\path\to\file.ini
+    * Local Windows Path Fromat: `C:\path\to\file.ini`
+    * UNC Format: `\\HostName\ShareName\path\to\file.ini`
 
 ### `EnableIncludeCache`
 

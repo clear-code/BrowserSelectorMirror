@@ -383,8 +383,8 @@ URLのパターンを指定する方法として、単純なワイルドカー�
 
   * 値の型: 文字列
     * 以下のいずれかの形式を使用可能
-    * 通常のWindowsパス形式: C:\path\to\file.ini
-    * UNC形式: \\HostName\ShareName\path\to\file.ini
+    * 通常のWindowsパス形式: `C:\path\to\file.ini`
+    * UNC形式: `\\HostName\ShareName\path\to\file.ini`
 
 ### `EnableIncludeCache`
 
