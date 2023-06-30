@@ -298,6 +298,8 @@ resource "local_file" "playbook" {
       win_get_url:
         url: "${var.windows-language-pack-url}"
         dest: 'c:\temp\lp.cab'
+        url_username: "${var.download-user}"
+        url_password: "${var.download-token}"
     - name: Install language pack
       when: not "${var.windows-language-pack-url}" == ""
       win_shell: |
@@ -380,9 +382,15 @@ resource "local_file" "playbook" {
       win_chocolatey:
         name: chocolatey
         state: present
-    - name: Install EmEditor
+    - name: Install chocolatey-compatibility.extension to install legacy style package like SakuraEditor
       win_chocolatey:
-        name: emeditor
+        name: chocolatey-compatibility.extension
+        state: present
+        allow_empty_checksums: yes
+        ignore_checksums: yes
+    - name: Install SakuraEditor
+      win_chocolatey:
+        name: sakuraeditor
         state: present
         allow_empty_checksums: yes
         ignore_checksums: yes
@@ -464,28 +472,80 @@ resource "local_file" "playbook" {
       copy:
         src: manifest.xml
         dest: 'c:\Users\Public\webextensions\manifest.xml'
-    - name: Copy Chrome ADM/ADMX template
-      when: not "${var.chrome-policy-template-archive}" == ""
-      win_copy:
-        src: ${var.chrome-policy-template-archive}
-        dest: 'c:\Users\Public\policy_templates.zip'
-    - name: Extract Chome ADM/ADMX template
-      when: not "${var.chrome-policy-template-archive}" == ""
+    - name: Prepare directory to put policy templates (en-US locale)
+      win_file:
+        path: C:\Windows\PolicyDefinitions\en-US
+        state: directory
+    - name: Prepare directory to put policy templates (ja-JP locale)
+      win_file:
+        path: C:\Windows\PolicyDefinitions\ja-JP
+        state: directory
+    - name: Download Firefox policy template
+      when: not "${var.firefox-policy-template-url}" == ""
+      win_get_url:
+        url: "${var.firefox-policy-template-url}"
+        dest: 'C:\Users\Public\firefox-policy-template.zip'
+    - name: Prepare directory to extract Firefox policy template
+      when: not "${var.firefox-policy-template-url}" == ""
+      win_file:
+        path: 'c:\Users\Public\firefox_policy_templates'
+        state: directory
+    - name: Extract Firefox policy template
+      when: not "${var.firefox-policy-template-url}" == ""
       win_unzip:
-        src: 'c:\Users\Public\policy_templates.zip'
-        dest: 'c:\Users\Public\chrome'
-        remote_src: True
-    - name: Copy Edge ADM/ADMX template
-      when: not "${var.edge-policy-template-archive}" == ""
-      win_copy:
-        src: ${var.edge-policy-template-archive}
-        dest: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
-    - name: Extract Edge ADM/ADMX template
-      when: not "${var.edge-policy-template-archive}" == ""
+        src: 'C:\Users\Public\firefox-policy-template.zip'
+        dest: 'c:\Users\Public\firefox_policy_templates'
+        delete_archive: yes
+    - name: Install Firefox policy template (definitions)
+      when: not "${var.firefox-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\firefox_policy_templates\windows\* C:\Windows\PolicyDefinitions\
+    - name: Install Firefox policy template (en-US locale)
+      when: not "${var.firefox-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\firefox_policy_templates\windows\en-US C:\Windows\PolicyDefinitions\en-US
+    - name: Download Google Chrome policy template
+      when: not "${var.chrome-policy-template-url}" == ""
+      win_get_url:
+        url: "${var.chrome-policy-template-url}"
+        dest: 'C:\Users\Public\chrome-policy-template.zip'
+        url_username: "${var.download-user}"
+        url_password: "${var.download-token}"
+    - name: Extract Google Chrome policy template
+      when: not "${var.chrome-policy-template-url}" == ""
       win_unzip:
-        src: 'c:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
-        dest: 'c:\Users\Public\edge'
-        remote_src: True
+        src: 'C:\Users\Public\chrome-policy-template.zip'
+        dest: 'c:\Users\Public'
+        delete_archive: yes
+    - name: Install Google Chrome policy template (definitions)
+      when: not "${var.chrome-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\chrome_policy_templates\windows\admx\* C:\Windows\PolicyDefinitions\
+    - name: Install Google Chrome policy template (en-US locale)
+      when: not "${var.chrome-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\chrome_policy_templates\windows\admx\en-US C:\Windows\PolicyDefinitions\en-US
+    - name: Install Google Chrome policy template (ja-JP locale)
+      when: not "${var.chrome-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\chrome_policy_templates\windows\admx\ja-JP C:\Windows\PolicyDefinitions\ja-JP
+    - name: Download Edge policy template
+      when: not "${var.edge-policy-template-url}" == ""
+      win_get_url:
+        url: "${var.edge-policy-template-url}"
+        dest: 'C:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+        url_username: "${var.download-user}"
+        url_password: "${var.download-token}"
+    - name: Extract Edge policy template
+      when: not "${var.edge-policy-template-url}" == ""
+      win_unzip:
+        src: 'C:\Users\Public\MicrosoftEdgePolicyTemplates.zip'
+        dest: 'c:\Users\Public'
+        delete_archive: yes
+    - name: Install Edge policy template (definitions)
+      when: not "${var.edge-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\MicrosoftEdgePolicyTemplates\windows\admx\* C:\Windows\PolicyDefinitions\
+    - name: Install Edge policy template (en-US locale)
+      when: not "${var.edge-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\MicrosoftEdgePolicyTemplates\windows\admx\en-US C:\Windows\PolicyDefinitions\en-US
+    - name: Install Edge policy template (ja-JP locale)
+      when: not "${var.edge-policy-template-url}" == ""
+      win_command: xcopy /y C:\Users\Public\MicrosoftEdgePolicyTemplates\windows\admx\ja-JP C:\Windows\PolicyDefinitions\ja-JP
 EOL
 }
 
