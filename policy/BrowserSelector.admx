@@ -13,6 +13,7 @@
   <policies>
     <policy name="DefaultBrowser" class="Machine"
         displayName="$(string.DefaultBrowser)"
+        explainText="$(string.DefaultBrowser_Explain)"
         key="SOFTWARE\WOW6432Node\ClearCode\BrowserSelector"
         presentation="$(presentation.DefaultBrowser)">
       <parentCategory ref="BrowserSelector"/>
@@ -44,6 +45,7 @@
     </policy>
     <policy name="SecondBrowser" class="Machine"
         displayName="$(string.SecondBrowser)"
+        explainText="$(string.SecondBrowser_Explain)"
         key="SOFTWARE\WOW6432Node\ClearCode\BrowserSelector"
         presentation="$(presentation.SecondBrowser)">
       <parentCategory ref="BrowserSelector"/>

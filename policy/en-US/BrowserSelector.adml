@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="2.4" schemaVersion="1.0" >
+  <displayName/>
+  <description/>
+  <resources >
+    <stringTable >
+      <string id="BrowserSelector">BrowserSelector</string>
+      <string id="IE">Internet Explorer</string>
+      <string id="Firefox">Firefox</string>
+      <string id="Chrome">Chrome</string>
+      <string id="Edge">Edge</string>
+
+      <string id="DefaultBrowser">Default browser to open URLs</string>
+      <string id="DefaultBrowser_Explain">URLs not matched to any pattern will be opened by this browser.</string>
+      <string id="SecondBrowser">Browser for patterns without browser name (SecondBrowser)</string>
+      <string id="SecondBrowser_Explain">URLs matched to patterns defined without browser name will be opened by this browser.</string>
+      <string id="FirefoxCommand">Path to Firefox executable file</string>
+      <string id="FirefoxCommand_Explain">You need to configure this for environments with multiple Firefox installations.</string>
+      <string id="CloseEmptyTab">Close the original tab after it is redirected to other browser</string>
+      <string id="OnlyOnAnchorClick">Trigger redirection only when you click links in webpages</string>
+      <string id="Include">Path to a remote config file which are loaded additionally</string>
+      <string id="EnableIncludeCache">Cache the remote config file</string>
+      <string id="UseRegex">Accept host and URL patterns containing regular expressions</string>
+      <string id="ZonePatterns">Zone patterns</string>
+      <string id="ZonePatterns_Explain">You can configure browsers for each security zone.
+
+For example, "intra|firefox" will open all Intranet pages with Firefox.
+Available zones are: "internet", "intra", "local", "trusted" and "restricted".</string>
+      <string id="HostnamePatterns">Hostname patterns</string>
+      <string id="HostnamePatterns_Explain">You can configure browsers for each hostname.
+
+For example, "*.clear-code.com|firefox" will open all pages under the specified domain with Firefox.</string>
+      <string id="URLPatterns">URL patterns</string>
+      <string id="URLPatterns_Explain">You can configure browsers for each URL pattern.
+
+For example, "http*://*.clear-code.com/*|firefox" will open all pages with URL matching to the pattern with Firefox.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DefaultBrowser">
+        <dropdownList refId="DefaultBrowser" noSort="true"/>
+      </presentation>
+      <presentation id="SecondBrowser">
+        <dropdownList refId="SecondBrowser" noSort="true"/>
+      </presentation>
+      <presentation id="FirefoxCommand">
+        <textBox refId="FirefoxCommand">
+          <label>Path: </label>
+        </textBox>
+      </presentation>
+      <presentation id="Include">
+        <textBox refId="Include">
+          <label>Path: </label>
+        </textBox>
+      </presentation>
+      <presentation id="ZonePatterns">
+        <listBox refId="ZonePatterns"/>
+      </presentation>
+      <presentation id="HostnamePatterns">
+        <listBox refId="HostnamePatterns"/>
+      </presentation>
+      <presentation id="URLPatterns">
+        <listBox refId="URLPatterns"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
