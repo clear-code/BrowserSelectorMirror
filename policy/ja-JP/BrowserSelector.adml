@@ -10,11 +10,13 @@
       <string id="Chrome">Chrome</string>
       <string id="Edge">Edge</string>
 
-      <string id="DefaultBrowser">Webページを開くデフォルトのブラウザ</string>
+      <string id="DefaultBrowser">Webページを開く既定のブラウザ</string>
+      <string id="DefaultBrowser_Explain">いずれのパターンにもマッチしなかったURLは、ここで指定したブラウザで開かれます。</string>
       <string id="SecondBrowser">ブラウザの指定を省略した時に利用するブラウザ (SecondBrowser)</string>
+      <string id="SecondBrowser_Explain">ブラウザ指定を省略したパターンにマッチしたURLは、ここで指定したブラウザで開かれます。</string>
       <string id="FirefoxCommand">起動するFirefoxの実行ファイルを指定する</string>
       <string id="FirefoxCommand_Explain">この設定はFirefoxを複数インストールしている環境のみ設定が必要です。</string>
-      <string id="CloseEmptyTab">他のブラウザでページを開いたときに元のタブを閉じる</string>
+      <string id="CloseEmptyTab">他のブラウザにリダイレクトしたときに元のタブを閉じる</string>
       <string id="OnlyOnAnchorClick">リンククリック時のみリダイレクト判定を行う</string>
       <string id="Include">追加で読み込むリモート設定ファイルのパス</string>
       <string id="EnableIncludeCache">リモート設定ファイルのキャッシュを生成する</string>
