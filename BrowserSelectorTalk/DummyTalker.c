@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 
 int error(char *msg)
 {
@@ -18,6 +19,9 @@ int error(char *msg)
 
 int main(int argc, char *argv[])
 {
+    /* Prevent Windows from corrupting data */
+    setmode(_fileno(stdout), O_BINARY);
+
     char *url;
     int len;
 
