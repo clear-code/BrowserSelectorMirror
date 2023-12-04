@@ -173,10 +173,37 @@ const Redirector = {
       Redirector.cached = resp.config;
       console.log('Fetch config', JSON.stringify(Redirector.cached));
 
+      resp.config.URLPatternsMatchers = {};
+      resp.config.HostNamePatternsMatchers = {};
+      if (resp.config.UseRegex) {
+        this._generateMatcher(resp.config.URLPatterns, resp.config.URLPatternsMatchers);
+        this._generateMatcher(resp.config.HostNamePatterns, resp.config.HostNamePatternsMatchers);
+      }
+
       if (isStartup) {
         Redirector.handleStartup(Redirector.cached);
       }
     });
+  },
+  _generateMatcher: function(patternsAndBrowsers, matchers) {
+    const patternsByBrowser = {};
+    for (const patternAndBrowser of patternsAndBrowsers) {
+      const [pattern, browser] = patternAndBrowser;
+      try {
+        new RegExp(pattern);
+      }
+      catch(_error) {
+        console.log('failed to compile a regex pattern: ', pattern, browser);
+        continue;
+      }
+      const safeBrowser = browser.toLowerCase();
+      if (!patternsByBrowser[safeBrowser])
+        patternsByBrowser[safeBrowser] = [];
+      patternsByBrowser[safeBrowser].push(pattern);
+    }
+    for (const [browser, patterns] of Object.entries(patternsByBrowser)) {
+      matchers[browser] = new RegExp(`(${patterns.join('|')})`);
+    }
   },
 
   listen: function() {
@@ -271,7 +298,7 @@ const Redirector = {
       const isNewWindow = Redirector.newWindows.has(tab.windowId);
       const closeTab = isNewTab !== false || isNewWindow;
       console.log(`Trying to close empty tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow}, closeTab=${closeTab})`);
-      if (!close) {
+      if (!closeTab) {
         console.log(` => no close tab`);
         return;
       }
@@ -288,24 +315,45 @@ const Redirector = {
 	 * browser name, or null if no pattern matched.
 	 */
   match: function(config, url) {
-    const host = url.split('/')[2];
-    const URLPatterns = config.URLPatterns
-    const HostPatterns = config.HostNamePatterns;
+    const host = this._getHost(url);
 
-    for (let i = 0; i < URLPatterns.length; i++) {
-      if (wildmat(url, URLPatterns[i][0])) {
-        console.log(`* Match with '${URLPatterns[i][0]}' (browser=${URLPatterns[i][1]})`);
-        return URLPatterns[i][1].toLowerCase();
+    if (config.UseRegex) {
+      for (const [browser, matcher] of Object.entries(config.URLPatternsMatchers)) {
+        if (matcher.test(url))
+          return browser;
+      }
+
+      for (const [browser, matcher] of Object.entries(config.HostNamePatternsMatchers)) {
+        if (matcher.test(host))
+          return browser;
+      }
+    } else {
+      for (const [patternAndBrowser] of Object.entries(config.URLPatterns)) {
+        const [pattern, browser] = patternAndBrowser;
+        if (wildmat(url, pattern)) {
+          console.log(`* Match with '${pattern}' (browser=${browser})`);
+          return browser.toLowerCase();
+        }
+      }
+
+      for (const [patternAndBrowser] of Object.entries(config.HostNamePatterns)) {
+        const [pattern, browser] = patternAndBrowser;
+        if (wildmat(host, pattern)) {
+          console.log(`* Match with '${pattern}' (browser=${browser})`);
+          return browser.toLowerCase();
+        }
       }
     }
 
-    for (let i = 0; i < HostPatterns.length; i++) {
-      if (wildmat(host, HostPatterns[i][0])) {
-        console.log(`* Match with '${HostPatterns[i][0]}' (browser=${HostPatterns[i][1]})`);
-        return HostPatterns[i][1].toLowerCase();
-      }
-    }
     return null;
+  },
+  _getHost: function(url) {
+    try {
+      return (new URL(url)).host;
+    }
+    catch(_error) {
+    }
+    return '';
   },
 
   isRedirectURL: function(config, url) {
