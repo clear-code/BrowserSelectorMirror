@@ -319,25 +319,27 @@ const Redirector = {
 
     if (config.UseRegex) {
       for (const [browser, matcher] of Object.entries(config.URLPatternsMatchers)) {
-        if (matcher.test(url))
+        if (matcher.test(url)) {
+          console.log(`* Match with '${matcher.source}' (browser=${browser})`);
           return browser;
+        }
       }
 
       for (const [browser, matcher] of Object.entries(config.HostNamePatternsMatchers)) {
-        if (matcher.test(host))
+        if (matcher.test(url)) {
+          console.log(`* Match with '${matcher.source}' (browser=${browser})`);
           return browser;
+        }
       }
     } else {
-      for (const [patternAndBrowser] of Object.entries(config.URLPatterns)) {
-        const [pattern, browser] = patternAndBrowser;
+      for (const [pattern, browser] of config.URLPatterns) {
         if (wildmat(url, pattern)) {
           console.log(`* Match with '${pattern}' (browser=${browser})`);
           return browser.toLowerCase();
         }
       }
 
-      for (const [patternAndBrowser] of Object.entries(config.HostNamePatterns)) {
-        const [pattern, browser] = patternAndBrowser;
+      for (const [pattern, browser] of Object.entries(config.HostNamePatterns)) {
         if (wildmat(host, pattern)) {
           console.log(`* Match with '${pattern}' (browser=${browser})`);
           return browser.toLowerCase();
