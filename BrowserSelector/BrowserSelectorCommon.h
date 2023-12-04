@@ -220,9 +220,9 @@ public:
 		for (it = m_urlPatterns.begin(); it != m_urlPatterns.end(); it++) {
 			if (it != m_urlPatterns.begin())
 				buf += L",";
-			buf += L"[\"";
-			buf += it->first;
-			buf += L"\",\"";
+			buf += L"[";
+			buf += ToJsonString(it->first, strbuf);
+			buf += L",\"";
 			buf += it->second;
 			buf += L"\"]";
 		}
@@ -232,9 +232,9 @@ public:
 		for (it = m_hostNamePatterns.begin(); it != m_hostNamePatterns.end(); it++) {
 			if (it != m_hostNamePatterns.begin())
 				buf += L",";
-			buf += L"[\"";
-			buf += it->first;
-			buf += L"\",\"";
+			buf += L"[";
+			buf += ToJsonString(it->first, strbuf);
+			buf += L",\"";
 			buf += it->second;
 			buf += L"\"]";
 		}
@@ -244,9 +244,9 @@ public:
 		for (it = m_zonePatterns.begin(); it != m_zonePatterns.end(); it++) {
 			if (it != m_zonePatterns.begin())
 				buf += L",";
-			buf += L"[\"";
-			buf += it->first;
-			buf += L"\",\"";
+			buf += L"[";
+			buf += ToJsonString(it->first, strbuf);
+			buf += L",\"";
 			buf += it->second;
 			buf += L"\"]";
 		}

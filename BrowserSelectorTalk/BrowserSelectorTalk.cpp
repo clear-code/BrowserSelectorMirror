@@ -14,6 +14,7 @@ using namespace std;
  */
 static bool OpenIE(const wstring &url)
 {
+	DebugLog(L"OpenIE");
 	int ret;
 	wstring iepath;
 	PROCESS_INFORMATION pi;
@@ -57,6 +58,7 @@ static bool OpenIE(const wstring &url)
 
 static bool BrowserOpen(const BrowserSelector &app, const wstring browser, const wstring &url)
 {
+	DebugLog(L"BrowserOpen %ls", browser.c_str());
 	std::wstring command;
 
 	if (browser == L"chrome" || browser == L"edge")
@@ -97,10 +99,12 @@ static void TalkResponse(const char *msg, ...)
 
 static int HandleTalkQuery(const BrowserSelector &app, wchar_t *wcmd)
 {
+	DebugLog(L"HandleTalkQuery '%ls'", wcmd);
 	wchar_t *space;
 
 	if (wcslen(wcmd) < 5) {
 		fprintf(stderr, "request too short '%ls'", wcmd);
+		DebugLog(L"request too short '%ls'", wcmd);
 		return -1;
 	}
 
@@ -111,6 +115,7 @@ static int HandleTalkQuery(const BrowserSelector &app, wchar_t *wcmd)
 	space = wcschr(wcmd + 2, L' ');
 	if (!space) {
 		fprintf(stderr, "invalid query request '%ls'", wcmd);
+		DebugLog(L"invalid query request '%ls'", wcmd);
 		return -1;
 	}
 	*space = L'\0';
@@ -125,8 +130,10 @@ static int HandleTalkQuery(const BrowserSelector &app, wchar_t *wcmd)
 
 	wstring browser = app.GetBrowserNameToOpenURL(url);
 	if (browser == origin) {
+		DebugLog(L"HandleTalkQuery: not redirected");
 		TalkResponse("{\"status\":\"OK\",\"open\":0}");
 	} else if (BrowserOpen(app, browser, url)) {
+		DebugLog(L"HandleTalkQuery: redirected");
 		TalkResponse("{\"status\":\"OK\",\"open\":1,\"close_tab\":%d}", app.m_config.m_closeEmptyTab);
 	} else {
 		fprintf(stderr, "cannot open '%ls' with '%ls'", url.c_str(), browser.c_str());
@@ -137,6 +144,7 @@ static int HandleTalkQuery(const BrowserSelector &app, wchar_t *wcmd)
 
 static int HandleTalkConfig(wchar_t *wcmd, const Config *config)
 {
+	DebugLog(L"HandleTalkConfig");
 	std::wstring buf(1024, '\0'); /* 1kb pre-allocation */
 	config->dumpAsJson(buf);
 	TalkResponse("{\"status\":\"OK\",\"config\":%ls}", buf.c_str());
@@ -145,6 +153,8 @@ static int HandleTalkConfig(wchar_t *wcmd, const Config *config)
 
 static int HandleTalkProtocol(const BrowserSelector &app)
 {
+	DebugLog(L"HandleTalkProtocol");
+
 	int len;
 	int ret = -1;
 	char *cmd = NULL;
@@ -156,22 +166,26 @@ static int HandleTalkProtocol(const BrowserSelector &app)
 	/* Read Native Messaging string */
 	if (fread(&len, sizeof(len), 1, stdin) < 1) {
 		fprintf(stderr, "cannot read %i bytes", sizeof(len));
+		DebugLog(L"cannot read %i bytes", sizeof(len));
 		return -1;
 	}
 
 	/* The shortest input is "C" (including quotes) */
 	if (len < 3) {
+		DebugLog(L"Shortest input");
 		return -1;
 	}
 
 	cmd = (char *) calloc(1, len + 1);
 	if (cmd == NULL) {
 		perror("calloc");
+		DebugLog(L"Null command");
 		return -1;
 	}
 
 	if (fread(cmd, len, 1, stdin) < 1) {
 		fprintf(stderr, "cannot read %i bytes", len);
+		DebugLog(L"cannot read %i bytes", len);
 		free(cmd);
 		return -1;
 	}
@@ -180,6 +194,7 @@ static int HandleTalkProtocol(const BrowserSelector &app)
 	wcmd = (wchar_t *) calloc(1, sizeof(wchar_t) * (len - 1));
 	if (wcmd == NULL) {
 		perror("calloc");
+		DebugLog(L"Null command");
 		free(cmd);
 		return -1;
 	}
@@ -187,6 +202,7 @@ static int HandleTalkProtocol(const BrowserSelector &app)
 	/* Here we trim double-quotes from '"Q firefox http://example.com"' */
 	if (!MultiByteToWideChar(CP_UTF8, 0, cmd + 1, len - 2, wcmd, len - 1)) {
 		fprintf(stderr, "cannot convert '%s' to wchar", cmd);
+		DebugLog(L"cannot convert '%ls' to wchar", wcmd);
 		free(cmd);
 		free(wcmd);
 		return -1;
@@ -201,8 +217,10 @@ static int HandleTalkProtocol(const BrowserSelector &app)
 		break;
 	default:
 		fprintf(stderr, "unknown command '%ls'", wcmd);
+		DebugLog(L"unknown command '%ls'", wcmd);
 		break;
 	}
+	DebugLog(L"Respond successfully");
 	free(cmd);
 	free(wcmd);
 	return ret;
