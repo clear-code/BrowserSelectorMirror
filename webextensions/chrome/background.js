@@ -64,43 +64,85 @@ function wildmat(text, pat) {
 
 const RecentlyRedirectedUrls = {
   entriesByTabId: new Map(),
+  entriesToBeExpired: new Set(),
   timeoutMsec: 10000,
+  resumed: false,
 
   init() {
-    chrome.tabs.onRemoved.addListener((tabId, _removeInfo) => {
-      this.entriesByTabId.delete(tabId);
+    this.load();
+  },
+
+  save() {
+    chrome.storage.session.set({
+      recentlyRedirectedUrls: Array.from(
+        this.entriesByTabId.entries(),
+        ([tabId, urlEntries]) => [tabId, [...urlEntries.entries()]]
+      ),
+      entriesToBeExpired: [...this.entriesToBeExpired],
     });
   },
 
-  add(url, tabId) {
+  async load() {
+    if (this.$promisedLoaded)
+      return this.$promisedLoaded;
+
+    console.log(`RecentlyRedirectedUrls: loading previous state`);
+    return this.$promisedLoaded = new Promise(async (resolve, _reject) => {
+      try {
+        const { recentlyRedirectedUrls, entriesToBeExpired } = await chrome.storage.session.get({ recentlyRedirectedUrls: null, entriesToBeExpired: null });
+        console.log(`RecentlyRedirectedUrls: loaded recentlyRedirectedUrls, entriesToBeExpired => `, JSON.stringify(recentlyRedirectedUrls), JSON.stringify(entriesToBeExpired));
+        this.resumed = !!(recentlyRedirectedUrls || entriesToBeExpired);
+        if (recentlyRedirectedUrls) {
+          for (const [tabId, entries] of recentlyRedirectedUrls) {
+            const urlEntries = this.entriesByTabId.get(tabId) || new Map();
+            for (const [url, timestamp] of entries) {
+              urlEntries.set(url, timestamp);
+            }
+            this.entriesByTabId.set(tabId, urlEntries);
+          }
+        }
+        if (entriesToBeExpired) {
+          for (const id of entriesToBeExpired) {
+            this.entriesToBeExpired.add(id);
+          }
+        }
+      }
+      catch(error) {
+        console.log('RecentlyRedirectedUrls: failed to load previous state: ', error.name, error.message);
+      }
+      resolve();
+    });
+  },
+
+  async add(url, tabId) {
     console.log(`RecentlyRedirectedUrls.add: ${url} (tab=${tabId})`);
     const now = Date.now();
+    await this.load();
 
     // This nested history is designed for better performance to delete
     // obsolete entries when tabs are closed.
     const urlEntries = this.entriesByTabId.get(tabId) || new Map();
     urlEntries.set(url, now);
     this.entriesByTabId.set(tabId, urlEntries);
-
-    chrome.alarms.create('clear-url-entry', { delayInMinutes: this.timeoutMsec / 1000 / 60 });
-    chrome.alarms.onAlarm.addListener((alarm) => {
-      if (alarm.name != 'clear-url-entry' ||
-			    urlEntries.get(url) != now)
-        return;
-      this.delete(url, tabId);
-    });
+    this.entriesToBeExpired.add(`${tabId}\n${url}`, now + this.timeoutMsec);
+    this.save();
   },
 
-  delete(url, tabId) {
+  async delete(url, tabId) {
     console.log(`RecentlyRedirectedUrls.delete: ${url} (tab=${tabId})`);
+    await this.load();
     const urlEntries = this.entriesByTabId.get(tabId);
-    if (!urlEntries)
+    if (!urlEntries) {
+      this.entriesToBeExpired.delete(`${tabId}\n${url}`);
       return;
+    }
 
     urlEntries.delete(url);
     if (urlEntries.size == 0) {
       this.entriesByTabId.delete(tabId);
     }
+    this.entriesToBeExpired.delete(`${tabId}\n${url}`);
+    this.save();
   },
 
   canRedirect(url, tabId) {
@@ -130,7 +172,44 @@ const RecentlyRedirectedUrls = {
     }
     return true;
   },
+
+  async expire() {
+    console.log('RecentlyRedirectedUrls: expiring entries');
+    const now = Date.now();
+    try {
+      await this.load();
+      for (const id of this.entriesToBeExpired) {
+        const [tabId, url] = id.split('\n');
+        const urlEntries = this.entriesByTabId.get(tabId);
+        if (!urlEntries) {
+          console.log(`  tab ${tabId} has no more entry`);
+          this.entriesToBeExpired.delete(id);
+          continue;
+        }
+        if (urlEntries.get(url) < now) {
+          console.log(`  url ${url} in tab ${tabId} has expired`);
+          this.delete(url, tabId);
+          continue;
+        }
+      }
+      this.save();
+    }
+    catch(error) {
+      console.log('RecentlyRedirectedUrls: failed to expire: ', error.name, error.message);
+    }
+  },
+
+  async onTabRemoved(tabId, _removeInfo) {
+    await this.load();
+    this.entriesByTabId.delete(tabId);
+    this.save();
+  },
 };
+
+RecentlyRedirectedUrls.init();
+
+chrome.tabs.onRemoved.addListener(RecentlyRedirectedUrls.onTabRemoved.bind(RecentlyRedirectedUrls));
+
 
 /*
  * Observe WebRequests with config fetched from BrowserSelector.
@@ -151,41 +230,46 @@ const RecentlyRedirectedUrls = {
 const Redirector = {
   newWindows: new Map(),
   newWindowTabs: new Map(),
+  resumed: false,
 
-  init: function() {
-    Redirector.cached = null;
-    Redirector.newTabIds = new Set();
-    RecentlyRedirectedUrls.init();
-    Redirector.configure();
-    Redirector.listen();
+  init() {
+    this.cached = null;
+    this.newTabIds = new Set();
+    this.ensureLoadedAndConfigured();
     console.log('Running as BrowserSelector Talk client');
   },
 
-  configure: function() {
+  async ensureLoadedAndConfigured() {
+    return Promise.all([
+      !this.cached && this.configure(),
+      this.load(),
+    ]);
+  },
+
+  async configure() {
     const query = `C ${BROWSER}`;
 
-    chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), (resp) => {
-      if (chrome.runtime.lastError) {
-        console.log('Cannot fetch config', JSON.stringify(chrome.runtime.lastError));
-        return;
-      }
-      const isStartup = (Redirector.cached == null);
-      Redirector.cached = resp.config;
-      console.log('Fetch config', JSON.stringify(Redirector.cached));
+    const resp = await chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query));
+    if (chrome.runtime.lastError) {
+      console.log('Cannot fetch config', JSON.stringify(chrome.runtime.lastError));
+      return;
+    }
+    const isStartup = (this.cached == null);
+    this.cached = resp.config;
+    console.log('Fetch config', JSON.stringify(this.cached));
 
-      resp.config.URLPatternsMatchers = {};
-      resp.config.HostNamePatternsMatchers = {};
-      if (resp.config.UseRegex) {
-        this._generateMatcher(resp.config.URLPatterns, resp.config.URLPatternsMatchers);
-        this._generateMatcher(resp.config.HostNamePatterns, resp.config.HostNamePatternsMatchers);
-      }
+    resp.config.URLPatternsMatchers = {};
+    resp.config.HostNamePatternsMatchers = {};
+    if (resp.config.UseRegex) {
+      this._generateMatcher(resp.config.URLPatterns, resp.config.URLPatternsMatchers);
+      this._generateMatcher(resp.config.HostNamePatterns, resp.config.HostNamePatternsMatchers);
+    }
 
-      if (isStartup) {
-        Redirector.handleStartup(Redirector.cached);
-      }
-    });
+    if (isStartup && !this.resumed) {
+      this.handleStartup(this.cached);
+    }
   },
-  _generateMatcher: function(patternsAndBrowsers, matchers) {
+  _generateMatcher(patternsAndBrowsers, matchers) {
     const patternsByBrowser = {};
     for (const patternAndBrowser of patternsAndBrowsers) {
       const [pattern, browser] = patternAndBrowser;
@@ -206,48 +290,49 @@ const Redirector = {
     }
   },
 
-  listen: function() {
-    chrome.webRequest.onBeforeRequest.addListener(
-      Redirector.onBeforeRequest,
-      {
-        urls: ['<all_urls>'],
-        types: ['main_frame','sub_frame']
-      },
-      ['blocking']
-    );
-
-    /* Refresh config for every N minute */
-    console.log('Poll config for every', ALARM_MINUTES , 'minutes');
-    chrome.alarms.create('poll-config', { periodInMinutes: ALARM_MINUTES });
-    chrome.alarms.onAlarm.addListener((alarm) => {
-      if (alarm.name !== 'poll-config')
-        return;
-      Redirector.configure();
+  save() {
+    chrome.storage.session.set({
+      newWindows: Array.from(
+        this.newWindows.entries(),
+        ([windowId, tabIds]) => [windowId, [...tabIds]]
+      ),
+      newWindowTabs: [...this.newWindowTabs.entries()],
     });
+  },
 
-    /* Tab book-keeping for intelligent tab handlings */
-    chrome.tabs.onCreated.addListener(tab => {
-      Redirector.newTabIds.add(tab.id);
+  async load() {
+    if (this.$promisedLoaded)
+      return this.$promisedLoaded;
 
-      const tabIds = Redirector.newWindows.get(tab.windowId);
-      if (!tabIds)
-        return;
-
-      tabIds.add(tab.id);
-      Redirector.newWindows.set(tab.windowId, tabIds);
-      if (tabIds.size > 1)
-        Redirector.forgetNewWindow(tab.windowId, 'tabs.onCreated');
+    console.log(`Redirector: loading previous state`);
+    return this.$promisedLoaded = new Promise(async (resolve, _reject) => {
+      try {
+        const { newWindows, newWindowTabs } = await chrome.storage.session.get({ newWindows: null, newWindowTabs: null });
+        console.log(`Redirector: loaded newWindows, newWindowTabs => `, JSON.stringify(newWindows), JSON.stringify(newWindowTabs));
+        this.resumed = !!(newWindows || newWindowTabs);
+        if (newWindows) {
+          for (const [windowId, loadedTabIds] of newWindows) {
+            if (!loadedTabIds ||
+                loadedTabIds.length == 0)
+              continue;
+            const tabIds = this.newWindows.get(windowId) || new Set();
+            for (const tabId of loadedTabIds) {
+              tabIds.add(tabId);
+            }
+            this.newWindows.set(windowId, tabIds);
+          }
+        }
+        if (newWindowTabs) {
+          for (const [windowId, tabId] of newWindowTabs) {
+            this.newWindowTabs.set(tabId, windowId);
+          }
+        }
+      }
+      catch(error) {
+        console.log('Redirector: failed to load previous state: ', error.name, error.message);
+      }
+      resolve();
     });
-
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-      Redirector.newTabIds.delete(tabId);
-      Redirector.forgetNewWindow(removeInfo.windowId, 'tabs.onRemoved');
-    });
-
-    chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated);
-
-
-    chrome.windows.onCreated.addListener(Redirector.onWindowCreated);
   },
 
   /*
@@ -258,7 +343,7 @@ const Redirector = {
 	 *
 	 * * Request Example: "Q edge https://example.com/".
 	 */
-  redirect: function({ url, tabId, isNewTab, closeEmptyTab }) {
+  redirect({ url, tabId, isNewTab, closeEmptyTab }) {
     chrome.tabs.get(tabId, tab => {
       if (chrome.runtime.lastError) {
         console.log(`* Ignore prefetch request`);
@@ -273,7 +358,7 @@ const Redirector = {
         console.log('Recently redirected: ', url, tabId);
         RecentlyRedirectedUrls.add(url, tabId);
         if (closeEmptyTab) {
-          Redirector.tryCloseEmptyTab({ tab, isNewTab });
+          this.tryCloseEmptyTab({ tab, isNewTab });
         }
         return;
       }
@@ -282,20 +367,21 @@ const Redirector = {
       RecentlyRedirectedUrls.add(url, tabId);
       chrome.runtime.sendNativeMessage(SERVER_NAME, new String(query), _resp => {
         if (closeEmptyTab) {
-          Redirector.tryCloseEmptyTab({ tab, isNewTab });
+          this.tryCloseEmptyTab({ tab, isNewTab });
         }
       });
     });
   },
-  tryCloseEmptyTab: function({ tab, isNewTab }) {
-    if (Redirector.newWindows.has(tab.windowId)) {
-      const tabIds = Redirector.newWindows.get(tab.windowId);
-      Redirector.newWindowTabs.set(tab.id, tab.windowId);
+  tryCloseEmptyTab({ tab, isNewTab }) {
+    if (this.newWindows.has(tab.windowId)) {
+      const tabIds = this.newWindows.get(tab.windowId);
+      this.newWindowTabs.set(tab.id, tab.windowId);
       tabIds.add(tab.id);
-      Redirector.newWindows.set(tab.windowId, tabIds);
+      this.newWindows.set(tab.windowId, tabIds);
+      this.save();
     }
     chrome.tabs.query({ windowId: tab.windowId }, tabs => {
-      const isNewWindow = Redirector.newWindows.has(tab.windowId);
+      const isNewWindow = this.newWindows.has(tab.windowId);
       const closeTab = isNewTab !== false || isNewWindow;
       console.log(`Trying to close empty tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow}, closeTab=${closeTab})`);
       if (!closeTab) {
@@ -314,7 +400,7 @@ const Redirector = {
 	 * Check URL/Host patterns in configuration. Return the matched
 	 * browser name, or null if no pattern matched.
 	 */
-  match: function(config, url) {
+  match(config, url) {
     const host = this._getHost(url);
 
     if (config.UseRegex) {
@@ -349,7 +435,7 @@ const Redirector = {
 
     return null;
   },
-  _getHost: function(url) {
+  _getHost(url) {
     try {
       return (new URL(url)).host;
     }
@@ -358,7 +444,7 @@ const Redirector = {
     return '';
   },
 
-  isRedirectURL: function(config, url) {
+  isRedirectURL(config, url) {
     if (!url) {
       console.log(`* Empty URL found`);
       return false;
@@ -375,7 +461,7 @@ const Redirector = {
 
     console.log(`* Check ${url} for redirect patterns`);
 
-    const matched = Redirector.match(config, url);
+    const matched = this.match(config, url);
     console.log(`* Result: ${matched}`);
 
     if (matched !== null) {
@@ -397,14 +483,14 @@ const Redirector = {
   },
 
   /* Handle startup tabs preceding to onBeforeRequest */
-  handleStartup: function(config) {
+  handleStartup(config) {
     chrome.tabs.query({}, (tabs) => {
       tabs.forEach((tab) => {
         const url = tab.pendingUrl || tab.url;
         console.log(`handleStartup ${url} (tab=${tab.id})`);
-        if (Redirector.isRedirectURL(config, url)) {
+        if (this.isRedirectURL(config, url)) {
           console.log(`* Redirect to another browser`);
-          Redirector.redirect({
+          this.redirect({
             url,
             tabId: tab.id,
             closeEmptyTab: config.CloseEmptyTab,
@@ -414,12 +500,42 @@ const Redirector = {
     });
   },
 
-  onTabUpdated: function(tabId, info, tab) {
+  /* Tab book-keeping for intelligent tab handlings */
+  async onTabCreated(tab) {
+    await this.ensureLoadedAndConfigured();
+
+    this.newTabIds.add(tab.id);
+
+    const tabIds = this.newWindows.get(tab.windowId);
+    if (!tabIds) {
+      this.save();
+      return;
+    }
+
+    tabIds.add(tab.id);
+    this.newWindows.set(tab.windowId, tabIds);
+    if (tabIds.size > 1)
+      this.forgetNewWindow(tab.windowId, 'tabs.onCreated');
+
+    this.save();
+  },
+
+  async onTabRemoved(tabId, removeInfo) {
+    await this.ensureLoadedAndConfigured();
+    this.newTabIds.delete(tabId);
+    this.forgetNewWindow(removeInfo.windowId, 'tabs.onRemoved');
+    this.save();
+  },
+
+  async onTabUpdated(tabId, info, tab) {
+    await this.ensureLoadedAndConfigured();
+
     if (info.status === 'complete') {
-      Redirector.newTabIds.delete(tab.id);
+      this.newTabIds.delete(tab.id);
     }
 
     if (BROWSER !== 'edge') {
+      this.save();
       return;
     }
     /*
@@ -427,73 +543,83 @@ const Redirector = {
 		 * from Edge-IE to Edge, so we need to handle requests on this timing.
 		 */
 
-    const config = Redirector.cached;
+    const config = this.cached;
     const url = tab.pendingUrl || tab.url;
 
     if (info.status !== 'loading') {
+      this.save();
       return;
     }
     if (!config) {
+      this.save();
       return;
     }
 
     console.log(`onTabUpdated ${url} (tab=${tabId}, windowId=${tab.windowId})`);
 
-    if (Redirector.newWindows.has(tab.windowId)) {
-      Redirector.newWindowTabs.set(tab.id, tab.windowId);
-      const tabIds = Redirector.newWindows.get(tab.windowId);
+    if (this.newWindows.has(tab.windowId)) {
+      this.newWindowTabs.set(tab.id, tab.windowId);
+      const tabIds = this.newWindows.get(tab.windowId);
       tabIds.add(tab.id);
-      Redirector.newWindows.set(tab.windowId, tabIds);
+      this.newWindows.set(tab.windowId, tabIds);
+      this.save();
       console.log(` => initial tab of a new window: skip redirection`);
       return;
     }
 
-    if (Redirector.isRedirectURL(config, url)) {
+    if (this.isRedirectURL(config, url)) {
       console.log(`* Redirect to another browser`);
-      Redirector.redirect({
+      this.redirect({
         url,
         tabId,
-        closeEmptyTab: Redirector.newWindows.has(tab.windowId),
+        closeEmptyTab: this.newWindows.has(tab.windowId),
       });
 
       /* Call executeScript() to stop the page loading immediately.
-			 * Then let the tab go back to the previous page.
-			 */
-      chrome.tabs.executeScript(tabId, {code: 'window.stop()', runAt: 'document_start'}, () => {
-        chrome.tabs.goBack(tabId);
+       * Then let the tab go back to the previous page.
+       */
+      chrome.scripting.executeScript({
+        target: { tabId },
+        func: function goBack(tabId) {
+          chrome.tabs.goBack(tabId);
+        },
+        args: [tabId],
       });
     }
   },
 
-  onWindowCreated: function(win) {
+  async onWindowCreated(win) {
+    await this.ensureLoadedAndConfigured();
     console.log(`Detected new browser window ${win.id}`);
-    Redirector.newWindows.set(win.id, new Set());
+    this.newWindows.set(win.id, new Set());
+    this.save();
   },
 
-  forgetNewWindow: function(windowId, trigger) {
+  forgetNewWindow(windowId, trigger) {
     console.log(`Forgetting new browser window ${windowId} (trigger=${trigger})`);
-    const tabIds = Redirector.newWindows.get(windowId);
+    const tabIds = this.newWindows.get(windowId);
     if (tabIds) {
       for (const tabId of tabIds) {
-        Redirector.newWindowTabs.delete(tabId);
+        this.newWindowTabs.delete(tabId);
       }
     }
-    Redirector.newWindows.delete(windowId);
+    this.newWindows.delete(windowId);
+    this.save();
   },
 
   /* Callback for webRequest.onBeforeRequest */
-  onBeforeRequest: function(details) {
-    const config = Redirector.cached;
+  onBeforeRequest(details) { // this must be sync
+    const config = this.cached;
     const isMainFrame = (details.type == 'main_frame');
-    const isNewTab = Redirector.newTabIds.has(details.tabId);
-    const isNewWindow = Redirector.newWindowTabs.has(details.tabId);
-    const windowId = Redirector.newWindowTabs.get(details.tabId);
+    const isNewTab = this.newTabIds.has(details.tabId);
+    const isNewWindow = this.newWindowTabs.has(details.tabId);
+    const windowId = this.newWindowTabs.get(details.tabId);
 
     console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, ,isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
 
     if (!config) {
       console.log('* Config cache is empty. Fetching...');
-      Redirector.configure();
+      this.configure();
       return;
     }
 
@@ -507,9 +633,9 @@ const Redirector = {
       return;
     }
 
-    if (Redirector.isRedirectURL(config, details.url)) {
+    if (this.isRedirectURL(config, details.url)) {
       console.log(`* Redirect to another browser`);
-      Redirector.redirect({
+      this.redirect({
         url: details.url,
         tabId: details.tabId,
         isNewTab,
@@ -518,9 +644,43 @@ const Redirector = {
       return CANCEL_REQUEST;
     }
 
-    Redirector.forgetNewWindow(windowId, 'onBeforeRequest (not redirected)');
-  }
+    this.forgetNewWindow(windowId, 'onBeforeRequest (not redirected)');
+  },
 };
 
 Redirector.init();
 
+chrome.webRequest.onBeforeRequest.addListener(
+  Redirector.onBeforeRequest.bind(Redirector),
+  {
+    urls: ['<all_urls>'],
+    types: ['main_frame','sub_frame']
+  },
+  ['blocking']
+);
+
+chrome.tabs.onCreated.addListener(Redirector.onTabCreated.bind(Redirector));
+chrome.tabs.onRemoved.addListener(Redirector.onTabRemoved.bind(Redirector));
+chrome.tabs.onUpdated.addListener(Redirector.onTabUpdated.bind(Redirector));
+chrome.windows.onCreated.addListener(Redirector.onWindowCreated.bind(Redirector));
+
+
+/* Refresh config for every N minute */
+console.log('Poll config for every', ALARM_MINUTES , 'minutes');
+chrome.alarms.create('poll-config', { periodInMinutes: ALARM_MINUTES });
+
+chrome.alarms.create('clear-url-entry', {
+  periodInMinutes: RecentlyRedirectedUrls.timeoutMsec / 1000 / 60,
+});
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+  switch (alarm.name) {
+    case 'poll-config':
+      Redirector.configure();
+      return;
+
+    case 'clear-url-entry':
+      RecentlyRedirectedUrls.expire();
+      return;
+  }
+});
