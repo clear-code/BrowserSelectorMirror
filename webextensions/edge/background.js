@@ -133,7 +133,7 @@ const RecentlyRedirectedUrls = {
     await this.load();
     const urlEntries = this.entriesByTabId.get(tabId);
     if (!urlEntries) {
-      this.entriesToBeExpired.delete(id);
+      this.entriesToBeExpired.delete(`${tabId}\n${url}`);
       return;
     }
 
