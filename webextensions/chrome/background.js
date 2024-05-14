@@ -235,6 +235,7 @@ const Redirector = {
   init() {
     this.cached = null;
     this.newTabIds = new Set();
+    this.knownTabIds = new Set();
     this.ensureLoadedAndConfigured();
     console.log('Running as BrowserSelector Talk client');
   },
@@ -297,6 +298,7 @@ const Redirector = {
         ([windowId, tabIds]) => [windowId, [...tabIds]]
       ),
       newWindowTabs: [...this.newWindowTabs.entries()],
+      knownTabIds: [...this.knownTabIds],
     });
   },
 
@@ -307,9 +309,9 @@ const Redirector = {
     console.log(`Redirector: loading previous state`);
     return this.$promisedLoaded = new Promise(async (resolve, _reject) => {
       try {
-        const { newWindows, newWindowTabs } = await chrome.storage.session.get({ newWindows: null, newWindowTabs: null });
-        console.log(`Redirector: loaded newWindows, newWindowTabs => `, JSON.stringify(newWindows), JSON.stringify(newWindowTabs));
-        this.resumed = !!(newWindows || newWindowTabs);
+        const { newWindows, newWindowTabs, knownTabIds } = await chrome.storage.session.get({ newWindows: null, newWindowTabs: null, knownTabIds: null });
+        console.log(`Redirector: loaded newWindows, newWindowTabs, knownTabIds => `, JSON.stringify(newWindows), JSON.stringify(newWindowTabs), JSON.stringify(knownTabIds));
+        this.resumed = !!(newWindows || newWindowTabs || knownTabIds);
         if (newWindows) {
           for (const [windowId, loadedTabIds] of newWindows) {
             if (!loadedTabIds ||
@@ -325,6 +327,11 @@ const Redirector = {
         if (newWindowTabs) {
           for (const [windowId, tabId] of newWindowTabs) {
             this.newWindowTabs.set(tabId, windowId);
+          }
+        }
+        if (knownTabIds) {
+          for (const tabId of knownTabIds) {
+            this.knownTabIds.add(tabId);
           }
         }
       }
@@ -380,7 +387,7 @@ const Redirector = {
       this.newWindows.set(tab.windowId, tabIds);
       this.save();
     }
-    chrome.tabs.query({ windowId: tab.windowId }, tabs => {
+    chrome.tabs.query({ windowId: tab.windowId }, async tabs => {
       const isNewWindow = this.newWindows.has(tab.windowId);
       const closeTab = isNewTab !== false || isNewWindow;
       console.log(`Trying to close empty tab ${tab.id} (windowId=${tab.windowId}, isNewWindow=${isNewWindow}, closeTab=${closeTab})`);
@@ -392,7 +399,19 @@ const Redirector = {
         console.log(`Close window ${tab.windowId} due to the redirected last tab`);
         chrome.windows.remove(tab.windowId);
       }
-      chrome.tabs.remove(tab.id);
+      let existingTab = tab;
+      let counter = 0;
+      do {
+        if (!existingTab)
+          break;
+        if (counter > 100) {
+          console.log(`couldn't close tab ${tab.id} within ${counter} times retry.`);
+          break;
+        }
+        if (counter++ > 0)
+          console.log(`tab ${tab.id} still exists: trying to close (${counter})`);
+        chrome.tabs.remove(tab.id);
+      } while (existingTab = await chrome.tabs.get(tab.id).catch(_error => null));
     });
   },
 
@@ -523,6 +542,7 @@ const Redirector = {
   async onTabRemoved(tabId, removeInfo) {
     await this.ensureLoadedAndConfigured();
     this.newTabIds.delete(tabId);
+    this.knownTabIds.delete(tabId);
     this.forgetNewWindow(removeInfo.windowId, 'tabs.onRemoved');
     this.save();
   },
@@ -530,8 +550,11 @@ const Redirector = {
   async onTabUpdated(tabId, info, tab) {
     await this.ensureLoadedAndConfigured();
 
-    if (info.status === 'complete') {
-      this.newTabIds.delete(tab.id);
+    this.knownTabIds.add(tabId);
+
+    if (info.status === 'complete' ||
+        (info.status !== 'loading' && info.url)) {
+      this.newTabIds.delete(tabId);
     }
 
     if (BROWSER !== 'edge') {
@@ -539,23 +562,21 @@ const Redirector = {
       return;
     }
     /*
-		 * Edge won't call webRequest.onBeforeRequest() when navigating
-		 * from Edge-IE to Edge, so we need to handle requests on this timing.
-		 */
+     * Edge won't call webRequest.onBeforeRequest() when navigating
+     * from Edge-IE to Edge, so we need to handle requests on this timing.
+     * On such case, info.status is always undefined and only URL changes
+     * are notified.
+     */
 
     const config = this.cached;
     const url = tab.pendingUrl || tab.url;
 
-    if (info.status !== 'loading') {
-      this.save();
-      return;
-    }
     if (!config) {
       this.save();
       return;
     }
 
-    console.log(`onTabUpdated ${url} (tab=${tabId}, windowId=${tab.windowId})`);
+    console.log(`onTabUpdated ${url} (tab=${tabId}, windowId=${tab.windowId}, status=${info.status}/${tab.status})`);
 
     if (this.newWindows.has(tab.windowId)) {
       this.newWindowTabs.set(tab.id, tab.windowId);
@@ -611,11 +632,11 @@ const Redirector = {
   onBeforeRequest(details) { // this must be sync
     const config = this.cached;
     const isMainFrame = (details.type == 'main_frame');
-    const isNewTab = this.newTabIds.has(details.tabId);
+    const isNewTab = this.newTabIds.has(details.tabId) || !this.knownTabIds.has(details.tabId);
     const isNewWindow = this.newWindowTabs.has(details.tabId);
     const windowId = this.newWindowTabs.get(details.tabId);
 
-    console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, ,isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
+    console.log(`onBeforeRequest ${details.url} (tab=${details.tabId}, isNewTab=${isNewTab} isNewWindow=${isNewWindow})`);
 
     if (!config) {
       console.log('* Config cache is empty. Fetching...');

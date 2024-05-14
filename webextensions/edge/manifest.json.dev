@@ -6,6 +6,8 @@
 	"permissions": [
 		"nativeMessaging",
 		"alarms",
+		"scripting",
+		"storage",
 		"tabs",
 		"webRequest",
 		"webRequestBlocking"
