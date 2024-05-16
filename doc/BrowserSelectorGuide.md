@@ -83,9 +83,43 @@ BrowserSelectorについてはMSI形式のインストーラを配布してい�
  3. 「BrowserSelectorは正常にインストールされました」というメッセージが表示されたら、
     「閉じる」をクリックして終了します。
 
+### BrowserSelector BHOの有効化
+
+IEおよびEdgeのIEモードのタブからのリダイレクトを期待通りに行うためには、BrowserSelector BHOを有効化する必要があります。
+
+BrowserSelector BHOはBrowserSelectorのMSI形式インストーラに含まれていますが、Windowsのセキュリティ上の制約により、インストール直後は無効化されている恐れがあります。
+現在の状態は、Windowsコントロールパネルの「インターネット オプション」→「プログラム」タブ→「アドオンの管理」で確認できます。
+「アドオンの管理」がグループポリシーで無効化されている場合は、BHOの有効化状態はブラウザの実際の動作をもってご確認ください。
+
+Active Directory管理下の端末に対し、グループポリシーを利用してBrowserSelector BHOを有効化する手順は以下の通りです。
+
+1. グループポリシーエディターで `Computer Configuration\Administrative Templates\Windows Components\Internet Explorer` （`コンピューターの構成\管理用テンプレート\Windows コンポーネント\Internet Explorer`）を開く。
+
+2. 以下のポリシーを設定する。
+
+   * `Turn off add-on performance notifications`（`アドオンのパフォーマンスの通知を無効にする`）：`Enabled`（`有効`）
+   * `Automatically activate newly installed add-ons`（`新たにインストールされたアドオンを自動的にアクティブ化する`）：`Enabled`（`有効`）
+
+3. 続けて、グループポリシーエディターで `Computer Configuration\Administrative Templates\Windows Components\Internet Explorer\Internet Control Panel\Advance Page` （`コンピューターの構成\管理用テンプレート\Windows コンポーネント\Internet Explorer\インターネット コントロール パネル\[詳細設定]ページ`）を開く。
+
+4. 以下のポリシーを設定する。
+
+   * `Allow third-party browser extensions`（`サード パーティ製のブラウザー拡張を許可する`）：`Enabled`（`有効`）
+
+5. 続けて、グループポリシーエディターで `Computer Configuration\Administrative Templates\Windows Components\Internet Explorer\Security Features\Add-on Management` （`コンピューターの構成\管理用テンプレート\Windows コンポーネント\Internet Explorer\セキュリティの機能\アドオン管理`）を開く。
+
+6. 以下のポリシーを設定する。
+
+   * `Add-on List`（`アドオンの一覧`）
+     * `Enabled`（`有効`）に設定して、`Add-on List`→`Show...`（`アドオンの一覧`→`表示...`）をクリックし、以下の項目を追加する。
+       * `Value name`（`値の名前`）：`{204D767E-FEA2-46DA-A88F-52F6C0C38EF1}`
+       * `Value`（`値`）：`1`
+
+
+
 ## BrowserSelectorの設定ファイルを配置する
 
-BrowserSelectorはINI形式の設定ファイルによって管理することができます。
+BrowserSelectorの動作はINI形式の設定ファイルで制御できます。
 
  1. 次の内容を「BrowserSelector.ini」という名前で保存します。
 
@@ -109,10 +143,12 @@ INIファイルに設定できる項目の詳細は「設定項目の一覧」�
 ## 拡張機能／アドオンをインストールする
 
 BrowserSelectorはEdge・Chrome・Firefox向けに専用のアドオンを提供しています。
+各ブラウザから他のブラウザへのリダイレクトを行うためには、リダイレクト元となる各ブラウザにアドオンをインストールする必要があります。
 
 ### Edgeアドオンを管理者インストールする
 
-グループポリシーを利用することで、Edgeアドオンを組織の端末に一括導入できます。
+Edgeからのリダイレクトを行う場合に、
+Active Directory管理下の端末に対し、グループポリシーを利用してEdgeアドオンを導入する手順は以下の通りです。
 
  1. Microsoft公式サイトからEdgeの管理者テンプレートを入手します。
 
@@ -135,8 +171,8 @@ Edgeアドオンストアのページからユーザー権限でインストー�
 
 ### Chromeアドオンを管理者インストールする
 
-切り替え先のブラウザにChromeを利用する場合、
-グループポリシーを利用することで、Chromeアドオンを組織の端末に一括導入できます。
+Chromeからのリダイレクトを行う場合に、
+Active Directory管理下の端末に対し、グループポリシーを利用してChromeアドオンを導入する手順は以下の通りです。
 
  1. Google公式サイトからChromeの管理者テンプレートを入手します。
 
@@ -159,8 +195,8 @@ Chromeウェブストアのページからユーザー権限でインストー�
 
 ### Firefoxアドオンを管理者インストールする
 
-切り替え先のブラウザにFirefoxを利用する場合、
-ポリシー設定ファイルを利用することで、Firefoxアドオンを組織の端末に管理者インストールできます。
+Firefoxからのリダイレクトを行う場合に、
+ポリシー設定ファイルを利用してFirefoxアドオンを導入する手順は以下の通りです。
 
  1. Firefoxのインストールパスに「distribution」というフォルダを作成します。
 
