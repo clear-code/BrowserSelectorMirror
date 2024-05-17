@@ -17,6 +17,7 @@
 
 - [開発者]
   - 自分が行った改修をテスト済みであること
+  - 改修内容に対する検証手順を[リリース前検証手順](./PreReleaseVerification.md)に追加済みであること
   - master へのマージ・プッシュが完了したこと
 - [開発者] 更新後の`/doc/`から 利用ガイドPDF を生成済みであること  
   1. 本体リリース時は、**利用ガイドの内容に変更がない場合も**`/doc/BrowserSelectorGuide.md`のtitle: date:を更新し、利用ガイドPDF を生成する  
@@ -31,9 +32,13 @@
 
 事前準備の完了後、それぞれ次の手順に従ってリリースする。
 
-### 番号付けのポリシー
+### リリース前検証
 
-次のとおり。
+後退バグが発生していないことを確認するため、[リリース前検証手順](./PreReleaseVerification.md)に従って一通り検証を実施する。
+
+### バージョン繰り上げ
+
+番号付けのポリシーは次のとおり。
 
 - 【バージョン番号の表記】`vx.y.z`と表記する（例：v2.2.3）
 - 【番号の付与単位】
@@ -98,6 +103,13 @@ BrowserSelector の動作環境で、「新規インストール」「上書き�
 
 1. アドオンのパッケージを作成する
 2. アドオンをストアにアップロードする
+   * Edge用アドオンの公開申請時には、検証手順の入力を求められるので、以下の要領で記述する。
+     ```
+     This extension requires its native messaging host.
+     https://gitlab.com/clear-code/browserselector/-/releases#msi-installer-debug-symbols
+     And this extension needs to be installed to Active Directory managed environments, via GPO. Steps:
+     https://gitlab.com/clear-code/browserselector/-/blob/master/README.md?ref_type=heads#notes-for-manifest-v3
+     ```
 3. [広報担当者]作業者の配信依頼を受け、リリースアナウンスする
 
 ### 「BrowserSelector利用ガイド」のリリース
