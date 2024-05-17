@@ -460,6 +460,8 @@ resource "local_file" "playbook" {
       copy:
         src: join-dummy-domain.bat
         dest: 'c:\Users\Public\join-dummy-domain.bat'
+    - name: Join to dummy domain
+      win_command: c:\Users\Public\join-dummy-domain.bat
     - name: Copy batch to setup policy files
       copy:
         src: copy-policy-templates.bat
@@ -472,6 +474,14 @@ resource "local_file" "playbook" {
       copy:
         src: manifest.xml
         dest: 'c:\Users\Public\webextensions\manifest.xml'
+    - name: Prepare directory to put BrowserSelector.ini
+      win_file:
+        path: 'C:\Program Files (x86)\ClearCode\BrowserSelector'
+        state: directory
+    - name: Copy example BrowserSelector.ini
+      copy:
+        src: BrowserSelector.ini
+        dest: 'C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelector.ini'
     - name: Prepare directory to put policy templates (en-US locale)
       win_file:
         path: C:\Windows\PolicyDefinitions\en-US
@@ -502,6 +512,22 @@ resource "local_file" "playbook" {
     - name: Install Firefox policy template (en-US locale)
       when: not "${var.firefox-policy-template-url}" == ""
       win_command: xcopy /y C:\Users\Public\firefox_policy_templates\windows\en-US\* C:\Windows\PolicyDefinitions\en-US\
+    - name: Create shortcut for Edge with debug logs
+      win_shortcut:
+        src: 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+        arguments: '--enable-logging'
+        dest: '%Public%\Desktop\Edge (logging).lnk'
+    - name: Install Google Chrome from chocolatey
+      win_chocolatey:
+        name: googlechrome
+        state: present
+        allow_empty_checksums: yes
+        ignore_checksums: yes
+    - name: Create shortcut for Google Chrome with debug logs
+      win_shortcut:
+        src: 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+        arguments: '--enable-logging'
+        dest: '%Public%\Desktop\Google Chrome (logging).lnk'
     - name: Download Google Chrome policy template
       when: not "${var.chrome-policy-template-url}" == ""
       win_get_url:
