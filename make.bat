@@ -28,9 +28,15 @@ if not %errorlevel% == 0 (
 @REM Sign source code
 @REM ==================
 signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% Release\*.dll Release\*.exe x64\Release\BrowserSelectorBHO64.dll
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 
 @REM ==================
 @REM Create Installer
 @REM ==================
 devenv BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% BrowserSelectorSetup\Release\*.msi
