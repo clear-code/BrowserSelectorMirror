@@ -8,21 +8,35 @@ set timestamp=http://timestamp.sectigo.com
 set VSAPPIDDIR=
 set VSAPPIDNAME=devenv.exe
 
-@REM ==================
-@REM Compile C# sources
-@REM ==================
+@REM ===================
+@REM Compile C++ sources
+@REM ===================
 msbuild BrowserSelector.sln /p:Configuration=Release /p:Platform=Win32
+if not %errorlevel% == 0 (
+    exit /b 1
+)
+
+@REM ==================
+@REM Run Unit Test
+@REM ==================
+vstest.console Release\UnitTest.dll
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 
 @REM ==================
 @REM Sign source code
 @REM ==================
-signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% Release\BrowserSelectorBHO.dll
-signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% x64\Release\BrowserSelectorBHO64.dll
-signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% Release\BrowserSelector.exe
-signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% Release\BrowserSelectorTalk.exe
+signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% Release\*.dll Release\*.exe x64\Release\BrowserSelectorBHO64.dll
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 
 @REM ==================
 @REM Create Installer
 @REM ==================
 devenv BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 signtool sign /t %timestamp% /fd SHA1 /sha1 %cert% BrowserSelectorSetup\Release\*.msi
