@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Fetch Visual Studio addons
         run: |
-          Invoke-WebRequest -O Installer.html -UseBasicParsing -SessionVariable session $env:EXTSITE
-          Invoke-WebRequest -O InstallerProjects.vsix -WebSession $session $env:EXTURL
+          Invoke-WebRequest -OutFile Installer.html -UseBasicParsing -SessionVariable session $env:EXTSITE
+          Invoke-WebRequest -OutFile InstallerProjects.vsix -WebSession $session $env:EXTURL
       - name: Build binaries
         shell: cmd
         run: |
