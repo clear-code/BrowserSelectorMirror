@@ -24,6 +24,11 @@ jobs:
           InstallerProjects.vsix /quiet InstallerProjects.vsix
           msbuild BrowserSelector.sln /m /p:Configuration=Release /p:Platform=Win32
           devenv BrowserSelectorSetup/BrowserSelectorSetup.vdproj /Build "Release|Win32"
+      - name: Run tests
+        shell: cmd
+        run: |
+          call "%VSPATH%\VC\Auxiliary\Build\vcvars32.bat"
+          vstest.console Release\UnitTest.dll
       - name: Upload Installer
         uses: actions/upload-artifact@v2
         with:
