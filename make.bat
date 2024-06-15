@@ -8,10 +8,21 @@ set timestamp=http://timestamp.sectigo.com
 set VSAPPIDDIR=
 set VSAPPIDNAME=devenv.exe
 
-@REM ==================
-@REM Compile C# sources
-@REM ==================
+@REM ===================
+@REM Compile C++ sources
+@REM ===================
 msbuild BrowserSelector.sln /p:Configuration=Release /p:Platform=Win32
+if not %errorlevel% == 0 (
+    exit /b 1
+)
+
+@REM ==================
+@REM Run Unit Test
+@REM ==================
+vstest.console Release\UnitTest.dll
+if not %errorlevel% == 0 (
+    exit /b 1
+)
 
 @REM ==================
 @REM Sign source code
