@@ -281,4 +281,200 @@ footnotes-pretty: true
 3. Edge、Chromeを終了する。
 
 
+## Service Workerの永続化
 
+### 準備
+
+以下の通り設定して検証を行う。
+
+* `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelector.ini` を以下の内容に設定する。
+  ```
+  [Common]
+  DefaultBrowser=chrome
+  CloseEmptyTab=1
+  
+  [URLPatterns]
+  0001=http*://example.com|edge
+  0002=http*://example.com/*|edge
+  0003=http*://*.example.com|edge
+  0004=http*://*.example.com/*|edge
+  0005=http*://piro.sakura.ne.jp|edge
+  0006=http*://piro.sakura.ne.jp/*|edge
+  0007=http*://groonga.org/ja|edge
+  0008=http*://groonga.org/ja/*|edge
+  ```
+
+### 検証
+
+1. Edgeを起動する。
+2. Shift-ESC を入力するか、アプリケーションメニューの「その他のツール」から「ブラウザー タスク マネージャー」を開く。
+3. 「タスク」列が「拡張機能: BrowserSelector」である綱目を探し、「プロセスID」列の値を控える。
+4. 6分間操作を行わず放置する。
+5. 「ブラウザー タスク マネージャー」において、「タスク」列が「拡張機能: BrowserSelector」である綱目を確認する。
+   * 期待される結果：
+     * 綱目が存在する。
+     * 「プロセスID」列の値が3の時点から変化していない。
+6. Edgeを終了する。
+
+
+## リダイレクト発生により元のページに戻った後の別のページへのリダイレクトの動作検証
+
+### 背景
+
+重複リダイレクトを防ぐ機構の誤判定によって、リダイレクトされるべき読み込みがリダイレクトされない結果とならないことを検証する。
+
+### 準備
+
+* `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelector.ini` を以下の内容に設定する。
+  ```
+  [Common]
+  DefaultBrowser=chrome
+  CloseEmptyTab=1
+  
+  [URLPatterns]
+  0001=http*://example.com|edge
+  0002=http*://example.com/*|edge
+  0003=http*://*.example.com|edge
+  0004=http*://*.example.com/*|edge
+  0005=http*://piro.sakura.ne.jp|edge
+  0006=http*://piro.sakura.ne.jp/*|edge
+  0007=http*://groonga.org/ja|edge
+  0008=http*://groonga.org/ja/*|edge
+  ```
+
+### 検証
+
+1. Edgeを起動する。
+2. リンクによるEdgeからChromeへのページ遷移の検証：
+   1. Edge→Chromeの検証のため、Edgeで新しいタブで https://groonga.org/ja/ を開く。
+      * 期待される結果：
+        * Edge上で https://groonga.org/ja/ が読み込まれる。
+   2. `English` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://groonga.org/ が読み込まれる。
+   3. Edge上で、「関連プロジェクト」のリンクをクリックする。
+      * 期待される結果：
+        * Edge上で https://groonga.org/ja/related-projects.html が読み込まれる。
+   4. Edge上で、`Mroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://mroonga.org/ が読み込まれる。
+   5. Edge上で、`PGroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://pgroonga.github.io/ja/ が読み込まれる。
+   6. Edge上で、`Nroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://nroonga.github.com/ が読み込まれる。
+
+
+## `onTabUpdated()`によるリダイレクトの動作検証
+
+### 背景
+
+crxパッケージ化されたアドオンをGPOでインストールした状態では、通常は`onBeforeRequest()`でリダイレクトが行われる。しかし、`onBeforeRequest()`実行時点で設定の読み込みが完了していない状況においては、`onBeforeRequest()`ではリダイレクトが行われず、`onTabUpdated()`でリダイレクトが行われる。両者では、WebExtensionsの仕様上どうしても挙動が異なってくるが、本アドオンではいずれの状況においても安定的にリダイレクト機能を提供する必要がある。
+
+このため、本テスト項目は、常に`onTabUpdated()`でリダイレクトが行われる状況でテストを実施できるよう、開発者モードで実施する。
+（GPOインストールではない状況では仕様上`onBeforeRequest()`が動作しない。）
+
+### 準備
+
+* `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelector.ini` を以下の内容に設定する。
+  ```
+  [Common]
+  DefaultBrowser=chrome
+  CloseEmptyTab=1
+  
+  [URLPatterns]
+  0001=http*://example.com|edge
+  0002=http*://example.com/*|edge
+  0003=http*://*.example.com|edge
+  0004=http*://*.example.com/*|edge
+  0005=http*://piro.sakura.ne.jp|edge
+  0006=http*://piro.sakura.ne.jp/*|edge
+  0007=http*://groonga.org/ja|edge
+  0008=http*://groonga.org/ja/*|edge
+  ```
+
+1. Edgeを起動する。
+2. 拡張機能の管理画面（`edge://extensions`）を開く。
+3. `開発者モード` を有効化する。
+4. GPOでインストールした拡張機能を一時的にアンインストールする。
+   1. `gpedit.msc` を起動する。
+   2. `Computer Configuration\Administrative Templates\Microsoft Edge\Extensions`（`コンピューターの構成\管理用テンプレート\Microsoft Edge\拡張機能`）の `Control which extensions are installed silently`（`サイレント インストールされる拡張機能を制御する`）を開き、検証環境の準備段階で追加した項目について、先頭に `_` を挿入して保存する。
+   3. Edgeの拡張機能管理画面上からBrowserSelectorが消えたことを確認する。
+5. `展開して読み込み` で `C:\Users\Public\webextensions\edge` を読み込んで、IDを控える。
+   例：`bplpacmhanoonjdmoelfokbphgopcbma`
+6. `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelectorTalkEdge.json` のアクセス権を変更し、ユーザー権限での書き込みを許可した上で、`"allowed_origins"` に、先ほど控えたIDに基づくURLを追加する。
+   例：`"chrome-extension://bplpacmhanoonjdmoelfokbphgopcbma/"`
+7. （必要に応じて: 「サービスワーカー」をクリックし、DevToolsを起動する。当画面で逐次状況を観察しながらテストする。）
+
+### 検証
+
+本検証においてはリダイレクトが発生する場合の挙動に大きな違いがあるため、読み込みが継続する場合の挙動は検証せず、リダイレクトする場合の検証を重点的に行う。
+
+1. Edgeを起動する。
+2. リンクによるEdgeからChromeへのページ遷移の検証：
+   1. Edge→Chromeの検証のため、Edgeで新しいタブで https://groonga.org/ja/ を開く。
+      * 期待される結果：
+        * Edge上で https://groonga.org/ja/ が読み込まれる。
+   2. `English` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://groonga.org/ が読み込まれる。
+   3. Edge上で、「関連プロジェクト」のリンクをクリックする。
+      * 期待される結果：
+        * Edge上で https://groonga.org/ja/related-projects.html が読み込まれる。
+   4. Edge上で、`Mroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://mroonga.org/ が読み込まれる。
+   5. Edge上で、`PGroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://pgroonga.github.io/ja/ が読み込まれる。
+   6. Edge上で、`Nroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://nroonga.github.com/ が読み込まれる。
+   7. Edge上で、`Rroonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://ranguba.org/ja/#about-rroonga が読み込まれる。
+   8. Edge上で、`GrnMini` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://github.com/ongaeshi/grn_mini が読み込まれる。
+   9. Edge上で、`p5-Groonga` のリンクをクリックする。
+      * 期待される結果：
+        * ページが一瞬遷移し、すぐに元のページに戻る。
+        * Chromeでタブが開かれ、https://github.com/yappo/p5-Groonga が読み込まれる。
+   10. Edge上で、`Ploonga` のリンクをクリックする。
+       * 期待される結果：
+         * ページが一瞬遷移し、すぐに元のページに戻る。
+         * Chromeでタブが開かれ、https://github.com/charsbar/groonga-api が読み込まれる。
+   11. Edge上で、`Proonga` のリンクをクリックする。
+       * 期待される結果：
+         * ページが一瞬遷移し、すぐに元のページに戻る。
+         * Chromeでタブが開かれ、https://github.com/Yujiro3/proonga が読み込まれる。
+   12. Edge上で、`Haroonga` のリンクをクリックする。
+       * 期待される結果：
+         * ページが一瞬遷移し、すぐに元のページに戻る。
+         * Chromeでタブが開かれ、https://github.com/cosmo0920/haroonga が読み込まれる。
+   13. Edge上で、`Groonga-GObject` のリンクをクリックする。
+       * 期待される結果：
+         * ページが一瞬遷移し、すぐに元のページに戻る。
+         * Chromeでタブが開かれ、https://github.com/groonga/groonga-gobject が読み込まれる。
+
+### 後始末
+
+1. 拡張機能の管理画面（`edge://extensions`）を開く。
+2. 「BrowserSelector」拡張機能を削除する。
+3. GPOで拡張機能をインストールする状態に戻す。
+   1. `gpedit.msc` を起動する。
+   2. `Computer Configuration\Administrative Templates\Microsoft Edge\Extensions`（`コンピューターの構成\管理用テンプレート\Microsoft Edge\拡張機能`）の `Control which extensions are installed silently`（`サイレント インストールされる拡張機能を制御する`）を開き、検証環境の準備段階で追加した項目について、先頭の `_` を削除して保存する。
+   3. Edgeの拡張機能管理画面上にBrowserSelectorが表示されたことを確認する。
+4. `開発者モード` を無効化する。
+5. Edgeを終了する。
