@@ -5,11 +5,29 @@ NPM_BIN_DIR := $(NPM_MOD_DIR)/.bin
 
 all: packages
 
+testee:
+	mkdir $@
+
+testee/chrome.js: chrome/background.js testee
+	sed -e "s/Redirector.init();/exports.redirector = Redirector/g" chrome/background.js > $@
+
+testee/edge.js: edge/background.js testee
+	sed -e "s/Redirector.init();/exports.redirector = Redirector/g" edge/background.js > $@
+
+unittest: install_dependency testee/chrome.js testee/edge.js
+	npx mocha --require mocha-suppress-logs test
+
+test: unittest
+
+test-verbose: install_dependency testee/chrome.js testee/edge.js
+	npx mocha test
+
 clean:
 	rm -f *.zip
 	rm -f *.xpi
+	rm -rf testee
 
-packages: clean lint
+packages: test clean lint
 	cd chrome && make && make dev && make enterprise-dev && mv *.zip ../
 	cd edge && make && make dev && make enterprise-dev && mv *.zip ../
 	cd firefox && make && mv *.xpi ../
