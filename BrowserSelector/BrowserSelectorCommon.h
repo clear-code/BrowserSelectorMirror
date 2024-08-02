@@ -1155,7 +1155,7 @@ public:
 			return false;
 		}
 
-		DebugLog(L"Launch chrome.exe (pid=%i)", pi.dwProcessId);
+		DebugLog(L"Launch %ls (pid=%i)", browser.c_str(), pi.dwProcessId);
 
 		/*
 		 * Chrome seems to crash if the parent process exits too
