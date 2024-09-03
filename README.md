@@ -443,25 +443,56 @@ e.g.)
 6. Reproduce the problem you need to inspect.
 7. Save log file as a file via the `Save As...` command under the `File` menu.
 
-### Chrome debug log
+### Chroem debug log
+
+#### On redirections from Chrome to others
 
 1. Copy a shortcut to Chrome to the desktop (or anywhere).
 2. Right click on the shortcut and choose "Property".
 3. Add a command line option ` --enable-logging=1` at the end of the "link target" field.
    (Please note that you put a space between the path to the exe file and the added option.)
-4. Launch Chrome with the shortcut.
-5. Reproduce the problem you need to inspect.
-6. Exit Chrome.
-7. Get the log file generated at `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log`.
+4. Confirm that there is no running process of `chrome.exe` with the Task Manager.
+   * Exit them if there is any running process.
+5. Launch Chrome with the shortcut.
+6. Reproduce the problem you need to inspect.
+7. Exit Chrome.
+9. Get the log file generated at `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log`.
+
+#### On redirections from others to Chrome
+
+1. Set a common option `ChromeDebug` to `1`.
+   For example, put `ChromeDebug=1` under the `[Common]` section in the file BrowserSelector.ini.
+   * Set a common option `ChromeDebugVerbose` as [an integer value between `1` to `3`](https://www.chromium.org/for-testers/enable-logging/) if you need more details.
+     For example, put `ChromeDebugVerbose=1` under the `[Common]` section in the file BrowserSelector.ini.
+2. Confirm that there is no running process of `chrome.exe` with the Task Manager.
+   * Exit them if there is any running process.
+3. Reproduce the problem you need to inspect.
+4. Exit Chrome.
+5. Get the log file generated at `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log`.
 
 ### Edge debug log
+
+#### On redirections from Edge to others
 
 1. Copy a shortcut to Edge to the desktop (or anywhere).
 2. Right click on the shortcut and choose "Property".
 3. Add a command line option ` --enable-logging=1` at the end of the "link target" field.
    (Please note that you put a space between the path to the exe file and the added option.)
-4. Launch Edge with the shortcut.
-5. Reproduce the problem you need to inspect.
-6. Exit Edge.
-7. Get the log file generated at `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log`.
+4. Confirm that there is no running process of `msedge.exe` with the Task Manager.
+   * Exit them if there is any running process.
+5. Launch Edge with the shortcut.
+6. Reproduce the problem you need to inspect.
+7. Exit Edge.
+8. Get the log file generated at `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log`.
 
+#### On redirections from others to Edge
+
+1. Set a common option `EdgeDebug` to `1`.
+   For example, put `EdgeDebug=1` under the `[Common]` section in the file BrowserSelector.ini.
+   * Set a common option `EdgeDebugVerbose` as [an integer value between `1` to `3`](https://www.chromium.org/for-testers/enable-logging/) if you need more details.
+     For example, put `EdgeDebugVerbose=1` under the `[Common]` section in the file BrowserSelector.ini.
+2. Confirm that there is no running process of `chrome.exe` with the Task Manager.
+   * Exit them if there is any running process.
+3. Reproduce the problem you need to inspect.
+4. Exit Edge.
+5. Get the log file generated at `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log`.

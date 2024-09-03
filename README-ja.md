@@ -424,23 +424,54 @@ URLのパターンを指定する方法として、単純なワイルドカー�
 
 ### Chrome debug log
 
+#### Chromeから他のブラウザーへリダイレクトする場面のログ収集の場合
+
 1. Chromeのショートカットをデスクトップ又は任意の場所にコピーする。
 2. ショートカットを右クリックし、メニューから「プロパティ」を選ぶ。
 3. リンクターゲット欄にコマンドライン引数 ` --enable-logging=1` を追加する。
    （実行ファイルへのパスとコマンドラインオプションの間にスペースを入れることを忘れないこと。）
-4. 編集したショートカットからChromeを起動する。
-5. 調査したい現象を再現させる。
-6. Chromeを終了する。
-7. `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` の位置に出力されたログを採取する。
+4. タスクマネージャーを使用し、`chrome.exe` のプロセスが残留していないことを確認する。
+   * 残留していた場合には、すべての残留プロセスを強制終了する。
+5. 編集したショートカットからChromeを起動する。
+6. 調査したい現象を再現させる。
+7. Chromeを終了する。
+8. `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` の位置に出力されたログを採取する。
+
+#### 他のブラウザーからChromeへリダイレクトする場面のログ収集の場合
+
+1. 共通オプションの `ChromeDebug` を `1` に設定する。
+   例えば、BrowserSelector.ini の `[Common]` セクションに `ChromeDebug=1` と追記する。
+   * さらに詳細なログを収集する場合は、共通オプションの `ChromeDebugVerbose` を [`1` 以上 `3` 以下の値](https://www.chromium.org/for-testers/enable-logging/)に設定する。
+     例えば、BrowserSelector.ini の `[Common]` セクションに `ChromeDebugVerbose=1` と追記する。
+2. タスクマネージャーを使用し、`chrome.exe` のプロセスが残留していないことを確認する。
+   * 残留していた場合には、すべての残留プロセスを強制終了する。
+3. 他のブラウザーからChromeへのリダイレクトで発生する現象を再現させる。
+4. Chromeを終了する。
+5. `%LocalAppData%\Google\Chrome\User Data\chrome_debug.log` の位置に出力されたログを採取する。
 
 ### Edge debug log
 
+#### Edgeから他のブラウザーへリダイレクトする場面のログ収集の場合
 
 1. Edgeのショートカットをデスクトップ又は任意の場所にコピーする。
 2. ショートカットを右クリックし、メニューから「プロパティ」を選ぶ。
 3. リンクターゲット欄にコマンドライン引数 ` --enable-logging=1` を追加する。
    （実行ファイルへのパスとコマンドラインオプションの間にスペースを入れることを忘れないこと。）
-4. 編集したショートカットからEdgeを起動する。
-5. 調査したい現象を再現させる。
-6. Edgeを終了する。
-7. `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` の位置に出力されたログを採取する。
+4. タスクマネージャーを使用し、`msedge.exe` のプロセスが残留していないことを確認する。
+   * 残留していた場合には、すべての残留プロセスを強制終了する。
+5. 編集したショートカットからEdgeを起動する。
+6. 調査したい現象を再現させる。
+7. Edgeを終了する。
+8. `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` の位置に出力されたログを採取する。
+
+#### 他のブラウザーからEdgeへリダイレクトする場面のログ収集の場合
+
+1. 共通オプションの `EdgeDebug` を `1` に設定する。
+   例えば、BrowserSelector.ini の `[Common]` セクションに `EdgeDebug=1` と追記する。
+   * さらに詳細なログを収集する場合は、共通オプションの `EdgeDebugVerbose` を [`1` 以上 `3` 以下の値](https://www.chromium.org/for-testers/enable-logging/)に設定する。
+     例えば、BrowserSelector.ini の `[Common]` セクションに `EdgeDebugVerbose=1` と追記する。
+2. タスクマネージャーを使用し、`chrome.exe` のプロセスが残留していないことを確認する。
+   * 残留していた場合には、すべての残留プロセスを強制終了する。
+3. 他のブラウザーからEdgeへのリダイレクトで発生する現象を再現させる。
+4. Edgeを終了する。
+5. `%LocalAppData%\Microsoft\Edge\User Data\chrome_debug.log` の位置に出力されたログを採取する。
