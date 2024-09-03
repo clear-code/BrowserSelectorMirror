@@ -59,6 +59,10 @@ class Config {
 public:
 	Config()
 		: m_debug(-1)
+		, m_chromeDebug(-1)
+		, m_chromeDebugVerbose(-1)
+		, m_edgeDebug(-1)
+		, m_edgeDebugVerbose(-1)
 		, m_closeEmptyTab(-1)
 		, m_onlyOnAnchorClick(-1)
 		, m_useRegex(-1)
@@ -151,6 +155,10 @@ public:
 
 		DebugLog(L"BrowserSelector version: %ls", getProductVersion().c_str());
 		DebugLog(L"Config: %ls", getName().c_str());
+		DebugLog(L"  ChromeDebug: %d", m_chromeDebug);
+		DebugLog(L"  ChromeDebugVerbose: %d", m_chromeDebugVerbose);
+		DebugLog(L"  EdgeDebug: %d", m_edgeDebug);
+		DebugLog(L"  EdgeDebugVerbose: %d", m_edgeDebugVerbose);
 		DebugLog(L"  DefaultBrowser: %ls", m_defaultBrowser.c_str());
 		DebugLog(L"  SecondBrowser: %ls", m_secondBrowser.c_str());
 		DebugLog(L"  FirefoxCommand: %ls", m_firefoxCommand.c_str());
@@ -261,6 +269,14 @@ public:
 			Config *config = *it;
 			if (config->m_debug >= 0)
 				m_debug = config->m_debug;
+			if (config->m_chromeDebug >= 0)
+				m_chromeDebug = config->m_chromeDebug;
+			if (config->m_chromeDebugVerbose >= 0)
+				m_chromeDebugVerbose = config->m_chromeDebugVerbose;
+			if (config->m_edgeDebug >= 0)
+				m_edgeDebug = config->m_edgeDebug;
+			if (config->m_edgeDebugVerbose >= 0)
+				m_edgeDebugVerbose = config->m_edgeDebugVerbose;
 			if (!config->m_defaultBrowser.empty())
 				m_defaultBrowser = config->m_defaultBrowser;
 			if (!config->m_secondBrowser.empty())
@@ -320,6 +336,10 @@ public:
 
 public:
 	int m_debug;
+	int m_chromeDebug;
+	int m_chromeDebugVerbose;
+	int m_edgeDebug;
+	int m_edgeDebugVerbose;
 	std::wstring m_defaultBrowser;
 	std::wstring m_secondBrowser;
 	std::wstring m_firefoxCommand;
@@ -339,6 +359,10 @@ public:
 	DefaultConfig()
 	{
 		m_debug = 0;
+		m_chromeDebug = 0;
+		m_chromeDebugVerbose = 0;
+		m_edgeDebug = 0;
+		m_edgeDebugVerbose = 0;
 		m_defaultBrowser = L"ie";
 		m_closeEmptyTab = true;
 		m_onlyOnAnchorClick = false;
@@ -366,6 +390,10 @@ public:
 			return;
 
 		GetIntValue(m_debug, L"Common", L"Debug");
+		GetIntValue(m_chromeDebug, L"Common", L"ChromeDebug");
+		GetIntValue(m_chromeDebugVerbose, L"Common", L"ChromeDebugVerbose");
+		GetIntValue(m_edgeDebug, L"Common", L"EdgeDebug");
+		GetIntValue(m_edgeDebugVerbose, L"Common", L"EdgeDebugVerbose");
 
 		GetStringValue(m_defaultBrowser, L"Common", L"DefaultBrowser");
 		GetStringValue(m_secondBrowser, L"Common", L"SecondBrowser");
@@ -685,6 +713,10 @@ public:
 		, m_enableIncludeCache(false)
 	{
 		LoadIntValue(m_debug, L"Debug");
+		LoadIntValue(m_chromeDebug, L"ChromeDebug");
+		LoadIntValue(m_chromeDebugVerbose, L"ChromeDebugVerbose");
+		LoadIntValue(m_edgeDebug, L"EdgeDebug");
+		LoadIntValue(m_edgeDebugVerbose, L"EdgeDebugVerbose");
 
 		LoadStringValue(m_defaultBrowser, L"DefaultBrowser");
 		LoadStringValue(m_secondBrowser, L"SecondBrowser");
@@ -1139,7 +1171,21 @@ public:
 
 		args += L"\"";
 		args += cmd;
-		args += L"\" -- \"";
+		args += L"\"";
+
+		if (browser == L"chrome" && m_config.m_chromeDebug > 0) {
+			args += L" --enable-logging";
+			if (m_config.m_chromeDebugVerbose > 0) {
+				args += L" --v=" + std::to_wstring(m_config.m_chromeDebugVerbose);
+			}
+		} else if (browser == L"edge" && m_config.m_edgeDebug > 0) {
+			args += L" --enable-logging";
+			if (m_config.m_edgeDebugVerbose > 0) {
+				args += L" --v=" + std::to_wstring(m_config.m_edgeDebugVerbose);
+			}
+		}
+
+		args += L" -- \"";
 		args += url;
 		args += L"\"";
 
@@ -1149,6 +1195,8 @@ public:
 			return false;
 		}
 
+		DebugLog(L"Command Line: %ls", cmd.c_str());
+		DebugLog(L"Command Line Args: %ls", buf);
 		if (!CreateProcess(cmd.c_str(), buf, NULL, NULL, FALSE, flags, NULL, NULL, &si, &pi)) {
 			ErrorLog(L"CreateProcess failed (err=%i, cmd=%ls)", GetLastError(), cmd.c_str());
 			free(buf);
