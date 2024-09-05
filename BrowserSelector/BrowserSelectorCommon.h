@@ -593,7 +593,11 @@ public:
 		if (cachePath.empty())
 			return false;
 
-		tmpPath = cachePath + L".tmp";
+		WCHAR buf[MAX_PATH];
+		UINT uniqNum = GetTempFileNameW(folderPath.c_str(), L"___", 0, buf);
+		if (uniqNum == 0)
+			return false;
+		tmpPath = buf;
 
 		size_t pos = GetDataFolderPath().size();
 		do
