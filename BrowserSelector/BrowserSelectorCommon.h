@@ -484,6 +484,7 @@ public:
 			return;
 		}
 
+		// Ensure the file to be placed local to improve read performance
 		bool succeeded = CopyToTempFile(path, tmpPath);
 		if (!succeeded) {
 			if (debug)
@@ -589,15 +590,6 @@ public:
 	static bool CopyToTempFile(const std::wstring& srcPath, std::wstring &tmpPath)
 	{
 		std::wstring folderPath = GetCacheFolderPath();
-		std::wstring cachePath = GetCachePath(srcPath);
-		if (cachePath.empty())
-			return false;
-
-		WCHAR buf[MAX_PATH];
-		UINT uniqNum = GetTempFileNameW(folderPath.c_str(), L"___", 0, buf);
-		if (uniqNum == 0)
-			return false;
-		tmpPath = buf;
 
 		size_t pos = GetDataFolderPath().size();
 		do
@@ -607,12 +599,18 @@ public:
 			if (pos == std::string::npos)
 				path = folderPath;
 			else
-				path = tmpPath.substr(0, pos).c_str();
+				path = folderPath.substr(0, pos).c_str();
 			::CreateDirectory(path.c_str(), NULL);
 		} while (pos != std::string::npos);
 
 		if (!::PathFileExists(folderPath.c_str()))
 			return false;
+
+		WCHAR buf[MAX_PATH];
+		UINT uniqNum = GetTempFileNameW(folderPath.c_str(), L"___", 0, buf);
+		if (uniqNum == 0)
+			return false;
+		tmpPath = buf;
 
 		return ::CopyFile(srcPath.c_str(), tmpPath.c_str(), FALSE);
 	}
