@@ -70,14 +70,20 @@ function wildmat(text, pat) {
  * A typical configuration looks like this:
  *
  * {
- *	 CloseEmptyTab:1, OnlyMainFrame:1, IgnoreQueryString:1, DefaultBrowser:"firefox",
+ *	 DefaultBrowser: "firefox",
+ *	 SecondBrowser: "",
+ *	 FirefoxCommand: "",
+ *	 CloseEmptyTab: 1,
+ *	 OnlyOnAnchorClick: 0,
+ *	 UseRegex: 0,
  *	 URLPattenrs: [
  *		 ['http*://*.example.com/*', 'ie'],
  *		 ...
  *	 ],
  *	 HostNamePattenrs: [
  *		 ['*.example.org/*', 'ie'],
- *	 ]
+ *	 ],
+ *	 ZonePatterns: []
  * }
  */
 const Redirector = {
@@ -344,10 +350,6 @@ const Redirector = {
     if (!/^https?:/.test(url)) {
       console.log(`* Ignore non-HTTP/HTTPS URL`);
       return false;
-    }
-
-    if (config.IgnoreQueryString) {
-      url = url.replace(/\?.*/, '');
     }
 
     console.log(`* Check ${url} for redirect patterns`);
