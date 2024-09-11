@@ -485,3 +485,50 @@ crxパッケージ化されたアドオンをGPOでインストールした状�
    3. Edgeの拡張機能管理画面上にBrowserSelectorが表示されたことを確認する。
 4. `開発者モード` を無効化する。
 5. Edgeを終了する。
+
+
+## Includeによる外部iniファイル指定時におけるブラウザ起動直後の動作検証
+
+### 背景
+
+BrowserSelector v2.2.6以前において、`Include`ディレクティブで外部iniファイルを指定した際、Edge起動直後のリダイレクトでは一時ファイルの作成に失敗して外部iniの設定を読み込めないことがある問題があった。この問題が発生しないことを確認する。
+
+### 準備
+
+* `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelector.ini` を以下の内容に設定する。
+  ```
+  [Common]
+  Include=C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelectorInclude.ini
+  ```
+* `C:\Program Files (x86)\ClearCode\BrowserSelector\BrowserSelectorInclude.ini` を以下の内容に設定する。
+  ```
+  [Common]
+  DefaultBrowser=chrome
+  CloseEmptyTab=1
+  
+  [URLPatterns]
+  0001=http*://example.com|edge
+  0002=http*://example.com/*|edge
+  0003=http*://*.example.com|edge
+  0004=http*://*.example.com/*|edge
+  0005=http*://piro.sakura.ne.jp|edge
+  0006=http*://piro.sakura.ne.jp/*|edge
+  0007=http*://groonga.org/ja|edge
+  0008=http*://groonga.org/ja/*|edge
+  ```
+
+### 検証
+
+1. Edgeのウインドウを全て閉じる
+2. Chromeを開き、`https://example.com/`を開く
+  * 期待される結果:
+    * Edgeのウインドウが開き、`https://example.com/`が読み込まれる
+    * Edgeのウインドウが閉じない
+3. 以上を10回程度繰り返す
+  * 期待される結果:
+    * 同上
+
+### 備考
+
+BrowserSelector v2.2.6以前では、Edgeウインドウが開いた直後に閉じる挙動となる場合がある。
+（IEを起動できる環境では、対象URLがIEで開かれる。）
