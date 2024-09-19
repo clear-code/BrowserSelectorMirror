@@ -24,12 +24,10 @@ describe('getHost', () => {
       // Although C++ implementation intends to exclude port number, JavaScript
       // one includes it. So that this test always fails with current code.
       // We may need to fix it.
-      /*
-      it('exclude port number', () => {
+      it('exclude port number' /*, () => {
         const url = 'https://www.google.com:8080/';
         assert.equal(redirector._getHost(url), 'www.google.com');
-      });
-      */
+      }*/);
     });
   });
 });
