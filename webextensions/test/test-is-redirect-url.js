@@ -6,6 +6,7 @@ describe('isRedirectURL', () => {
     { browser: 'chrome', module: require('../testee/chrome.js') },
     { browser: 'edge',   module: require('../testee/edge.js')   },
   ].forEach(({browser, module}) => {
+    const redirector = module.redirector;
     describe(browser, () => {
       const baseConfig = {
         DefaultBrowser: browser,
@@ -18,14 +19,13 @@ describe('isRedirectURL', () => {
         HostNamePatterns: [],
         ZonePatterns: [],
       }
-      function config(additionals = {}, URLPatterns = [], HostNamePatterns = []) {
+      function config(URLPatterns = [], HostNamePatterns = [], additionals = {}) {
         const config = {...baseConfig, ...additionals};
         config.URLPatterns = [...config.URLPatterns, ...URLPatterns];
         config.HostNamePatterns = [...config.HostNamePatterns, ...HostNamePatterns];
         return config;
       }
       describe('Empty redirect pattern', () => {
-        const redirector = module.redirector;
         it(`Should not redirect when default browser is ${browser}`, () => {
           const url = 'http://www.google.com/';
           assert.equal(redirector.isRedirectURL(baseConfig, url), false);
@@ -33,32 +33,30 @@ describe('isRedirectURL', () => {
         it(`Should redirect when default browser is not ${browser}`, () => {
           const defaultBrowser = browser === 'edge' ? 'chrome' : 'edge';
           const url = 'http://www.google.com/';
-          assert.equal(redirector.isRedirectURL(config({DefaultBrowser: defaultBrowser}), url), true);
+          assert.equal(redirector.isRedirectURL(config([], [], {DefaultBrowser: defaultBrowser}), url), true);
         });
       });
       describe('URL patterns', () => {
-        const redirector = module.redirector;
         it(`Match redirect pattern`, () => {
           const url = 'http://www.example.com/';
-          const conf = config({}, [['http*://*.example.com/*', 'firefox']])
+          const conf = config([['http*://*.example.com/*', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
         it(`Unmatch redirect pattern`, () => {
           const url = 'http://www.google.com/';
-          const conf = config({}, [['http*://*.example.com/*', 'firefox']])
+          const conf = config([['http*://*.example.com/*', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), false);
         });
       });
       describe('HostName patterns', () => {
-        const redirector = module.redirector;
         it(`Match redirect pattern`, () => {
           const url = 'http://www.example.com/';
-          const conf = config({}, [], [['*.example.com', 'firefox']])
+          const conf = config([], [['*.example.com', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
         it(`Unmatch redirect pattern`, () => {
           const url = 'http://www.google.com/';
-          const conf = config({}, [], [['*.example.com', 'firefox']])
+          const conf = config([], [['*.example.com', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), false);
         });
       });
