@@ -322,7 +322,7 @@ const Redirector = {
         }
       }
 
-      for (const [pattern, browser] of Object.entries(config.HostNamePatterns)) {
+      for (const [pattern, browser] of config.HostNamePatterns) {
         if (wildmat(host, pattern)) {
           console.log(`* Match with '${pattern}' (browser=${browser})`);
           return browser.toLowerCase();
