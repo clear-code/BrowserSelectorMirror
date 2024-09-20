@@ -45,6 +45,9 @@ jobs:
           cp webextensions/chrome/manifest.json.dev webextensions/chrome/manifest.json
           make -C webextensions/chrome
           make -C webextensions/firefox
+      - name: Run tests
+        run: |
+          make -C webextensions test
       - name: Upload Extensions
         uses: actions/upload-artifact@v4
         with:
@@ -59,6 +62,9 @@ jobs:
           make -C webextensions/edge
           make -C webextensions/chrome
           make -C webextensions/firefox
+      - name: Run tests
+        run: |
+          make -C webextensions test
       - name: Upload Extensions
         uses: actions/upload-artifact@v4
         with:
