@@ -4,7 +4,7 @@ CJKoptions:
   - BoldFont=Noto Sans CJK JP Bold
 title: "BrowserSelector利用ガイド v2.2.7"
 author: "株式会社クリアコード"
-date: "2024-09-13"
+date: "2024-10-01"
 titlepage: true
 logo: logo.png
 logo-width: 250
