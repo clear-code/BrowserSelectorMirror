@@ -23,6 +23,14 @@ describe('isRedirectURL', () => {
         const config = {...baseConfig, ...additionals};
         config.URLPatterns = [...config.URLPatterns, ...URLPatterns];
         config.HostNamePatterns = [...config.HostNamePatterns, ...HostNamePatterns];
+        if(config.UseRegex) {
+          config.URLPatternsMatchers = {};
+          config.HostNamePatternsMatchers = {};
+          if (config.UseRegex) {
+            redirector._generateMatcher(config.URLPatterns, config.URLPatternsMatchers);
+            redirector._generateMatcher(config.HostNamePatterns, config.HostNamePatternsMatchers);
+          }
+        }
         return config;
       }
       describe('Empty redirect pattern', () => {
@@ -49,14 +57,51 @@ describe('isRedirectURL', () => {
         });
       });
       describe('HostName patterns', () => {
-        it(`Match redirect pattern`, () => {
+        it(`Match redirect pattern without wildcard`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['www.example.com', 'firefox']])
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Match redirect pattern with wildcard`, () => {
           const url = 'http://www.example.com/';
           const conf = config([], [['*.example.com', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
-        it(`Unmatch redirect pattern`, () => {
+        it(`Match redirect pattern with regex: partial match`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['www\.example\.com', 'firefox']], { UseRegex: 1 })
+          console.log(conf);
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Match redirect pattern with regex: exact match`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['^www\.example\.com$', 'firefox']], { UseRegex: 1 })
+          console.log(conf);
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Unmatch redirect pattern without wildcard`, () => {
+          const url = 'http://www.google.com/';
+          const conf = config([], [['www.example.com', 'firefox']])
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern extra scheme`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['http://www.example.com', 'firefox']])
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern with wildcard`, () => {
           const url = 'http://www.google.com/';
           const conf = config([], [['*.example.com', 'firefox']])
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern with regex`, () => {
+          const url = 'http://www.google.com/';
+          const conf = config([], [['www\.example\.com', 'firefox']], { UseRegex: 1 })
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern extra scheme with regex`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['http://www.example.com', 'firefox']], { UseRegex: 1 })
           assert.equal(redirector.isRedirectURL(conf, url), false);
         });
       });

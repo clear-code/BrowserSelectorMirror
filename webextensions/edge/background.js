@@ -309,7 +309,7 @@ const Redirector = {
       }
 
       for (const [browser, matcher] of Object.entries(config.HostNamePatternsMatchers)) {
-        if (matcher.test(url)) {
+        if (matcher.test(host)) {
           console.log(`* Match with '${matcher.source}' (browser=${browser})`);
           return browser;
         }
