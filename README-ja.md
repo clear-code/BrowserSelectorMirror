@@ -325,7 +325,7 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * `ie` （デフォルト）
     * `firefox`
     * `chrome`
-    * `edge`: Microsoft Edge
+    * `edge`
 
 例)
 
