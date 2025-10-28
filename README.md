@@ -302,9 +302,9 @@ the following registry value under the top of `BrowserSelector` key:
 On this case all patterns must be valid regular expressions, so you cannot mix
 regular expression patterns and wildcard patterns.
 
-Regular expression patterns matches by partial matches. If you want to do exact 
-match, use the `^` assertion to indicate the beginning of the pattern and the `$`
-assertion to indicate the end of the pattern.
+Regular expression patterns must match to the whole URL, not partially. Prealse
+remind that you must put `.*` at the end of the pattern if the pattern needs to
+be matched to arbitrary paths under a specific host.
 
 Please see the following page for the grammar of the regular expression:
 
