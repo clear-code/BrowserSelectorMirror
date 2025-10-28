@@ -343,7 +343,7 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * `ie`
     * `firefox`
     * `chrome`
-    * `edge`: Microsoft Edge
+    * `edge`
 
 例)
 
