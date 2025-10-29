@@ -36,15 +36,82 @@ describe('isRedirectURL', () => {
           assert.equal(redirector.isRedirectURL(config([], [], {DefaultBrowser: defaultBrowser}), url), true);
         });
       });
+      it(`Match redirect pattern with regex: partial match`, () => {
+        const url = 'http://www.example.com/';
+        const conf = config([['http://www\.example\.com/', 'firefox']], [], { UseRegex: 1 })
+        assert.equal(redirector.isRedirectURL(conf, url), true);
+      });
+      it(`Match redirect pattern with regex: exact match`, () => {
+        const url = 'http://www.example.com/';
+        const conf = config([['^http://www\.example\.com/$', 'firefox']], [], { UseRegex: 1 })
+        assert.equal(redirector.isRedirectURL(conf, url), true);
+      });
       describe('URL patterns', () => {
-        it(`Match redirect pattern`, () => {
+        it(`Match redirect pattern with wild card`, () => {
           const url = 'http://www.example.com/';
           const conf = config([['http*://*.example.com/*', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
-        it(`Unmatch redirect pattern`, () => {
+        it(`Match first pattern: redirection (matches firefox)`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config(
+            [
+              ['not-match', browser],
+              ['http*://*.example.com/*', 'firefox'],
+              ['http*://*.example.com/*', browser]
+            ])
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Match first pattern: non redirection (matches myself)`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config(
+            [
+              ['not-match', browser],
+              ['http*://*.example.com/*', browser],
+              ['http*://*.example.com/*', 'firefox']
+            ])
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Match first pattern with regex: redirection (matches firefox)`, () => {
+          // On 2.2.0 or before, patterns were grouped by browser, so they were matched in 
+          // the order in which the browsers appeared, rather than in top-down order of the patterns.
+          // On the versions later than 2.2.0, the patterns were matched in the order in top-down order.
+          const url = 'http://www.example.com/';
+          const conf = config(
+            [
+              // We need this to make the "browser" the first appeared browser.
+              ['not-match', browser],
+              ['http://www\.example\.com/.*', 'firefox'],
+              ['http://www\.example\.com/.*', browser]
+            ],
+            [],
+            { UseRegex: 1 })
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Match first pattern with regex: non redirection (matches myself)`, () => {
+          // On 2.2.0 or before, patterns were grouped by browser, so they were matched in 
+          // the order in which the browsers appeared, rather than in top-down order of the patterns.
+          // On the versions later than 2.2.0, the patterns were matched in the order in top-down order.
+          const url = 'http://www.example.com/';
+          const conf = config(
+            [
+              // We need this to make the "browser" the first appeared browser.
+              ['not-match', browser],
+              ['http://www\.example\.com/.*', browser],
+              ['http://www\.example\.com/.*', 'firefox']
+            ],
+            [],
+            { UseRegex: 1 })
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern with wild card`, () => {
           const url = 'http://www.google.com/';
           const conf = config([['http*://*.example.com/*', 'firefox']])
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern with regex`, () => {
+          const url = 'http://www.google.com/';
+          const conf = config([['http://www\.example\.com/', 'firefox']], [], { UseRegex: 1 })
           assert.equal(redirector.isRedirectURL(conf, url), false);
         });
       });
