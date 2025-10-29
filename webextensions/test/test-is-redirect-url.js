@@ -126,14 +126,19 @@ describe('isRedirectURL', () => {
           const conf = config([], [['*.example.com', 'firefox']])
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
-        it(`Match redirect pattern with regex: partial match`, () => {
+        it(`Match redirect pattern with regex`, () => {
           const url = 'http://www.example.com/';
           const conf = config([], [['www\.example\.com', 'firefox']], { UseRegex: 1 })
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
-        it(`Match redirect pattern with regex: exact match`, () => {
+        it(`Match redirect pattern with regex: extra caret and dollar`, () => {
           const url = 'http://www.example.com/';
           const conf = config([], [['^www\.example\.com$', 'firefox']], { UseRegex: 1 })
+          assert.equal(redirector.isRedirectURL(conf, url), true);
+        });
+        it(`Match redirect pattern with regex: partial match`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['.*\.example\..*', 'firefox']], { UseRegex: 1 })
           assert.equal(redirector.isRedirectURL(conf, url), true);
         });
         it(`Match first pattern: redirection (matches firefox)`, () => {
@@ -213,6 +218,11 @@ describe('isRedirectURL', () => {
         it(`Unmatch redirect pattern extra scheme with regex`, () => {
           const url = 'http://www.example.com/';
           const conf = config([], [['http://www.example.com', 'firefox']], { UseRegex: 1 })
+          assert.equal(redirector.isRedirectURL(conf, url), false);
+        });
+        it(`Unmatch redirect pattern with regex: not exact match`, () => {
+          const url = 'http://www.example.com/';
+          const conf = config([], [['\.example\.', 'firefox']], { UseRegex: 1 })
           assert.equal(redirector.isRedirectURL(conf, url), false);
         });
       });
