@@ -66,7 +66,7 @@ function wildmat(text, pat) {
 function regexMatch(url, pattern) {
   let regExp;
   try {
-    regExp = new RegExp(pattern);
+    regExp = new RegExp(`^${pattern}$`);
   }
   catch(_error) {
     console.log('failed to compile a regex pattern: ', pattern);
