@@ -63,6 +63,18 @@ function wildmat(text, pat) {
   return domatch(text, pat, 0, 0);
 }
 
+function regexMatch(url, pattern) {
+  let regExp;
+  try {
+    regExp = new RegExp(pattern);
+  }
+  catch(_error) {
+    console.log('failed to compile a regex pattern: ', pattern);
+    return false;
+  }
+  return regExp.test(url);
+}
+
 
 /*
  * Observe WebRequests with config fetched from BrowserSelector.
@@ -119,36 +131,8 @@ const Redirector = {
     const isStartup = (this.cached == null);
     this.cached = resp.config;
     console.log('Fetch config', JSON.stringify(this.cached));
-
-    resp.config.URLPatternsMatchers = {};
-    resp.config.HostNamePatternsMatchers = {};
-    if (resp.config.UseRegex) {
-      this._generateMatcher(resp.config.URLPatterns, resp.config.URLPatternsMatchers);
-      this._generateMatcher(resp.config.HostNamePatterns, resp.config.HostNamePatternsMatchers);
-    }
-
     if (isStartup && !this.resumed) {
       this.handleStartup(this.cached);
-    }
-  },
-  _generateMatcher(patternsAndBrowsers, matchers) {
-    const patternsByBrowser = {};
-    for (const patternAndBrowser of patternsAndBrowsers) {
-      const [pattern, browser] = patternAndBrowser;
-      try {
-        new RegExp(pattern);
-      }
-      catch(_error) {
-        console.log('failed to compile a regex pattern: ', pattern, browser);
-        continue;
-      }
-      const safeBrowser = browser.toLowerCase();
-      if (!patternsByBrowser[safeBrowser])
-        patternsByBrowser[safeBrowser] = [];
-      patternsByBrowser[safeBrowser].push(pattern);
-    }
-    for (const [browser, patterns] of Object.entries(patternsByBrowser)) {
-      matchers[browser] = new RegExp(`(${patterns.join('|')})`);
     }
   },
 
@@ -237,6 +221,7 @@ const Redirector = {
     }
     return redirected;
   },
+
   async tryCloseEmptyTab({ tabId, windowId, isNewTab }) {
     if (!windowId)
       windowId = (await chrome.tabs.get(tabId)).windowId;
@@ -299,34 +284,18 @@ const Redirector = {
 	 */
   match(config, url) {
     const host = this._getHost(url);
-
-    if (config.UseRegex) {
-      for (const [browser, matcher] of Object.entries(config.URLPatternsMatchers)) {
-        if (matcher.test(url)) {
-          console.log(`* Match with '${matcher.source}' (browser=${browser})`);
-          return browser;
-        }
+    const matcher = config.UseRegex ? regexMatch : wildmat;
+    for (const [pattern, browser] of config.URLPatterns) {
+      if (matcher(url, pattern)) {
+        console.log(`* Match with '${pattern}' (browser=${browser})`);
+        return browser.toLowerCase();
       }
+    }
 
-      for (const [browser, matcher] of Object.entries(config.HostNamePatternsMatchers)) {
-        if (matcher.test(host)) {
-          console.log(`* Match with '${matcher.source}' (browser=${browser})`);
-          return browser;
-        }
-      }
-    } else {
-      for (const [pattern, browser] of config.URLPatterns) {
-        if (wildmat(url, pattern)) {
-          console.log(`* Match with '${pattern}' (browser=${browser})`);
-          return browser.toLowerCase();
-        }
-      }
-
-      for (const [pattern, browser] of config.HostNamePatterns) {
-        if (wildmat(host, pattern)) {
-          console.log(`* Match with '${pattern}' (browser=${browser})`);
-          return browser.toLowerCase();
-        }
+    for (const [pattern, browser] of config.HostNamePatterns) {
+      if (matcher(host, pattern)) {
+        console.log(`* Match with '${pattern}' (browser=${browser})`);
+        return browser.toLowerCase();
       }
     }
 
