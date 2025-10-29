@@ -287,6 +287,7 @@ For browser names, following values are supported:
   * `ie`
   * `firefox`
   * `chrome`
+  * `edge`
 
 When the browser name is unspecified, `DefaultBrowser` or `SecondBrowser` will
 be used as described later.
@@ -345,6 +346,7 @@ value `DefaultBrowser` under the top of `BrowserSelector` key.
     * `ie`
     * `firefox`
     * `chrome`
+    * `edge`
 
 e.g)
 
@@ -362,6 +364,7 @@ browser for such URL patterns, you can do it by the registry value
     * `ie`
     * `firefox`
     * `chrome`
+    * `edge`
 
 e.g.)
 

@@ -264,6 +264,7 @@ URLは`http:`または`https:`で始まる物のみ対応しています。そ�
   * `ie`: Internet Explorer
   * `firefox`: Mozilla Firefox
   * `chrome`: Google Chrome
+  * `edge`: Microsoft Edge
 
 ブラウザ名を指定しない場合は後述の`DefaultBrowser`や`SecondBrowser`が使用されま
 す。
@@ -324,6 +325,7 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * `ie` （デフォルト）
     * `firefox`
     * `chrome`
+    * `edge`
 
 例)
 
@@ -341,6 +343,7 @@ URLのパターンを指定する方法として、単純なワイルドカー�
     * `ie`
     * `firefox`
     * `chrome`
+    * `edge`
 
 例)
 
