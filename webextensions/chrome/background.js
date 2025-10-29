@@ -63,7 +63,7 @@ function wildmat(text, pat) {
   return domatch(text, pat, 0, 0);
 }
 
-function regexMatch(url, pattern) {
+function regexMatch(text, pattern) {
   let regExp;
   try {
     regExp = new RegExp(pattern);
@@ -72,7 +72,7 @@ function regexMatch(url, pattern) {
     console.log('failed to compile a regex pattern: ', pattern);
     return false;
   }
-  return regExp.test(url);
+  return regExp.test(text);
 }
 
 /*
