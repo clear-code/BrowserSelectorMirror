@@ -77,6 +77,167 @@ namespace TestMatching
 			Assert::IsTrue(app.matchSimpleWildCard(url, pattern));
 		}
 	};
+
+	TEST_CLASS(MatchRegularExpression)
+	{
+	public:
+		TEST_METHOD(ExactMatch)
+		{
+			DefaultConfig config;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com");
+			wstring pattern(L"https://www\\.example\\.com");
+			Assert::IsTrue(app.matchRegex(url, pattern));
+		}
+
+		TEST_METHOD(WildCard)
+		{
+			DefaultConfig config;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com");
+			wstring pattern(L".*example.*");
+			Assert::IsTrue(app.matchRegex(url, pattern));
+		}
+
+		TEST_METHOD(UnmatchToPartial)
+		{
+			DefaultConfig config;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com");
+			wstring pattern(L"example");
+			Assert::IsFalse(app.matchRegex(url, pattern));
+		}
+
+		TEST_METHOD(Unmatch)
+		{
+			DefaultConfig config;
+			BrowserSelector app(config);
+			wstring url(L"https://www2.example.com");
+			wstring pattern(L"https://www\\.example\\.com");
+			Assert::IsFalse(app.matchRegex(url, pattern));
+		}
+
+		TEST_METHOD(UNCPath)
+		{
+			DefaultConfig config;
+			BrowserSelector app(config);
+			wstring url(L"\\\\shared\\folder");
+			wstring pattern(L"\\\\\\\\shared\\\\folder");
+			Assert::IsTrue(app.matchRegex(url, pattern));
+		}
+	};
+
+	TEST_CLASS(GetBrowserNameToOpenURL)
+	{
+	public:
+		TEST_METHOD(WildCardMatchFirstUrlPattern1)
+		{
+			DefaultConfig config;
+			config.m_urlPatterns = {
+				{ L"not-match", L"ie" },
+				{ L"http*://*.example.com/*", L"firefox" },
+				{ L"http*://*.example.com/*", L"ie" },
+			};
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"firefox", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(WildCardMatchFirstUrlPattern2)
+		{
+			DefaultConfig config;
+			config.m_urlPatterns = {
+				{ L"not-match", L"ie" },
+				{ L"http*://*.example.com/*", L"ie" },
+				{ L"http*://*.example.com/*", L"firefox" },
+			};
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"ie", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(RegexMatchFirstUrlPattern1)
+		{
+			DefaultConfig config;
+			config.m_urlPatterns = {
+				{ L"not-match", L"ie" },
+				{ L"https?://.*\\.example\\.com/.*", L"firefox" },
+				{ L"https?://.*\\.example\\.com/.*", L"ie" },
+			};
+			config.m_useRegex = TRUE;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"firefox", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(RegexMatchFirstUrlPattern2)
+		{
+			DefaultConfig config;
+			config.m_urlPatterns = {
+				{ L"not-match", L"ie" },
+				{ L"https?://.*\\.example\\.com/.*", L"ie" },
+				{ L"https?://.*\\.example\\.com/.*", L"firefox" },
+			};
+			config.m_useRegex = TRUE;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"ie", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(WildCardMatchFirstHostNamePattern1)
+		{
+			DefaultConfig config;
+			config.m_hostNamePatterns = {
+				{ L"not-match", L"ie" },
+				{ L"www\\.example\\.com", L"firefox" },
+				{ L"www\\.example\\.com", L"ie" },
+			};
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"firefox", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(WildCardMatchFirstHostNamePattern2)
+		{
+			DefaultConfig config;
+			config.m_hostNamePatterns = {
+				{ L"not-match", L"ie" },
+				{ L"www.example.com", L"ie" },
+				{ L"www.example.com", L"firefox" },
+			};
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"ie", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(RegexMatchFirstHostNamePattern1)
+		{
+			DefaultConfig config;
+			config.m_hostNamePatterns = {
+				{ L"not-match", L"ie" },
+				{ L"www\\.example\\.com", L"firefox" },
+				{ L"www\\.example\\.com", L"ie" },
+			};
+			config.m_useRegex = TRUE;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"firefox", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+
+		TEST_METHOD(RegexMatchFirstHostNamePattern2)
+		{
+			DefaultConfig config;
+			config.m_hostNamePatterns = {
+				{ L"not-match", L"ie" },
+				{ L"www\\.example\\.com", L"ie" },
+				{ L"www\\.example\\.com", L"firefox" },
+			};
+			config.m_useRegex = TRUE;
+			BrowserSelector app(config);
+			wstring url(L"https://www.example.com/");
+			Assert::AreEqual(L"ie", app.GetBrowserNameToOpenURL(url).c_str());
+		}
+	};
 }
 
 namespace TestConfig
